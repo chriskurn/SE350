@@ -1,3 +1,4 @@
+package simulator;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -6,7 +7,7 @@
 	Date:			Spring Quarter 2014
  */
 
-
-public class ElevatorMoveUp {
+//singleton
+public interface Simulator {
 
 }

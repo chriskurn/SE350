@@ -1,3 +1,4 @@
+package elevator.movement;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -7,7 +8,6 @@
  */
 
 
-public interface Mover {
+public interface Elevator {
 
 }
-

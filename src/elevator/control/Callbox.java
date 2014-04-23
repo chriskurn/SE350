@@ -1,3 +1,4 @@
+package elevator.control;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -7,6 +8,6 @@
  */
 
 
-public interface StatisticsGenerator {
+public interface Callbox {
 
 }
