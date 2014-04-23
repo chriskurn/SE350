@@ -1,6 +1,6 @@
 package simulator;
-
-import java.io.FileNotFoundException;
+import simulator.inputloading.InputLoader;
+import simulator.inputloading.InputLoaderFactory;
 /*
 Description:    Object-Oriented Software Development
                 Quarter Programming Project

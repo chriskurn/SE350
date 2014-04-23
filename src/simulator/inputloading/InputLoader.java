@@ -1,4 +1,4 @@
-package simulator;
+package simulator.inputloading;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -10,7 +10,8 @@ package simulator;
 
 public interface InputLoader {
     
-    public void loadInput() throws Exception;
+    public void loadInput() throws IllegalParamException, FileReadException, NullFileException;
+    public void readInput() throws NullFileException, IllegalParamException;
     
     public int getNumElevators();
     public int getNumFloors();
