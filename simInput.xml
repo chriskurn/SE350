@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<simulation>
+	<input id="0001">
+		<numelevators>4</numelevators>
+		<numfloors>16</numfloors>
+	</input>		
+</simulation>

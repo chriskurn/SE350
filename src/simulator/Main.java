@@ -19,6 +19,15 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Start");
+		
+		Simulator mySim = new SimulatorImpl("simInput.xml");
+		try {
+            mySim.buildSimulator();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
 
 
 	}

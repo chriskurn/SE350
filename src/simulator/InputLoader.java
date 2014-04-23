@@ -9,5 +9,10 @@ package simulator;
 
 
 public interface InputLoader {
+    
+    public void loadInput() throws Exception;
+    
+    public int getNumElevators();
+    public int getNumFloors();
 
 }

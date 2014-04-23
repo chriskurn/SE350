@@ -1,4 +1,4 @@
-package simulator;
+package simulator.elements;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -8,6 +8,6 @@ package simulator;
  */
 
 
-public interface Floor {
+public interface Person {
 
 }
