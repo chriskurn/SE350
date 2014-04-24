@@ -1,12 +1,12 @@
 package elevator.movement;
-/*
-   	Description: 	Object-Oriented Software Development
-   					Quarter Programming Project
-	Authors:  		Chris Kurn and Patrick Stein
-	Class:			SE-350
-	Date:			Spring Quarter 2014
- */
 
+/**
+ * class ElevatorMoverFactory
+ * 
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package elevator.movement
+ */
 
 public class ElevatorMoverFactory {
 
