@@ -1,7 +1,7 @@
 package elevator.movement;
 
 /**
- * class ElevatorMoveUp
+ * Description: class ElevatorMoveUp
  * 
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014

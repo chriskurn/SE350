@@ -3,7 +3,7 @@ package simulator;
 import java.io.FileNotFoundException;
 
 /**
- * interface Simulator
+ * Description: interface Simulator
  * 
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
