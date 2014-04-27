@@ -16,6 +16,8 @@ public class Main {
 		System.out.println("Start");
 		
 		Simulator mySim = new SimulatorImpl("simInput.xml");
+		/** create mySim object - simInput.xml data loaded via constructor */
+	    protected PrintStream out;
 		try {
             mySim.buildSimulator();
         } catch (Exception e) {
