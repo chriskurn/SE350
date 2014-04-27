@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 
 /**
  * Description: interface Simulator
- * 
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator
