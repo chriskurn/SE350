@@ -1,10 +1,10 @@
 package simulator;
-/*
-   	Description: 	Object-Oriented Software Development
-   					Quarter Programming Project
-	Authors:  		Chris Kurn and Patrick Stein
-	Class:			SE-350
-	Date:			Spring Quarter 2014 (04/22/14)
+
+/**
+ * Description: main
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package simulator
  */
 
 public class Main {
@@ -12,9 +12,11 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Start");
+		System.out.println("Start the Elevator Simulation");
 		
 		Simulator mySim = new SimulatorImpl("simInput.xml");
+		/** create mySim object - simInput.xml data loaded via constructor */
+	    //protected PrintStream out;
 		try {
             mySim.buildSimulator();
         } catch (Exception e) {

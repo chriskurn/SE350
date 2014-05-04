@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <simulation>
 	<input id="0001">
-		<numelevators>4</numelevators>
-		<numfloors>16</numfloors>
+		<numFloors>10</numFloors>
+		<numElevators>4</numElevators>		
+		<numExpressElevators>0</numExpressElevators>
+		<maxPersonsPerElevator>5</maxPersonsPerElevator>
+		<floorTime>500</floorTime>
+		<doorTime>500</doorTime>
+		<elevatorSleepTime>60000</elevatorSleepTime>
 	</input>		
 </simulation>

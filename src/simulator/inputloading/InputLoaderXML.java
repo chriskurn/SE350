@@ -1,11 +1,12 @@
 package simulator.inputloading;
-/*
-Description:    Object-Oriented Software Development
-                Quarter Programming Project
-Authors:        Chris Kurn and Patrick Stein
-Class:          SE-350
-Date:           Spring Quarter 2014
-*/
+
+/**
+ * Description: InputLoaderXML
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see simulator.inputloading
+ */
+
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -27,6 +28,12 @@ public class InputLoaderXML implements InputLoader {
     
     private int numElevators;
     private int numFloors;
+    private int numExpressElevators;
+    private int numPersonsPerElevators;
+    private int floorTime;
+    private int doorTime;
+    private int elevatorSleepTime;
+    
     
     private final int MIN_ELEVATORS = 1;
     private final int MIN_FLOORS = 1;
@@ -84,8 +91,13 @@ public class InputLoaderXML implements InputLoader {
                 Element element = (Element) firstNode;
                 //Get the number of floors and elevators
                 // TODO Maybe I should catch this illegal param exception and throw a different one?
-                this.setNumElevators(element.getAttribute("numelevators"));
-                this.setNumFloors(element.getAttribute("numfloors"));
+                this.setNumElevators(element.getAttribute("numElevators"));
+                this.setNumFloors(element.getAttribute("numFloors"));
+                this.setNumElevators(element.getAttribute("numExpressElevators"));
+                this.setNumFloors(element.getAttribute("numPersonsPerElevators"));
+                this.setNumElevators(element.getAttribute("floorTime"));
+                this.setNumElevators(element.getAttribute("doorTime"));
+                this.setNumFloors(element.getAttribute("elevatorSleepTime"));
         }else {
             throw new NullFileException("The XML document member you are trying to read from is currently null.");
         }
@@ -119,6 +131,40 @@ public class InputLoaderXML implements InputLoader {
         // TODO Auto-generated method stub
         return this.numFloors;
     }
+    
+    @Override
+    public int numExpressElevators() {
+        // TODO Auto-generated method stub
+        return this.numExpressElevators;
+    }
+
+    @Override
+    public int numPersonsPerElevators() {
+        // TODO Auto-generated method stub
+        return this.numPersonsPerElevators;
+    }
+    
+    
+    @Override
+    public int floorTime() {
+        // TODO Auto-generated method stub
+        return this.floorTime;
+    }
+
+    @Override
+    public int doorTime() {
+        // TODO Auto-generated method stub
+        return this.doorTime;
+    }
+    
+    @Override
+    public int elevatorSleepTime() {
+        // TODO Auto-generated method stub
+        return this.elevatorSleepTime;
+    }    
+    
+    
+    
     /**
      * Private method for setting the number of elevators.
      * @param numE takes a string that corresponds to a number that must be greater than 0.
