@@ -13,7 +13,6 @@ public class ElevatorMoveUpDown {
 
     public ElevatorMoveUpDown() {}
 
-
 	public void selectTheFloor() {
 	    Scanner readInScreen = new Scanner(System.in);
 	    int moveToFloor;
