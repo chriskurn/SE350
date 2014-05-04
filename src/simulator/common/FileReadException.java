@@ -1,4 +1,4 @@
-package simulator.inputloading;
+package simulator.common;
 
 public class FileReadException extends Exception {
     public FileReadException(String msg) {

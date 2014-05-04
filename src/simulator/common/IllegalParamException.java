@@ -1,4 +1,4 @@
-package simulator.inputloading;
+package simulator.common;
 
 public class IllegalParamException extends Exception {
 

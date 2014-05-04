@@ -16,6 +16,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import simulator.common.FileReadException;
+import simulator.common.IllegalParamException;
+import simulator.common.NullFileException;
+
 public class InputLoaderXML implements InputLoader {
     private String fileName;
     private File xmlFile;

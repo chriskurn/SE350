@@ -1,4 +1,6 @@
 package simulator.inputloading;
+
+import simulator.common.NullFileException;
 /*
 Description:    Object-Oriented Software Development
                 Quarter Programming Project

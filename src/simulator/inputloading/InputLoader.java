@@ -1,4 +1,7 @@
 package simulator.inputloading;
+
+import simulator.common.FileReadException;
+import simulator.common.NullFileException;
 /*
    	Description: 	Object-Oriented Software Development
    					Quarter Programming Project
@@ -6,6 +9,7 @@ package simulator.inputloading;
 	Class:			SE-350
 	Date:			Spring Quarter 2014
  */
+import simulator.common.IllegalParamException;
 
 
 public interface InputLoader {
