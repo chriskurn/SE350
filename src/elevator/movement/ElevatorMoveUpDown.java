@@ -1,6 +1,5 @@
 package elevator.movement;
 
-import java.util.Scanner;
 
 /**
  * Description: class ElevatorMoveUpDown
@@ -13,24 +12,26 @@ public class ElevatorMoveUpDown {
 
     public ElevatorMoveUpDown() {}
 
-	public void selectTheFloor() {
-	    Scanner readInScreen = new Scanner(System.in);
-	    int moveToFloor;
+	public void moveToFloor() {
+	    int newFloor;
 	    int maxFloor = 10;	//should be set by the xml file    
 	    int minFloor = 0;	//should be set by the xml file
 	    int idleFloor = (maxFloor-minFloor)/2;
 	    int direction;
+	    //Simulator.getInstance().getElevatorInformation()
+	    //Elevator.numberOfSecondsPerFloor
+	    //Floor request comes from elevatorController.java
 	
 	    System.out.println("Enter your destination floor> ");
 	    moveToFloor = readInScreen.nextInt();
-	    if (moveToFloor > maxFloor || moveToFloor < minFloor || moveToFloor == 13) {
+	    if (newFloor > maxFloor || newFloor < minFloor) {
 	        System.out.println("Invalid selection");
 	    }
 	
-	    else if (moveToFloor <= maxFloor && moveToFloor > minFloor && moveToFloor != 13) {
+	    else if (newFloor <= maxFloor && newFloor > minFloor) {
 	        for (int i = 1; i <= moveToFloor; i++)
 	            System.out.println("Floor: " + i);
-	            //Illuminate floor light if avaiable
+	            //Illuminate floor light if available
 	            elevatorIdlePosition(moveToFloor);
 	    }
 	}

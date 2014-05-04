@@ -93,11 +93,11 @@ public class InputLoaderXML implements InputLoader {
                 // TODO Maybe I should catch this illegal param exception and throw a different one?
                 this.setNumElevators(element.getAttribute("numElevators"));
                 this.setNumFloors(element.getAttribute("numFloors"));
-                this.setNumElevators(element.getAttribute("numExpressElevators"));
-                this.setNumFloors(element.getAttribute("numPersonsPerElevators"));
-                this.setNumElevators(element.getAttribute("floorTime"));
-                this.setNumElevators(element.getAttribute("doorTime"));
-                this.setNumFloors(element.getAttribute("elevatorSleepTime"));
+                this.setNumExpressElevators(element.getAttribute("numExpressElevators"));
+                this.setNumPersonsPerElevators(element.getAttribute("numPersonsPerElevators"));
+                this.setFloorTime(element.getAttribute("floorTime"));
+                this.setDoorTime(element.getAttribute("doorTime"));
+                this.setElevatorSleepTime(element.getAttribute("elevatorSleepTime"));
         }else {
             throw new NullFileException("The XML document member you are trying to read from is currently null.");
         }
