@@ -1,6 +1,10 @@
 package simulator.common;
-
-public class ElevatorInfoDTO {
+/**
+ * Description: SimulationInformation
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ */
+public class SimulationInformation {
     
     public int numElevators;
     public int numFloors;

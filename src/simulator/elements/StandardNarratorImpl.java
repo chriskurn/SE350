@@ -1,6 +1,9 @@
 package simulator.elements;
+
+import java.util.Calendar;
+
 /**
- * Description: Standard Narrator impl
+ * Description: Standard Narrator Impl
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
  */
@@ -16,6 +19,8 @@ public class StandardNarratorImpl implements Narrator{
     }
     @Override
     public void logEvent(String event){
-        System.out.println(event);
+        
+        System.out.println(String.format("%tT   %s",Calendar.getInstance(),event));
     }
+    
 }

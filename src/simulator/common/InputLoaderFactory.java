@@ -1,5 +1,10 @@
 package simulator.common;
 
+import java.io.FileNotFoundException;
+
+import simulator.elements.InputLoader;
+import simulator.elements.InputLoaderProperties;
+
 
 /**
  * Description: InputLoaderFactory
@@ -14,13 +19,15 @@ public class InputLoaderFactory {
      * @param fileName A string that contains the full path to the file. Make sure it has an extension
      * @return Returns a new object that will load the file provided.
      * @throws NullFileException 
+     * @throws IllegalParamException 
+     * @throws FileNotFoundException 
      */
-    public static InputLoader build(String fileName) throws NullFileException{
+    public static InputLoader build(String fileName) throws NullFileException, FileNotFoundException, IllegalParamException{
         //get the file name
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
         //If it is of type XML then create a new XML file loader
-        if(extension.equals("xml")){
-            return new InputLoaderXML(fileName);
+        if(extension.equals("properties")){
+            return new InputLoaderProperties(fileName);
         }else{
             return null;
         }

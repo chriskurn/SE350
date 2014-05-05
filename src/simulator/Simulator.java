@@ -1,10 +1,16 @@
 package simulator;
-import simulator.common.InputLoader;
+import java.io.IOException;
+
+import simulator.common.NarratorFactory;
+import simulator.common.SimulationInformation;
+import simulator.common.IllegalParamException;
 import simulator.common.InputLoaderFactory;
+import simulator.common.NullFileException;
+import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 
 /**
- * Description: simulator
+ * Description: Simulator
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
  */
@@ -13,69 +19,79 @@ import simulator.elements.Narrator;
 public class Simulator implements Narrator{
     
     private volatile static Simulator instance;
-    private String inputFile;
     private InputLoader inputLoaderDelegate;
     private Narrator narratorDelegate;
-    private int numFloors;
-    private int numElevators;
     
     private Simulator(){
         // TODO fill later
     }
 
     /**
-     * 
-     * @return
+     * Singleton method for creating and returning the only instance of the Simulator class.
+     * @return returns the only instance of the SImulator class.
      */
     public static Simulator getInstance(){
          
         //Double locking for multi-threaded environment
         if(instance == null){
-            synchronized(Thread.class){
+            synchronized(Simulator.class){
                 if(instance == null){
-                    return new Simulator();
+                    instance = new Simulator();
                 }
-
             }
         }
         return instance;
-        
     }
     
     /**
-     * 
+     * Is a method for logging events that occur throughout the runtime of the simulation
      * @param event
      */
     @Override
     public void logEvent(String event){
-        
-        
+        this.getNarratorDelegate().logEvent(event);
     }
     
     /**
-     * 
-     * @param file
+     * Takes a file name as a string. It will then load and build a simulation based on all relevant simulation information contained in that file.
+     * @param file a string containing the file name. Currently only accepts .properties files.
+     * @throws NullFileException Will be thrown if the parameter file name is null 
+     * @throws IllegalParamException Will be thrown if one of the values in the file violates specifications.
+     * @throws IOException This will be thrown if the file tries to read something that is invalid in the file.
      */
-    public void addInputFile(String file){
-        this.setInputFile(file);
-    }
-    
-    public void buildSimulator() throws Exception{
-        /* Builds the simulation based on the input file. Can throw file not found exception
-         * 
-         */
-        this.setInputLoader(InputLoaderFactory.build(this.getInputFile()));
+    public void buildSimulator(String file) throws NullFileException, IllegalParamException, IOException{
+        // Build information based on the file passed in.
+        this.setInputLoader(InputLoaderFactory.build(file));
         this.getInputLoader().loadInput();
         
-
+        // Create narrator
+        // TODO put parameters in config file maybe?
+        this.setNarratorDelegate(NarratorFactory.build(false, 1));
+        
+        // TODO Create simulation elements such as the building floors, elevators, people, and elevator controller
+       
     }
 
+    /**
+     * Returns all of the parameters related to elevators. How many floors, how many
+     * @return
+     */
+    public SimulationInformation getSimulationInfo(){
+        return this.getInputLoader().getSimulationInfo();  
+    }
+
+    /**
+     * Runs the simulator
+     */
     public void runSimulator() {
         // TODO Auto-generated method stub
         
 
     }
 
+    /**
+     * If needed, will end the simulation 
+     */
     public void endSimulator() {
         // TODO Auto-generated method stub
 
@@ -85,17 +101,8 @@ public class Simulator implements Narrator{
      * @param il a new instance of a class that implements the InputLoader interface. Must match the file type.
      */
     private void setInputLoader(InputLoader il){
+     // TODO Error checking
         this.inputLoaderDelegate = il;
-    }
-    /**
-     * Gets the input file associated with this simulation
-     * @return return a string of the input file associated with this simulation.
-     */
-    private String getInputFile(){
-        return this.inputFile;
-    }
-    private void setInputFile(String f){
-        this.inputFile = f;
     }
     
     /**
@@ -105,5 +112,16 @@ public class Simulator implements Narrator{
     private InputLoader getInputLoader(){
         return this.inputLoaderDelegate;
     }
-
+    /**
+     * Private get method for narrator delegate.
+     * @return returns the narratorDelegate member.
+     */
+    private Narrator getNarratorDelegate(){
+        return this.narratorDelegate;
+    }
+    private void setNarratorDelegate(Narrator n) {
+        // TODO Error checking
+        this.narratorDelegate = n;
+    }
+    
 }
