@@ -1,6 +1,5 @@
-package simulator.inputloading;
+package simulator.common;
 
-import simulator.common.NullFileException;
 
 /**
  * Description: InputLoaderFactory

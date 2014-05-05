@@ -9,12 +9,8 @@ package simulator.elements;
 public interface Floor {
 
 	
-	public void setFloor(int floor) {
-    	this.floor = floor;
-	}
+	public void setFloor(int floor);
 
-	public int getFloor() {
-    	return floor;
-	}
+	public int getFloor();
 
 }

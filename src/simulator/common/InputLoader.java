@@ -1,7 +1,4 @@
-package simulator.inputloading;
-import simulator.common.FileReadException;
-import simulator.common.IllegalParamException;
-import simulator.common.NullFileException;
+package simulator.common;
 
 /**
  * Description: InputLoader
@@ -14,7 +11,6 @@ public interface InputLoader {
     public void loadInput() throws IllegalParamException, FileReadException, NullFileException;
     public void readInput() throws NullFileException, IllegalParamException;
     
-    public int getNumElevators();
-    public int getNumFloors();
+    public ElevatorInfoDTO getElevatorInfo();
 
 }

@@ -14,10 +14,12 @@ public class Main {
 		
 		System.out.println("Start the Elevator Simulation");
 		
-		Simulator mySim = new SimulatorImpl("simInput.xml");
+		Simulator mySim = Simulator.getInstance();
+		mySim.addInputFile("simInput.xml");
 		/** create mySim object - simInput.xml data loaded via constructor */
 	    //protected PrintStream out;
 		try {
+		    
             mySim.buildSimulator();
         } catch (Exception e) {
             // TODO Auto-generated catch block

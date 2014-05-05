@@ -1,4 +1,4 @@
-package simulator.inputloading;
+package simulator.common;
 
 /**
  * Description: InputLoaderXML
@@ -17,9 +17,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import simulator.common.FileReadException;
-import simulator.common.IllegalParamException;
-import simulator.common.NullFileException;
+
+// TODO Do error checking on the private set methods
+// TODO JUnit testing
 
 public class InputLoaderXML implements InputLoader {
     private String fileName;
@@ -102,6 +102,22 @@ public class InputLoaderXML implements InputLoader {
             throw new NullFileException("The XML document member you are trying to read from is currently null.");
         }
     }
+
+    @Override
+    public ElevatorInfoDTO getElevatorInfo() {
+        ElevatorInfoDTO info = new ElevatorInfoDTO();
+        
+        info.doorTime = this.doorTime;
+        info.elevatorSleepTime = this.elevatorSleepTime;
+        info.floorTime = this.floorTime;
+        info.numElevators = this.numElevators;
+        info.numExpressElevators = this.numExpressElevators;
+        info.numFloors = this.numFloors;
+        info.numPeoplePerElevator = this.numPersonsPerElevators;
+        
+        return info;
+    }
+    
     /**
      * Creates a new file object based on the filename member.
      * @throws NullFileNameException The filename belonging to this member cannot be null
@@ -119,52 +135,6 @@ public class InputLoaderXML implements InputLoader {
         }
         this.setXmlFile(newFile);
     }
-    
-    @Override
-    public int getNumElevators() {
-        // TODO Auto-generated method stub
-        return this.numElevators;
-    }
-
-    @Override
-    public int getNumFloors() {
-        // TODO Auto-generated method stub
-        return this.numFloors;
-    }
-    
-    @Override
-    public int numExpressElevators() {
-        // TODO Auto-generated method stub
-        return this.numExpressElevators;
-    }
-
-    @Override
-    public int numPersonsPerElevators() {
-        // TODO Auto-generated method stub
-        return this.numPersonsPerElevators;
-    }
-    
-    
-    @Override
-    public int floorTime() {
-        // TODO Auto-generated method stub
-        return this.floorTime;
-    }
-
-    @Override
-    public int doorTime() {
-        // TODO Auto-generated method stub
-        return this.doorTime;
-    }
-    
-    @Override
-    public int elevatorSleepTime() {
-        // TODO Auto-generated method stub
-        return this.elevatorSleepTime;
-    }    
-    
-    
-    
     /**
      * Private method for setting the number of elevators.
      * @param numE takes a string that corresponds to a number that must be greater than 0.
@@ -246,6 +216,40 @@ public class InputLoaderXML implements InputLoader {
         return this.xmlDoc;
     }
     
+    private void setElevatorSleepTime(String attribute) {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        this.elevatorSleepTime = n;
+        
+    }
+
+    private void setDoorTime(String attribute) {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        this.doorTime = n;
+        
+    }
+
+    private void setFloorTime(String attribute) {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        this.floorTime = n;
+        
+    }
+
+    private void setNumPersonsPerElevators(String attribute) {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        this.numPersonsPerElevators = n;
+        
+    }
+
+    private void setNumExpressElevators(String attribute) {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        this.numExpressElevators = n;
+        
+    }
     /**
      * Private method for returning the xml file name.
      * @return returns a string containing the xml file
@@ -253,4 +257,5 @@ public class InputLoaderXML implements InputLoader {
     private String getFileName(){
         return this.fileName;
     }
+
 }
