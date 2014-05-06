@@ -123,5 +123,18 @@ public class Simulator implements Narrator{
         // TODO Error checking
         this.narratorDelegate = n;
     }
+
+    @Override
+    public boolean writeToFile() {
+        // TODO Auto-generated method stub
+        return this.getNarratorDelegate().writeToFile();
+    }
+
+    @Override
+    public int getMessageQueueLength() {
+        // TODO Auto-generated method stub
+        return this.getNarratorDelegate().getMessageQueueLength();
+    }
+
     
 }

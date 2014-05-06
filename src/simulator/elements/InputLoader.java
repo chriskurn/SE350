@@ -16,5 +16,7 @@ public interface InputLoader {
     public SimulationInformation loadInput() throws IOException, IllegalParamException;
     
     public SimulationInformation getSimulationInfo();
+    
+    public String getResourceName();
 
 }

@@ -50,7 +50,7 @@ public class InputLoaderProperties implements InputLoader {
     public InputLoaderProperties(String fn) throws IllegalParamException, NullFileException, FileNotFoundException {
         this.setFileName(fn);
         this.setProp(new Properties());
-        this.setInput(new FileInputStream(this.getFileName()));
+        this.setInput(new FileInputStream(this.getResourceName()));
     }
     
     @Override
@@ -95,7 +95,7 @@ public class InputLoaderProperties implements InputLoader {
             this.numElevators = n;
         }else {
             throw new IllegalParamException(String.format("Invalid value in file: %s " +
-            		"Number of elevators must be greater or equal to 1.",this.getFileName()));
+            		"Number of elevators must be greater or equal to 1.",this.getResourceName()));
         }
     }
     /**
@@ -109,7 +109,7 @@ public class InputLoaderProperties implements InputLoader {
             this.numFloors = n;
         }else {
             throw new IllegalParamException(String.format("Invalid value in file: %s " +
-                    "Number of floors must be greater or equal to 1.",this.getFileName()));
+                    "Number of floors must be greater or equal to 1.",this.getResourceName()));
         }
         
     }
@@ -127,10 +127,11 @@ public class InputLoaderProperties implements InputLoader {
         }
     }
     /**
-     * Private method for returning the Properties file name.
+     * public method for returning the Properties file name.
      * @return returns a string containing the Properties file
      */
-    private String getFileName(){
+    @Override
+    public String getResourceName(){
         return this.fileName;
     }
     /**

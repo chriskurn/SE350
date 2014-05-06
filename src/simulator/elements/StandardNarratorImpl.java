@@ -22,5 +22,13 @@ public class StandardNarratorImpl implements Narrator{
         
         System.out.println(String.format("%tT   %s",Calendar.getInstance(),event));
     }
+    @Override
+    public boolean writeToFile() {
+        return this.saveToFile;
+    }
+    @Override
+    public int getMessageQueueLength() {
+        return this.recentMessages.length;
+    }
     
 }
