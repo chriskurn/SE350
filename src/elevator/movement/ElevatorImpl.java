@@ -183,7 +183,6 @@ public class ElevatorImpl implements Elevator,Mover{
             //throw new IllegalParamException("Cannot change direction ")
         }
     }
-
     private boolean destinationExists(int floorAdded) {
         return this.getDestinations().contains(floorAdded);
     }
@@ -208,7 +207,6 @@ public class ElevatorImpl implements Elevator,Mover{
     private int getCurrentFloor() {
         return this.currentFloor;
     }
-
     private ElevatorDirection getDirection() {
         return this.direction;
     }
