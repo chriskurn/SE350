@@ -14,3 +14,6 @@ public interface Elevator {
     public void addFloor(int floor);
 
 }
+
+
+//moveToFloor(dest)
