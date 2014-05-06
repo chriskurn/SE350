@@ -1,5 +1,7 @@
 package elevator.movement;
 
+import elevator.common.InvalidFloorException;
+
 /**
  * Description: interface Elevator
  * @author Chris Kurn, Patrick Stein
@@ -7,13 +9,10 @@ package elevator.movement;
  * @see package elevator.movement
  */
 
-public interface Elevator {
+public interface Elevator extends Mover{
     
     public void startElevator();
     public void stopElevator();
-    public void addFloor(int floor);
+    public void addFloor(int floor) throws InvalidFloorException;
 
 }
-
-
-//moveToFloor(dest)

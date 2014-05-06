@@ -1,6 +1,10 @@
 package elevator.movement;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import elevator.common.ElevatorDirection;
+import elevator.common.InvalidFloorException;
 
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
@@ -14,11 +18,14 @@ public class ElevatorImpl implements Elevator,Mover{
     private long doorTime;
     private int numFloors;
     private int numPeoplePerElevator;
+    private int currentFloor;
+    private final int STARTINGFLOOR = 1;
     private ArrayList<Integer> destinations;
     
     private Thread myThread;
     private int elevatorId;
     private boolean elevatorOn = true;
+    private ElevatorDirection direction = ElevatorDirection.IDLE;
     
     
     //no caching
@@ -40,9 +47,15 @@ public class ElevatorImpl implements Elevator,Mover{
         this.setNumpeopleperElevator(info.numPeoplePerElevator);
         this.elevatorId = ElevatorImpl.getElevatorId();
         this.destinations = new ArrayList<Integer>();
+        this.setCurrentFloor(this.STARTINGFLOOR);
     }
     
     
+    private void setCurrentFloor(int sf) {
+        this.currentFloor = sf;
+        
+    }
+
     private void setDoorTime(int dt) {
         this.doorTime = dt;
     }
@@ -70,9 +83,30 @@ public class ElevatorImpl implements Elevator,Mover{
     }
 
     @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        
+    public void move() throws InterruptedException {
+        //get the first destination
+        int destination = this.getDestinations().get(0);
+        int curFloor = this.getCurrentFloor();
+        System.out.println(String.format("Moving from floor: %d to floor %d.", curFloor,destination));
+        while(destination != curFloor){
+            Thread.sleep(this.getFloorTime());
+            if(this.getDirection() == ElevatorDirection.UP){
+                this.setCurrentFloor(++curFloor);
+            }else{
+                this.setCurrentFloor(--curFloor);
+            }
+            //This is just to keep it updated with the rest of the program.
+            curFloor = this.getCurrentFloor();
+            //this may change during moving
+            destination = this.getDestinations().get(0);
+            System.out.println("Now at floor: " + curFloor);
+        }
+        System.out.println("Now done moving.");
+       
+    }
+
+    private long getFloorTime() {
+        return this.floorTime;
     }
 
     @Override
@@ -83,64 +117,105 @@ public class ElevatorImpl implements Elevator,Mover{
     }
 
     @Override
-    public void addFloor(int floor) {
-        // TODO Auto-generated method stub
+    public void addFloor(int floor) throws InvalidFloorException {
+        this.addFloorToDestinations(floor);
         
     }
     
     
-    private void moveToFloor(int currentFloor, int destination) throws InterruptedException{
-    	   	   	
-      	 if (destination > 0 || destination < ("this.setNumFloors")) {
-             System.out.println("Floor doesnt exist in building.");
-         }
+    private synchronized void addFloorToDestinations(int floorAdded) throws InvalidFloorException{
+        
+        //Check if the floor is valid. throw error is it is less than one or it is greater than the number of floors.
+        if((floorAdded < 1) || floorAdded > this.getNumFloors()){
+            throw new InvalidFloorException(String.format("The floor must be between 1 and %d.",this.getNumFloors()));
+        }
+        // BEWARE RACE CONDITIONS WITH THIS STATEMENT
+        if(floorAdded == this.getCurrentFloor()){
+            throw new InvalidFloorException("Cannot add this floor because we are already at it.");
+        }
+        //The floor must be in the same direction as the current floor destination
+        if(floorInSameDirection(floorAdded) == false){
+            throw new InvalidFloorException("Cannot add a floor in a different direction of travel.");
+        }
+        //If the destination already exists we want to ignore it / not add it
+        if(destinationExists(floorAdded) == false){
+            //add the destination
+            this.addFloorToQueue(floorAdded);
+            System.out.println("Added floor: "+ floorAdded);
+        }else{
+            System.out.println("This floor already exists.");
+        }
+        
+    }
+    private void addFloorToQueue(int floorAdded) {
+        //Get the list of destinations
+        ArrayList<Integer> dests = this.getDestinations();
+        //add the floor
+        dests.add(floorAdded);
+        //make sure it is still sorted
+        ElevatorDirection dir = this.getDirection();
+        if(dir == ElevatorDirection.UP){
+            //This should be sorted ascending
+            Collections.sort(dests);
+        }else if(dir == ElevatorDirection.DOWN){
+            //This should be sorted descending
+            Collections.sort(dests,Collections.reverseOrder());
+        }else if(dir == ElevatorDirection.IDLE){
+            this.setDirection(floorAdded);
+        }
+    }
+    /**
+     * A method for determining the direction based on the new floor being added
+     * DOES NOT CHECK THE STATE. MAY BE AN ISSUE IN THE FUTURE. 
+     * I THINK SHOULD ONLY BE CALLED IF STATE IS IDLE.
+     * @param floorAdded the floor that is being added
+     */
+    private void setDirection(int floorAdded) {
+        if(this.getDirection() == ElevatorDirection.IDLE){
+            int cf = this.getCurrentFloor();
+            if(cf > floorAdded){
+                this.direction = ElevatorDirection.DOWN;
+            }else{
+                this.direction = ElevatorDirection.UP;
+            }
+        }else{
+            System.out.println("Tried to change the direction when it was not in IDLE.");
+            //throw new IllegalParamException("Cannot change direction ")
+        }
+    }
 
-         else {
-             int elevatorDirection = 0;
-             if(currentFloor < destination){
-            	 elevatorDirection = 1; // elevator going up;
-             } else if (currentFloor > destination) {
-            	 elevatorDirection = -1; //elevator going down;
-             } else {
-            	 elevatorDirection = 0; //elevator is idle;
-             }
-             for (; currentFloor != destination; currentFloor += destination)
-            	 //add floorToDestinations
-             	System.out.println("Your flour sir!");
-         }
-     	
-      	 // note: sleep
-      	 sleep(this.setFloorTime);
-      	 
+    private boolean destinationExists(int floorAdded) {
+        return this.getDestinations().contains(floorAdded);
+    }
+    /**
+     * A method to determine if the current floor is in the same direction of travel.
+     * @param floorAdded takes an integer representing the floor that wishes to be added
+     * @return returns a boolean confirming that this floor is on the way to the current destination.
+     */
+    private boolean floorInSameDirection(int floorAdded){
+        //if the direction is set to up and the current floor is less than the floor added then we cannot add
+        int cf = this.getCurrentFloor();
+        if((this.getDirection() == ElevatorDirection.UP) && cf > floorAdded){
+            return false;
+        }else if((this.getDirection() == ElevatorDirection.DOWN) && floorAdded < cf){ //Same thing for down but the floor is greater than the above floor
+            return false;
+        }else{
+            //This is fine then. If it is idle. Then everything should be okay.
+            return true;
+        }
     }
     
-    private void addFloorToDestinations(int newFloor){
-
-    	int direction;
-    	
-    	// always sorted (Assending/Decending)
-    	
-    	//sort the list
-    	//Collections.sort(this.destinations);
-    	
-    	this.destinations = new ArrayList<Integer>();
-    	
-    	for (int i = 0; i < numFloors; i++) {
-    		this.destinations.add(i);
-    	}
-    	
-        //List<Integer> up = this.destinations.subList(0, newFloor);
-        //List<Integer> down = this.destinations.subList(newFloor+1, this.setNumFloors);
-    	
-    	//direction = 0 descending, direction = 1 ascending
-    	
-    	if (direction == 1){
-    		Collections.sort(this.destinations);	
-    	} else if (direction == 0){
-    		Comparator cmp = Collections.reverseOrder();  
-    		Collections.sort(this.destinations, cmp);
-    		
-    	
+    private int getCurrentFloor() {
+        return this.currentFloor;
     }
 
+    private ElevatorDirection getDirection() {
+        return this.direction;
+    }
+    private ArrayList<Integer> getDestinations() {
+        return this.destinations;
+    }
+    private int getNumFloors() {
+        return this.numFloors;
+    }
 }

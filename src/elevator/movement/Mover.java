@@ -9,7 +9,7 @@ package elevator.movement;
 
 public interface Mover {
     
-    public void move();
+    public void move() throws InterruptedException;
 
 }
 
