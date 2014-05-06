@@ -130,6 +130,7 @@ public class ElevatorImpl implements Elevator,Mover{
     	
         //List<Integer> up = this.destinations.subList(0, newFloor);
         //List<Integer> down = this.destinations.subList(newFloor+1, this.setNumFloors);
+    	
     	//direction = 0 descending, direction = 1 ascending
     	
     	if (direction == 1){
