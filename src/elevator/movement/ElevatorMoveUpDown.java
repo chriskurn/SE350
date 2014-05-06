@@ -21,6 +21,8 @@ public class ElevatorMoveUpDown {
 	    //Simulator.getInstance().getElevatorInformation()
 	    //Elevator.numberOfSecondsPerFloor
 	    //Floor request comes from elevatorController.java
+	    
+	    sleep(timeForEachFloor);
 	
 	    System.out.println("Enter your destination floor> ");
 	    moveToFloor = readInScreen.nextInt();
