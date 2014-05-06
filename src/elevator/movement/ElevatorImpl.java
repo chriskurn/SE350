@@ -1,5 +1,7 @@
 package elevator.movement;
 
+import java.util.ArrayList;
+
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
@@ -17,6 +19,7 @@ public class ElevatorImpl implements Elevator,Mover{
     private Thread myThread;
     private int elevatorId;
     private boolean elevatorOn = true;
+    
     
     //no caching
     private static volatile int elevatorCount = 1;
