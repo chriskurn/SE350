@@ -87,13 +87,57 @@ public class ElevatorImpl implements Elevator,Mover{
     
     
     private void moveToFloor(int currentFloor, int destination) throws InterruptedException{
-    	// note: sleep
+    	   	   	
+      	 if (destination > 0 || destination < ("this.setNumFloors")) {
+             System.out.println("Floor doesnt exist in building.");
+         }
+
+         else {
+             int elevatorDirection = 0;
+             if(currentFloor < destination){
+            	 elevatorDirection = 1; // elevator going up;
+             } else if (currentFloor > destination) {
+            	 elevatorDirection = -1; //elevator going down;
+             } else {
+            	 elevatorDirection = 0; //elevator is idle;
+             }
+             for (; currentFloor != destination; currentFloor += destination)
+            	 //add floorToDestinations
+             	System.out.println("Your flour sir!");
+         }
+     	
+      	 // note: sleep
+      	 sleep(this.setFloorTime);
+      	 
     }
     
     private void addFloorToDestinations(int newFloor){
-    	// add a destination to array.list
-    	// Note: this.destinations = new ArrayList<Integer>();
+
+    	int direction;
+    	
     	// always sorted (Assending/Decending)
+    	
+    	//sort the list
+    	//Collections.sort(this.destinations);
+    	
+    	this.destinations = new ArrayList<Integer>();
+    	
+    	for (int i = 0; i < numFloors; i++) {
+    		this.destinations.add(i);
+    	}
+    	
+        //List<Integer> up = this.destinations.subList(0, newFloor);
+        //List<Integer> down = this.destinations.subList(newFloor+1, this.setNumFloors);
+    	
+    	//direction = 0 descending, direction = 1 ascending
+    	
+    	if (direction == 1){
+    		Collections.sort(this.destinations);	
+    	} else if (direction == 0){
+    		Comparator cmp = Collections.reverseOrder();  
+    		Collections.sort(this.destinations, cmp);
+    		
+    	
     }
 
 }
