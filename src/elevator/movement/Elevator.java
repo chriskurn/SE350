@@ -8,5 +8,9 @@ package elevator.movement;
  */
 
 public interface Elevator {
+    
+    public void startElevator();
+    public void stopElevator();
+    public void addFloor(int floor);
 
 }

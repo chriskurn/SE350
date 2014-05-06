@@ -51,8 +51,8 @@ public class ElevatorController {
     private void createElevators(SimulationInformation simInfo){
         ArrayList<Elevator> eles = this.getElevators();
         
-        for( int i = 0; i < simInfo.numElevators; i++){
-            // TODO create elevators
+        for(int i = 0; i < simInfo.numElevators; i++){
+            
         }
         
         

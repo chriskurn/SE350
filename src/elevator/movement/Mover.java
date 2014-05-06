@@ -8,6 +8,8 @@ package elevator.movement;
  */
 
 public interface Mover {
+    
+    public void move();
 
 }
 
