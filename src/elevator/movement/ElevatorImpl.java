@@ -12,6 +12,7 @@ public class ElevatorImpl implements Elevator,Mover{
     private long doorTime;
     private int numFloors;
     private int numPeoplePerElevator;
+    private ArrayList<Integer> destinations;
     
     private Thread myThread;
     private int elevatorId;
@@ -35,6 +36,7 @@ public class ElevatorImpl implements Elevator,Mover{
         this.setNumFloors(info.numFloors);
         this.setNumpeopleperElevator(info.numPeoplePerElevator);
         this.elevatorId = ElevatorImpl.getElevatorId();
+        this.destinations = new ArrayList<Integer>();
     }
     
     
@@ -81,6 +83,17 @@ public class ElevatorImpl implements Elevator,Mover{
     public void addFloor(int floor) {
         // TODO Auto-generated method stub
         
+    }
+    
+    
+    private void moveToFloor(int currentFloor, int destination) throws InterruptedException{
+    	// note: sleep
+    }
+    
+    private void addFloorToDestinations(int newFloor){
+    	// add a destination to array.list
+    	// Note: this.destinations = new ArrayList<Integer>();
+    	// always sorted (Assending/Decending)
     }
 
 }
