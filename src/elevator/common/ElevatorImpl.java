@@ -2,7 +2,6 @@ package elevator.common;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
