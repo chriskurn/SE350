@@ -1,4 +1,4 @@
-package elevator.movement;
+package elevator.common;
 
 /**
  * Description: class ElevatorMoverFactory

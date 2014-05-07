@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import simulator.Simulator;
 import simulator.common.SimulationInformation;
 
-import elevator.movement.Elevator;
+import elevator.common.Elevator;
 
 /**
  * Description: class ElevatorController

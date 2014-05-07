@@ -1,6 +1,5 @@
-package elevator.movement;
+package elevator.common;
 
-import elevator.common.InvalidFloorException;
 
 /**
  * Description: interface Elevator
@@ -9,10 +8,13 @@ import elevator.common.InvalidFloorException;
  * @see package elevator.movement
  */
 
-public interface Elevator extends Mover{
+public interface Elevator{
     
     public void startElevator();
     public void stopElevator();
     public void addFloor(int floor) throws InvalidFloorException;
+    public int getCurrentFloor();
+    public ElevatorDirection getDirection();
+    
 
 }

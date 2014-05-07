@@ -1,8 +1,8 @@
 package simulator;
 
+import elevator.common.Elevator;
+import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
-import elevator.movement.Elevator;
-import elevator.movement.ElevatorImpl;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
@@ -39,18 +39,24 @@ public class Main {
                 e.printStackTrace();
             }
 		}
-		Elevator ele = null;
+		Elevator ele1 = null;
+		Elevator ele2 = null;
 		try {
-            ele = new ElevatorImpl(info);
+		    ele1 = new ElevatorImpl(info);
+		    //ele2 = new ElevatorImpl(info);
         } catch (IllegalParamException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 		
 		try {
-            ele.addFloor(10);
-            ele.addFloor(10);
-            ele.move();
+		   // ele2.addFloor(8);
+		    ele1.addFloor(10);
+		    ele1.startElevator();
+		   // ele2.startElevator();
+            Thread.sleep(1000);
+           // ele2.addFloor(7);
+            ele1.addFloor(9);
         } catch (InvalidFloorException | InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
