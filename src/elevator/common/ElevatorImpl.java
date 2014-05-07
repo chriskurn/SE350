@@ -1,23 +1,26 @@
 package elevator.common;
 
-
 import elevator.adding.ElevatorAdder;
 import elevator.adding.ElevatorAdderFactory;
-
-
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
+/**
+ * Description: Elevator Implementation (impl)
+ * @author Patrick Stein
+ * @author Chris Kurn 
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package elevator.common
+ */
+
 public class ElevatorImpl implements Elevator, Runnable{
     
-    private int defaultFloor = 7;
-    
+    private int defaultFloor = 7;   
     private long timeOut;
     private long floorTime;
     private long doorTime;
     private int numFloors;
     private int numPeoplePerElevator;
-
     private ElevatorAdder adderDelegate;
     private Thread myThread;
     private int elevatorId;
@@ -39,8 +42,7 @@ public class ElevatorImpl implements Elevator, Runnable{
         this.setFloorTime(info.floorTime);
         this.setDoorTime(info.doorTime);
         this.setNumFloors(info.numFloors);
-        this.setNumpeopleperElevator(info.numPeoplePerElevator);
-        
+        this.setNumpeopleperElevator(info.numPeoplePerElevator);      
         this.setAdderDelegate(ElevatorAdderFactory.build(info));
         this.elevatorId = ElevatorImpl.getNewElevatorId();
         this.myThread = new Thread(this);

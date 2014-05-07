@@ -4,9 +4,12 @@ import java.util.Calendar;
 
 /**
  * Description: Standard Narrator Impl
- * @author Chris Kurn, Patrick Stein
+ * @author Patrick Stein
+ * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
+ * @see package simulator.elements
  */
+
 public class StandardNarratorImpl implements Narrator{
     
     private final boolean saveToFile;

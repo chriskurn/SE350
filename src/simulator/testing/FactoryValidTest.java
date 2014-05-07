@@ -1,11 +1,4 @@
 package simulator.testing;
-/**
- * Description: Factory Valid Test
- * @author Chris Kurn, Patrick Stein
- * @since Version 1.0 - Spring Quarter 2014
- * 
- * TODO add additional tests for blank files
- */
 
 import org.junit.Test;
 
@@ -14,6 +7,14 @@ import simulator.common.InputLoaderFactory;
 import simulator.common.NarratorFactory;
 import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
+
+/**
+ * Description: Factory Valid Test
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ * 
+ * TODO add additional tests for blank files
+ */
 
 public class FactoryValidTest {
     

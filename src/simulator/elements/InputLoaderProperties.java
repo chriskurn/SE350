@@ -1,12 +1,5 @@
 package simulator.elements;
 
-/**
- * Description: InputLoaderProperties
- * @author Chris Kurn, Patrick Stein
- * @since Version 1.0 - Spring Quarter 2014
- * @see simulator.inputloading
- */
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +10,13 @@ import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 
+/**
+ * Description: InputLoaderProperties
+ * @author Patrick Stein
+ * @author Chris Kurn 
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see simulator.elements
+ */
 
 // TODO Do error checking on the private set methods
 // TODO JUnit testing
