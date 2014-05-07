@@ -102,7 +102,8 @@ public class Simulator implements Narrator {
     }
 
     /**
-     * Runs the simulator
+     * Runs the simulation. Currently just adds a bunch of random destinations to a set of elevators.
+     * 
      */
     public void runSimulator() {
         // TODO Auto-generated method stub
@@ -169,9 +170,9 @@ public class Simulator implements Narrator {
 
     /**
      * Returns all of the parameters related to elevators. How many floors, how
-     * many
+     * many people can be in an elevator. Also, contains information related to the simulation.
      * 
-     * @return
+     * @return A SimulationInformation DTO containing relevant information to building and managing the simulation.
      */
     public SimulationInformation getSimulationInfo() {
         return this.getInputLoader().getSimulationInfo();
@@ -215,20 +216,25 @@ public class Simulator implements Narrator {
         return this.narratorDelegate;
     }
 
-    private void setNarratorDelegate(Narrator n) {
-        // TODO Error checking
+    /**
+     * Private set method for setting the narrator delegate.
+     * @param n This object must implement the Narrator interface and not be null.
+     * @throws IllegalParamException THis exception will be thrown in n is null.
+     */
+    private void setNarratorDelegate(Narrator n) throws IllegalParamException {
+        if(n == null){
+            throw new IllegalParamException("The narrator cannot be set to null.");
+        }
         this.narratorDelegate = n;
     }
 
     @Override
     public boolean writeToFile() {
-        // TODO Auto-generated method stub
         return this.getNarratorDelegate().writeToFile();
     }
 
     @Override
     public int getMessageQueueLength() {
-        // TODO Auto-generated method stub
         return this.getNarratorDelegate().getMessageQueueLength();
     }
 
