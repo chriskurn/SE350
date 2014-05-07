@@ -48,6 +48,7 @@ public class StandardNarratorImpl implements Narrator {
     @Override
     /**
      * Method retrieves message queue length.
+     * @return the message queue length
      */
     public int getMessageQueueLength() {
         return this.recentMessages.length;

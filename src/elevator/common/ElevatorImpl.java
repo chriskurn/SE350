@@ -79,6 +79,51 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     @Override
+    public void run() {
+        try {
+            this.controlState();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt(); // restore interrupted status
+        }
+    }
+
+    @Override
+    public ElevatorDirection getDirection() {
+        return this.direction;
+    }
+
+    @Override
+    public boolean destinationsLeft() {
+        return !this.getDestinations().isEmpty();
+    }
+
+    @Override
+    public int getCurrentFloor() {
+        return this.currentFloor;
+    }
+
+    @Override
+    public int getDestination() throws NoNewDestinationException {
+        if (this.getDestinations().isEmpty() == false) {
+            return this.getDestinations().get(0);
+        } else {
+            throw new NoNewDestinationException(
+                    "There are no more destinations in the queue.");
+        }
+    }
+
+    @Override
+    public void startElevator() {
+        this.myThread.start();
+    }
+
+    @Override
+    public void stopElevator() {
+        this.elevatorOn = false;
+    }
+
+    @Override
     public void addFloor(int floor) throws InvalidFloorException {
         this.addFloorHelper(floor);
     }
@@ -209,11 +254,6 @@ public class ElevatorImpl implements Elevator, Runnable {
         return this.getDestinations().contains(floorAdded);
     }
 
-    @Override
-    public boolean destinationsLeft() {
-        return !this.getDestinations().isEmpty();
-    }
-
     /**
      * A method to determine if the current floor is in the same direction of
      * travel.
@@ -240,11 +280,6 @@ public class ElevatorImpl implements Elevator, Runnable {
         }
     }
 
-    @Override
-    public int getCurrentFloor() {
-        return this.currentFloor;
-    }
-
     /**
      * This method retrieves the timeout
      * 
@@ -253,17 +288,6 @@ public class ElevatorImpl implements Elevator, Runnable {
     private int getDefaultFloor() {
         return this.defaultFloor;
     }
-
-    @Override
-    public int getDestination() throws NoNewDestinationException {
-        if (this.getDestinations().isEmpty() == false) {
-            return this.getDestinations().get(0);
-        } else {
-            throw new NoNewDestinationException(
-                    "There are no more destinations in the queue.");
-        }
-    }
-
     /**
      * This method retrieves the destinations from an arraylist
      * 
@@ -272,12 +296,6 @@ public class ElevatorImpl implements Elevator, Runnable {
     private ArrayList<Integer> getDestinations() {
         return this.destinations;
     }
-
-    @Override
-    public ElevatorDirection getDirection() {
-        return this.direction;
-    }
-
     /**
      * This method retrieves the door time
      * 
@@ -465,16 +483,6 @@ public class ElevatorImpl implements Elevator, Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        try {
-            this.controlState();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt(); // restore interrupted status
-        }
-    }
-
     /**
      * This method sets the current floor
      */
@@ -561,16 +569,6 @@ public class ElevatorImpl implements Elevator, Runnable {
                     "Timeout time cannot be less than or equal to zero.");
         }
         this.timeOut = to;
-    }
-
-    @Override
-    public void startElevator() {
-        this.myThread.start();
-    }
-
-    @Override
-    public void stopElevator() {
-        this.elevatorOn = false;
     }
 
     /**
