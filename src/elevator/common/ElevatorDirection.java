@@ -1,7 +1,7 @@
 package elevator.common;
 
 /**
- * Elevator direction
+ * Description: ElevatorDirection enum
  * A elevator variable set of predefined constants (UP,DOWN,IDLE)
  * @author Patrick Stein
  * @author Chris Kurn 

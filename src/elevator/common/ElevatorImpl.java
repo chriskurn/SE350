@@ -6,7 +6,7 @@ import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Elevator Implementation (impl)
+ * Description: Elevator implementation class
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
