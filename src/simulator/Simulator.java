@@ -99,6 +99,13 @@ public class Simulator implements Narrator {
         // TODO put parameters in config file maybe?
         this.setNarratorDelegate(NarratorFactory.build(false, 1));
 
+    }
+
+    /**
+     * Runs the simulator
+     */
+    public void runSimulator() {
+        // TODO Auto-generated method stub
         Elevator ele1 = null;
         Elevator ele2 = null;
         Elevator ele3 = null;
@@ -166,14 +173,6 @@ public class Simulator implements Narrator {
      */
     public SimulationInformation getSimulationInfo() {
         return this.getInputLoader().getSimulationInfo();
-    }
-
-    /**
-     * Runs the simulator
-     */
-    public void runSimulator() {
-        // TODO Auto-generated method stub
-
     }
 
     /**
