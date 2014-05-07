@@ -110,7 +110,7 @@ public class ElevatorImpl implements Elevator, Runnable{
             System.out.println(String.format("Elevator %d Now at floor: %d.",eleId,curFloor));
         }
         System.out.println(String.format("Elevator %d now done moving to floor: %d.",eleId,curFloor));
-        
+        this.openDoors();
     }
     
     private int getCurrentDestination() {
@@ -176,6 +176,15 @@ public class ElevatorImpl implements Elevator, Runnable{
         //enter idle state again
         // NOTE: for this test program the execution just ends
         this.elevatorOn = false;
+    }
+    
+    private void openDoors() throws InterruptedException{
+        System.out.println(String.format("The doors are now open in elevator %d on floor: %d",this.getElevatorId(),this.getCurrentFloor()));
+        Thread.sleep(this.getDoorTime());
+        System.out.println(String.format("The doors are now closed in elevator %d on floor: %d",this.getElevatorId(),this.getCurrentFloor()));
+    }
+    private long getDoorTime() {
+        return this.doorTime;
     }
     // TODO do error checking
     private long getTimeout() {
