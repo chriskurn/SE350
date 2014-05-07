@@ -41,36 +41,60 @@ public class ElevatorAdderImpl implements ElevatorAdder{
     private int getNumFloors() {
         return this.numFloors;
     }
+    
+    /**
+     * Method: arraylist conatining the elevator destinations
+     */
     private ArrayList<Integer> getDestinations() {
         // TODO Auto-generated method stub
         return this.destinations;
     }
     @Override
+    /**
+     * Private method: remaining elevators
+     * @return returns a boolean.
+     */
     public boolean destinationsLeft() {
         return !this.getDestinations().isEmpty();
     }
     @Override
+    /**
+     * Method: sets the current floor of the elevator
+     * @return returns a boolean.
+     */
     public void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
     }
     @Override
+    /**
+     * Method: elevator direction method
+     */
     public ElevatorDirection getDirection() {
         // TODO Auto-generated method stub
         return this.direction;
     }
     @Override
+    /**
+     * Method: elevator is idle - stoppedMoving()
+     */
     public void stoppedMoving() {
         // TODO Auto-generated method stub
         this.direction = ElevatorDirection.IDLE;
         
     }
     @Override
+    /**
+     * Method: getCurrentFloor().
+     */
     public int getCurrentFloor() {
         // TODO Auto-generated method stub
         return this.currentFloor;
     }
 
     @Override
+    /**
+     * Method: getDestination().
+     */
     public int getDestination() {
         // TODO Auto-generated method stub
         if(this.getDestinations().isEmpty() == false){
@@ -92,6 +116,11 @@ public class ElevatorAdderImpl implements ElevatorAdder{
         this.addFloorHelper(floor);
     }
     
+    /**
+     * 
+     * @param floor
+     * @throws InvalidFloorException
+     */
     public synchronized void addFloorHelper(int floor) throws InvalidFloorException {
         //Check if the floor is valid. throw error is it is less than one or it is greater than the number of floors.
         if((floor < 1) || floor > this.getNumFloors()){
