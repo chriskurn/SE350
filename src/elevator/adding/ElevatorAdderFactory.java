@@ -4,11 +4,13 @@ import elevator.common.Elevator;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Elevator Adder Factory
+ * Description: Elevator adder factory class
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.adding
+ * @see import elevator.common.Elevator;
+ * @see import simulator.common.SimulationInformation;
  */
 
 public class ElevatorAdderFactory {

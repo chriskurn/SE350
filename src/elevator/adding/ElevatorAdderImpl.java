@@ -8,11 +8,17 @@ import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 
 /**
- * Description: Elevator Adder Implementation (impl)
+ * Description: Elevator adder implementation
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.adding
+ * @see java.util.ArrayList;
+ * @see java.util.Collections;
+ * @see import simulator.common.SimulationInformation;
+ * @see import elevator.common.Elevator;
+ * @see import elevator.common.ElevatorDirection;
+ * @see import elevator.common.InvalidFloorException;
  */
 
 public class ElevatorAdderImpl implements ElevatorAdder{

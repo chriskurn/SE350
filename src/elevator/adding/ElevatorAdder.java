@@ -4,11 +4,13 @@ import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 
 /**
- * Description: Elevator Adder
+ * Description: Elevator adder interface
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.adding
+ * @see import elevator.common.ElevatorDirection;
+ * @see import elevator.common.InvalidFloorException;
  */
 
 public interface ElevatorAdder {

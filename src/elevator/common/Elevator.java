@@ -1,7 +1,7 @@
 package elevator.common;
 
 /**
- * Description: Elevator
+ * Description: Elevator interface
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
@@ -16,5 +16,4 @@ public interface Elevator{
     public int getCurrentFloor();
     public ElevatorDirection getDirection();
     
-
 }

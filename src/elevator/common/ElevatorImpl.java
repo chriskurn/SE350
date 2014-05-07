@@ -10,7 +10,11 @@ import simulator.common.SimulationInformation;
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
- * @see package elevator.common
+ * @see package elevator.common\
+ * @see elevator.adding.ElevatorAdder;
+ * @see elevator.adding.ElevatorAdderFactory;
+ * @see simulator.common.IllegalParamException;
+ * @see simulator.common.SimulationInformation;
  */
 
 public class ElevatorImpl implements Elevator, Runnable{
