@@ -73,7 +73,7 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     @Override
     /**
-     * 
+     * method run
      */
     public void run() {
         try {
@@ -110,7 +110,7 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     @Override
     /**
-     * 
+     * method to get Destination
      */
     public int getDestination() throws NoNewDestinationException {
         if (this.getDestinations().isEmpty() == false) {
