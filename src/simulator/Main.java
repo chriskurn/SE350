@@ -16,7 +16,7 @@ import simulator.common.SimulationInformation;
  * down for repairs on the building’s population.
  * 
  * @author Patrick Stein
- * @author Chris Kurn 
+ * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator
  * @see import elevator.common.Elevator;
