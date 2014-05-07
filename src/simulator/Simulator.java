@@ -15,6 +15,15 @@ import simulator.elements.Narrator;
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator
+ * @see import java.io.IOException;
+ * @see import simulator.common.NarratorFactory;
+ * @see import simulator.common.SimulationInformation;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.InputLoaderFactory;
+ * @see import simulator.common.NullFileException;
+ * @see import simulator.elements.InputLoader;
+ * @see import simulator.elements.Narrator;
+
  */
 
 //singleton

@@ -11,6 +11,10 @@ import elevator.common.Elevator;
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.control
+ * @see import java.util.ArrayList;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.SimulationInformation;
+ * @see import elevator.common.Elevator;
  */
 
 public class ElevatorController {

@@ -3,11 +3,12 @@ package simulator.elements;
 import java.util.Calendar;
 
 /**
- * Description: Standard Narrator Impl
+ * Description: StandardNarratorImpl class
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.elements
+ * @see import java.util.Calendar;
  */
 
 public class StandardNarratorImpl implements Narrator{

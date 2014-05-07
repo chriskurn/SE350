@@ -10,6 +10,9 @@ import simulator.common.IllegalParamException;
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.elements
+ * @see import java.io.IOException;
+ * @see import simulator.common.SimulationInformation;
+ * @see import simulator.common.IllegalParamException;
  */
 
 public interface InputLoader {

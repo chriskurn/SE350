@@ -12,7 +12,13 @@ import simulator.elements.Narrator;
  * Description: Factory Valid Test
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
- * 
+ * @see package simulator.testing
+ * @see import org.junit.Test;
+ * @see import static org.junit.Assert.*;
+ * @see import simulator.common.InputLoaderFactory;
+ * @see import simulator.common.NarratorFactory;
+ * @see import simulator.elements.InputLoader;
+ * @see import simulator.elements.Narrator;
  * TODO add additional tests for blank files
  */
 

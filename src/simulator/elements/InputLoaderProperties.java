@@ -5,17 +5,24 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 
 /**
- * Description: InputLoaderProperties
+ * Description: InputLoaderProperties class
  * @author Patrick Stein
  * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see simulator.elements
+ * @see import java.io.FileInputStream;
+ * @see import java.io.FileNotFoundException;
+ * @see import java.io.IOException;
+ * @see import java.io.InputStream;
+ * @see import java.util.Properties;
+ * @see import simulator.common.SimulationInformation;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.NullFileException;
  */
 
 // TODO Do error checking on the private set methods
