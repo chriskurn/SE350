@@ -229,11 +229,18 @@ public class Simulator implements Narrator {
     }
 
     @Override
+    /**
+     * Method Write to file
+     */
     public boolean writeToFile() {
         return this.getNarratorDelegate().writeToFile();
     }
 
     @Override
+    /**
+     * Method retrieves message queue length
+     * @return message queue length
+     */
     public int getMessageQueueLength() {
         return this.getNarratorDelegate().getMessageQueueLength();
     }
