@@ -16,10 +16,20 @@ import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 
 /**
- * Description: Simulator
  * 
- * @author Chris Kurn, Patrick Stein
+ * @author Patrick Stein
+ * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
+ * @see package simulator
+ * @see import java.io.IOException;
+ * @see import simulator.common.NarratorFactory;
+ * @see import simulator.common.SimulationInformation;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.InputLoaderFactory;
+ * @see import simulator.common.NullFileException;
+ * @see import simulator.elements.InputLoader;
+ * @see import simulator.elements.Narrator;
+
  */
 
 // singleton
@@ -138,10 +148,8 @@ public class Simulator implements Narrator {
             Thread.sleep(5000);
             ele3.addFloor(2);
             Thread.sleep(1000);
-            System.out.println(ele3.getDirection());
             ele3.addFloor(5);
             Thread.sleep(500);
-            System.out.println(ele3.getDirection());
             ele3.addFloor(3);
         } catch (InvalidFloorException | InterruptedException e) {
             // TODO Auto-generated catch block

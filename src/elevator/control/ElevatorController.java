@@ -1,17 +1,20 @@
 package elevator.control;
 
 import java.util.ArrayList;
-
 import simulator.Simulator;
 import simulator.common.SimulationInformation;
-
 import elevator.common.Elevator;
 
 /**
  * Description: class ElevatorController
- * @author Chris Kurn, Patrick Stein
+ * @author Patrick Stein
+ * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.control
+ * @see import java.util.ArrayList;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.SimulationInformation;
+ * @see import elevator.common.Elevator;
  */
 
 public class ElevatorController {

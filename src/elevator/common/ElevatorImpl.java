@@ -7,10 +7,22 @@ import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
-public class ElevatorImpl implements Elevator, Runnable {
 
+/**
+ * Description: Elevator implementation class
+ * @author Patrick Stein
+ * @author Chris Kurn 
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package elevator.common\
+ * @see elevator.adding.ElevatorAdder;
+ * @see elevator.adding.ElevatorAdderFactory;
+ * @see simulator.common.IllegalParamException;
+ * @see simulator.common.SimulationInformation;
+ */
+
+public class ElevatorImpl implements Elevator, Runnable{
+       
     private int defaultFloor = 1;
-
     private long timeOut;
     private long floorTime;
     private long doorTime;

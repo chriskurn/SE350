@@ -1,10 +1,11 @@
 package simulator.elements;
 
 /**
- * Description: interface StatisticsGenerator
- * @author Chris Kurn, Patrick Stein
+ * Description: StatisticsGenerator interface
+ * @author Patrick Stein
+ * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator
+ * @see package simulator.elements
  */
 
 public interface StatisticsGenerator {

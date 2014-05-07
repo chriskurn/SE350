@@ -1,11 +1,5 @@
 package simulator.testing;
-/**
- * Description: Input Loader Test
- * @author Chris Kurn, Patrick Stein
- * @since Version 1.0 - Spring Quarter 2014
- * 
- * TODO add additional tests for blank files
- */
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -19,6 +13,24 @@ import simulator.common.InputLoaderFactory;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 import simulator.elements.InputLoader;
+
+/**
+ * Description: Input Loader Test
+ * @author Chris Kurn, Patrick Stein
+ * @since Version 1.0 - Spring Quarter 2014
+ * TODO add additional tests for blank files
+ * @see package simulator.testing;
+ * @see import static org.junit.Assert.assertEquals;
+ * @see import static org.junit.Assert.fail;
+ * @see import java.io.FileNotFoundException;
+ * @see import java.io.IOException;
+ * @see import org.junit.Test;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.InputLoaderFactory;
+ * @see import simulator.common.NullFileException;
+ * @see import simulator.common.SimulationInformation;
+ * @see import simulator.elements.InputLoader;
+ */
 
 public class InputLoaderTest {
 

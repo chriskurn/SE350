@@ -1,15 +1,18 @@
 package simulator.common;
 
 import java.io.FileNotFoundException;
-
 import simulator.elements.InputLoader;
 import simulator.elements.InputLoaderProperties;
 
-
 /**
- * Description: InputLoaderFactory
- * @author Chris Kurn, Patrick Stein
+ * Description: InputLoaderFactory class
+ * @author Patrick Stein
+ * @author Chris Kurn 
  * @since Version 1.0 - Spring Quarter 2014
+ * @see package simulator.common
+ * @see import java.io.FileNotFoundException;
+ * @see import simulator.elements.InputLoader;
+ * @see import simulator.elements.InputLoaderProperties;
  */
 
 public class InputLoaderFactory {
