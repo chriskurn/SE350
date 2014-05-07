@@ -20,6 +20,30 @@ import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
+/**
+ * Description: InvalidFloorInputTest
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see elevator.testing
+ * @see import java.io.FileNotFoundException;
+ * @see import java.io.IOException;
+ * @see import java.util.Arrays;
+ * @see import java.util.Collection;
+ * @see import org.junit.Before;
+ * @see import org.junit.Test;
+ * @see import org.junit.runner.RunWith;
+ * @see import org.junit.runners.Parameterized;
+ * @see import org.junit.runners.Parameterized.Parameters;
+ * @see import elevator.common.Elevator;
+ * @see import elevator.common.ElevatorImpl;
+ * @see import elevator.common.InvalidFloorException;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.NullFileException;
+ * @see import simulator.common.SimulationInformation;
+ */
+
 @RunWith(Parameterized.class)
 public class InvalidFloorInputTest {
 

@@ -21,8 +21,10 @@ package simulator;
  */
 
 public class Main {
+	
 	/**
 	 * The main java class (runnable)
+	 * creates a mySim object - data loaded via constructor
 	 * @param args
 	 */
 	public static void main(String[] args){
