@@ -127,7 +127,9 @@ public class Simulator implements Narrator {
         ele2.startElevator();
         ele3.startElevator();
         ele4.startElevator();
+        
         try {
+            Thread.sleep(1000);
             ele1.addFloor(11, ElevatorDirection.UP);
             ele2.addFloor(14, ElevatorDirection.UP);
             Thread.sleep(1000);
