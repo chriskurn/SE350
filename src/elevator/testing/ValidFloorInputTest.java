@@ -7,6 +7,8 @@ package elevator.testing;
  * @see package elevator.testing
  */
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 
 import org.junit.Before;
@@ -15,6 +17,7 @@ import org.junit.Test;
 import elevator.common.Elevator;
 import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
+import elevator.common.NoNewDestinationException;
 
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
@@ -36,9 +39,10 @@ public class ValidFloorInputTest {
     
     
     @Test
-    public void addFloorInputTest() throws IllegalParamException, InvalidFloorException{
+    public void addFloorInputTest() throws IllegalParamException, InvalidFloorException, NoNewDestinationException{
         Elevator e = new ElevatorImpl(this.info);
         e.addFloor(10);
+        assertEquals(e.getDestination(),10);
         
     }
 }
