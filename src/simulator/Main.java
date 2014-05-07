@@ -21,7 +21,10 @@ package simulator;
  */
 
 public class Main {
-
+	/**
+	 * The main java class (runnable)
+	 * @param args
+	 */
 	public static void main(String[] args){
 		
 		System.out.println("Start the Elevator Simulation");
