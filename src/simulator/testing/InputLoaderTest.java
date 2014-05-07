@@ -18,7 +18,6 @@ import simulator.elements.InputLoader;
  * Description: Input Loader Test
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
- * TODO add additional tests for blank files
  * @see package simulator.testing;
  * @see import static org.junit.Assert.assertEquals;
  * @see import static org.junit.Assert.fail;

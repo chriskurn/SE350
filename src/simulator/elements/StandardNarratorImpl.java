@@ -1,6 +1,10 @@
 package simulator.elements;
 
+import java.io.FileNotFoundException;
 import java.util.Calendar;
+
+import simulator.common.IllegalParamException;
+import simulator.common.NullFileException;
 
 /**
  * Description: StandardNarratorImpl class
@@ -22,15 +26,24 @@ public class StandardNarratorImpl implements Narrator{
         recentMessages = new String[sizeOfMessageQueue];
     }
     @Override
+    /**
+     * Method that logs elevator events.
+     */
     public void logEvent(String event){
         
         System.out.println(String.format("%tT   %s",Calendar.getInstance(),event));
     }
     @Override
+    /**
+     * Method that writes elevator info to a file.
+     */
     public boolean writeToFile() {
         return this.saveToFile;
     }
     @Override
+    /**
+     * Method retrieves message queue length.
+     */
     public int getMessageQueueLength() {
         return this.recentMessages.length;
     }
