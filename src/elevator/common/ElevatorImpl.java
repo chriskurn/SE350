@@ -27,6 +27,8 @@ public class ElevatorImpl implements Elevator, Runnable{
     private long floorTime;
     private long doorTime;
     private int numFloors;
+    //For later use
+    @SuppressWarnings("unused")
     private int numPeoplePerElevator;
     private ElevatorDirection direction = ElevatorDirection.IDLE;
     private final int STARTINGFLOOR = 1;
@@ -60,9 +62,52 @@ public class ElevatorImpl implements Elevator, Runnable{
         this.elevatorId = ElevatorImpl.getNewElevatorId();
         this.setNumFloors(info.numFloors);
         this.setCurrentFloor(this.STARTINGFLOOR);
-
         this.myThread = new Thread(this);
 
+    }
+    
+    @Override
+    public void run() {
+        try {
+            this.controlState();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt(); // restore interrupted status
+        }
+    }
+    @Override
+    public ElevatorDirection getDirection() {
+        return this.direction;
+    }
+    @Override
+    public boolean destinationsLeft() {
+        return !this.getDestinations().isEmpty();
+    }
+
+    @Override
+    public int getCurrentFloor() {
+        return this.currentFloor;
+    }
+    @Override
+    public int getDestination() throws NoNewDestinationException {
+        if (this.getDestinations().isEmpty() == false) {
+            return this.getDestinations().get(0);
+        } else {
+            throw new NoNewDestinationException("There are no more destinations in the queue.");
+        }
+    }
+    @Override
+    public void startElevator() {
+        this.myThread.start();
+    }
+
+    @Override
+    public void stopElevator() {
+        this.elevatorOn = false;
+    }
+    @Override
+    public void addFloor(int floor) throws InvalidFloorException {
+        this.addFloorHelper(floor);
     }
     @Override
     public void addFloor(int floor, ElevatorDirection dir)
@@ -74,46 +119,120 @@ public class ElevatorImpl implements Elevator, Runnable{
         }
         
     }
-
-    @Override
-    public void run() {
-        // TODO Auto-generated method stub
-        try {
-            // this.moveToAllFloors();
-            this.controlState();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt(); // restore interrupted status
+    public synchronized void addFloorHelper(int floor)
+            throws InvalidFloorException {
+        // Check if the floor is valid. throw error is it is less than one or it
+        // is greater than the number of floors.
+        if ((floor < 1) || floor > this.getNumFloors()) {
+            throw new InvalidFloorException(String.format(
+                    "The floor must be between 1 and %d.", this.getNumFloors()));
+        }
+        // BEWARE RACE CONDITIONS WITH THIS STATEMENT
+        if (floor == this.getCurrentFloor()) {
+            throw new InvalidFloorException(
+                    "Cannot add this floor because we are already at it.");
+        }
+        // The floor must be in the same direction as the current floor
+        // destination
+        if (floorInSameDirection(floor) == false) {
+            throw new InvalidFloorException(
+                    "Cannot add a floor in a different direction of travel.");
+        }
+        // If the destination already exists we want to ignore it / not add it
+        if (destinationExists(floor) == false) {
+            // add the destination
+            this.addFloorToQueue(floor);
+            Simulator.getInstance().logEvent("Added floor: " + floor);
+        } else {
+            Simulator.getInstance().logEvent("This floor already exists.");
         }
     }
 
-    @Override
-    public ElevatorDirection getDirection() {
-        // TODO Auto-generated method stub
-        return this.direction;
+    /**
+     * A method to determine if the current floor is in the same direction of
+     * travel.
+     * 
+     * @param floorAdded
+     *            takes an integer representing the floor that wishes to be
+     *            added
+     * @return returns a boolean confirming that this floor is on the way to the
+     *         current destination.
+     */
+    private boolean floorInSameDirection(int floorAdded) {
+        // if the direction is set to up and the current floor is less than the
+        // floor added then we cannot add
+        int cf = this.getCurrentFloor();
+        if ((this.getDirection() == ElevatorDirection.UP) && cf > floorAdded) {
+            return false;
+        } else if ((this.getDirection() == ElevatorDirection.DOWN)
+                && floorAdded > cf) { // Same thing for down but the floor is
+                                      // greater than the above floor
+            return false;
+        } else {
+            // This is fine then. If it is idle. Then everything should be okay.
+            return true;
+        }
     }
 
-    @Override
-    public void startElevator() {
-        this.myThread.start();
+    private boolean destinationExists(int floorAdded) {
+        return this.getDestinations().contains(floorAdded);
     }
 
-    @Override
-    public void stopElevator() {
-        // TODO Auto-generated method stub
-        this.elevatorOn = false;
+    /**
+     * A method for determining the direction based on the new floor being added
+     * 
+     * @param floorAdded
+     *            the floor that is being added
+     */
+    private void updateDirection() {
+        int cf = this.getCurrentFloor();
+        int destination = 0;
+        try {
+            destination = this.getDestination();
+            if (cf > destination) {
+                this.direction = ElevatorDirection.DOWN;
+            } else if (cf < destination){
+                this.direction = ElevatorDirection.UP;
+            }
+        } catch (NoNewDestinationException e) {
+            this.direction = ElevatorDirection.IDLE;
+        }
+    }
+
+    private synchronized void addFloorToQueue(int floorAdded) {
+        // Get the list of destinations
+        ArrayList<Integer> dests = this.getDestinations();
+        // add the floor
+        dests.add(floorAdded);
+        // make sure it is still sorted
+        ElevatorDirection dir = this.getDirection();
+        if (dir == ElevatorDirection.UP) {
+            // This should be sorted ascending
+            Collections.sort(dests);
+        } else if (dir == ElevatorDirection.DOWN) {
+            // This should be sorted descending
+            Collections.sort(dests, Collections.reverseOrder());
+        } else {
+            this.updateDirection();
+        }
+        notifyAll();
     }
 
     private void moveToAllFloors() throws InterruptedException {
         while (this.destinationsLeft() == true) {
             // Move and update the destination queue
-            this.moveToNextDestination();
+            try {
+                this.moveToNextDestination();
+            } catch (NoNewDestinationException e) {
+                //No new destinations to be moved to. Let's break for lunch
+                break;
+            }
             this.removeMostRecentDestination();
         }
         this.updateDirection();
     }
 
-    private void moveToNextDestination() throws InterruptedException {
+    private void moveToNextDestination() throws InterruptedException, NoNewDestinationException {
         // get the first destination
         int destination = this.getDestination();
         int curFloor = this.getCurrentFloor();
@@ -144,16 +263,6 @@ public class ElevatorImpl implements Elevator, Runnable{
         Simulator.getInstance().logEvent(String.format(
                 "Elevator %d now done moving to floor: %d.", eleId, curFloor));
         this.openDoors();
-    }
-
-    private synchronized void setCurrentFloor(int i) {
-        this.currentFloor = i;
-
-    }
-
-    private int getElevatorId() {
-        // TODO Auto-generated method stub
-        return this.elevatorId;
     }
 
     private void removeMostRecentDestination() {
@@ -223,18 +332,17 @@ public class ElevatorImpl implements Elevator, Runnable{
                 "The doors are now closed in elevator %d on floor: %d",
                 this.getElevatorId(), this.getCurrentFloor()));
     }
-
+    private synchronized void setCurrentFloor(int i) {
+        this.currentFloor = i;
+    }
     private long getDoorTime() {
         return this.doorTime;
     }
-
-    // TODO do error checking
     private long getTimeout() {
         return this.timeOut;
     }
 
     private int getDefaultFloor() {
-        // TODO Auto-generated method stub
         return this.defaultFloor;
     }
 
@@ -242,11 +350,17 @@ public class ElevatorImpl implements Elevator, Runnable{
         return this.floorTime;
     }
 
-    private void setDoorTime(int dt) {
+    private void setDoorTime(int dt) throws IllegalParamException {
+        if(dt <= 0){
+            throw new IllegalParamException("The doortime must be greater than 0.");
+        }
         this.doorTime = dt;
     }
 
-    private void setNumpeopleperElevator(int num) {
+    private void setNumpeopleperElevator(int num) throws IllegalParamException {
+        if(num <= 0){
+            throw new IllegalParamException("Number of people per elevator must be greater than zero.");
+        }
         this.numPeoplePerElevator = num;
     }
 
@@ -258,145 +372,29 @@ public class ElevatorImpl implements Elevator, Runnable{
         this.timeOut = to;
     }
 
-    private void setFloorTime(long fo) {
+    private void setFloorTime(long fo) throws IllegalParamException {
+        if(fo <= 0){
+            throw new IllegalParamException("The floor time should not less than or equal to 0.");
+        }
         this.floorTime = fo;
     }
 
-    private void setNumFloors(int nf) {
+    private void setNumFloors(int nf) throws IllegalParamException {
+        if(nf <= 0){
+            throw new IllegalParamException("Number of floors cannot be less than or equal to 0.");
+        }
         this.numFloors = nf;
 
     }
-
     private int getNumFloors() {
         return this.numFloors;
     }
 
     private ArrayList<Integer> getDestinations() {
-        // TODO Auto-generated method stub
         return this.destinations;
     }
-
-    @Override
-    public boolean destinationsLeft() {
-        return !this.getDestinations().isEmpty();
-    }
-
-    @Override
-    public int getCurrentFloor() {
-        // TODO Auto-generated method stub
-        return this.currentFloor;
-    }
-
-    @Override
-    public int getDestination() {
-        // TODO Auto-generated method stub
-        if (this.getDestinations().isEmpty() == false) {
-            return this.getDestinations().get(0);
-        } else {
-            // TODO THROW AN ERROR
-            return 0;
-        }
-    }
-
-    @Override
-    public void addFloor(int floor) throws InvalidFloorException {
-        this.addFloorHelper(floor);
-    }
-
-    public synchronized void addFloorHelper(int floor)
-            throws InvalidFloorException {
-        // Check if the floor is valid. throw error is it is less than one or it
-        // is greater than the number of floors.
-        if ((floor < 1) || floor > this.getNumFloors()) {
-            throw new InvalidFloorException(String.format(
-                    "The floor must be between 1 and %d.", this.getNumFloors()));
-        }
-        // BEWARE RACE CONDITIONS WITH THIS STATEMENT
-        if (floor == this.getCurrentFloor()) {
-            throw new InvalidFloorException(
-                    "Cannot add this floor because we are already at it.");
-        }
-        // The floor must be in the same direction as the current floor
-        // destination
-        if (floorInSameDirection(floor) == false) {
-            throw new InvalidFloorException(
-                    "Cannot add a floor in a different direction of travel.");
-        }
-        // If the destination already exists we want to ignore it / not add it
-        if (destinationExists(floor) == false) {
-            // add the destination
-            this.addFloorToQueue(floor);
-            Simulator.getInstance().logEvent("Added floor: " + floor);
-        } else {
-            Simulator.getInstance().logEvent("This floor already exists.");
-        }
-    }
-
-    /**
-     * A method to determine if the current floor is in the same direction of
-     * travel.
-     * 
-     * @param floorAdded
-     *            takes an integer representing the floor that wishes to be
-     *            added
-     * @return returns a boolean confirming that this floor is on the way to the
-     *         current destination.
-     */
-    private boolean floorInSameDirection(int floorAdded) {
-        // if the direction is set to up and the current floor is less than the
-        // floor added then we cannot add
-        int cf = this.getCurrentFloor();
-        if ((this.getDirection() == ElevatorDirection.UP) && cf > floorAdded) {
-            return false;
-        } else if ((this.getDirection() == ElevatorDirection.DOWN)
-                && floorAdded > cf) { // Same thing for down but the floor is
-                                      // greater than the above floor
-            return false;
-        } else {
-            // This is fine then. If it is idle. Then everything should be okay.
-            return true;
-        }
-    }
-
-    private boolean destinationExists(int floorAdded) {
-        return this.getDestinations().contains(floorAdded);
-    }
-
-    /**
-     * A method for determining the direction based on the new floor being added
-     * 
-     * @param floorAdded
-     *            the floor that is being added
-     */
-    private void updateDirection() {
-        int cf = this.getCurrentFloor();
-        if (this.destinationsLeft() == false){
-            this.direction = ElevatorDirection.IDLE;
-        }
-        else if (cf > this.getDestination()) {
-            this.direction = ElevatorDirection.DOWN;
-        } else if (cf < this.getDestination()){
-            this.direction = ElevatorDirection.UP;
-        }
-    }
-
-    private synchronized void addFloorToQueue(int floorAdded) {
-        // Get the list of destinations
-        ArrayList<Integer> dests = this.getDestinations();
-        // add the floor
-        dests.add(floorAdded);
-        // make sure it is still sorted
-        ElevatorDirection dir = this.getDirection();
-        if (dir == ElevatorDirection.UP) {
-            // This should be sorted ascending
-            Collections.sort(dests);
-        } else if (dir == ElevatorDirection.DOWN) {
-            // This should be sorted descending
-            Collections.sort(dests, Collections.reverseOrder());
-        } else {
-            this.updateDirection();
-        }
-        notifyAll();
+    private int getElevatorId() {
+        return this.elevatorId;
     }
 
 }

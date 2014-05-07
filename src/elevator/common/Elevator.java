@@ -24,7 +24,7 @@ public interface Elevator {
 
     public ElevatorDirection getDirection();
 
-    int getDestination();
+    int getDestination() throws NoNewDestinationException;
 
     boolean destinationsLeft();
 

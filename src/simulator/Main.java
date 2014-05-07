@@ -1,12 +1,5 @@
 package simulator;
 
-import elevator.common.Elevator;
-import elevator.common.ElevatorDirection;
-import elevator.common.ElevatorImpl;
-import elevator.common.InvalidFloorException;
-import simulator.common.IllegalParamException;
-import simulator.common.SimulationInformation;
-
 /**
  * Description: main elevator runnable
  * 
