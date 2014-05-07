@@ -16,6 +16,7 @@ import simulator.elements.InputLoader;
 
 /**
  * Description: Input Loader Test
+ * 
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.testing;
@@ -33,10 +34,9 @@ import simulator.elements.InputLoader;
 
 public class InputLoaderTest {
 
-    
     @Test
-    public void inputSimulationLoadTest(){
-        
+    public void inputSimulationLoadTest() {
+
         String fn = "validDestConfigFile.properties";
         InputLoader i = null;
         try {
@@ -46,7 +46,7 @@ public class InputLoaderTest {
             fail("This file should load properly.");
             e1.printStackTrace();
         }
-        
+
         try {
             i.loadInput();
         } catch (IOException | IllegalParamException e) {
@@ -54,15 +54,14 @@ public class InputLoaderTest {
             fail("This file should load properly. Examine the file and the code to make sure they are correct.");
         }
         SimulationInformation si = i.getSimulationInfo();
-        
-        assertEquals(si.doorTime,5239293);
-        assertEquals(si.elevatorSleepTime,6304821);
-        assertEquals(si.floorTime,5039893);
-        assertEquals(si.numElevators,238);
-        assertEquals(si.numExpressElevators,23893);
-        assertEquals(si.numFloors,1233);
-        assertEquals(si.numPeoplePerElevator,23723);
+
+        assertEquals(si.doorTime, 5239293);
+        assertEquals(si.elevatorSleepTime, 6304821);
+        assertEquals(si.floorTime, 5039893);
+        assertEquals(si.numElevators, 238);
+        assertEquals(si.numExpressElevators, 23893);
+        assertEquals(si.numFloors, 1233);
+        assertEquals(si.numPeoplePerElevator, 23723);
     }
-    
-    
+
 }

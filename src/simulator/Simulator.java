@@ -18,7 +18,7 @@ import simulator.elements.Narrator;
 /**
  * 
  * @author Patrick Stein
- * @author Chris Kurn 
+ * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator
  * @see import java.io.IOException;
@@ -29,7 +29,6 @@ import simulator.elements.Narrator;
  * @see import simulator.common.NullFileException;
  * @see import simulator.elements.InputLoader;
  * @see import simulator.elements.Narrator;
-
  */
 
 // singleton
@@ -67,6 +66,8 @@ public class Simulator implements Narrator {
      * simulation
      * 
      * @param event
+     *            event corresponds to a string that logs an activity that just
+     *            occurred.
      */
     @Override
     public void logEvent(String event) {
@@ -102,11 +103,11 @@ public class Simulator implements Narrator {
     }
 
     /**
-     * Runs the simulation. Currently just adds a bunch of random destinations to a set of elevators.
+     * Runs the simulation. Currently just adds a bunch of random destinations
+     * to a set of elevators.
      * 
      */
     public void runSimulator() {
-        // TODO Auto-generated method stub
         Elevator ele1 = null;
         Elevator ele2 = null;
         Elevator ele3 = null;
@@ -128,7 +129,7 @@ public class Simulator implements Narrator {
         ele2.startElevator();
         ele3.startElevator();
         ele4.startElevator();
-        
+
         try {
             Thread.sleep(1000);
             ele1.addFloor(11, ElevatorDirection.UP);
@@ -170,9 +171,11 @@ public class Simulator implements Narrator {
 
     /**
      * Returns all of the parameters related to elevators. How many floors, how
-     * many people can be in an elevator. Also, contains information related to the simulation.
+     * many people can be in an elevator. Also, contains information related to
+     * the simulation.
      * 
-     * @return A SimulationInformation DTO containing relevant information to building and managing the simulation.
+     * @return A SimulationInformation DTO containing relevant information to
+     *         building and managing the simulation.
      */
     public SimulationInformation getSimulationInfo() {
         return this.getInputLoader().getSimulationInfo();
@@ -218,12 +221,17 @@ public class Simulator implements Narrator {
 
     /**
      * Private set method for setting the narrator delegate.
-     * @param n This object must implement the Narrator interface and not be null.
-     * @throws IllegalParamException THis exception will be thrown in n is null.
+     * 
+     * @param n
+     *            This object must implement the Narrator interface and not be
+     *            null.
+     * @throws IllegalParamException
+     *             THis exception will be thrown in n is null.
      */
     private void setNarratorDelegate(Narrator n) throws IllegalParamException {
-        if(n == null){
-            throw new IllegalParamException("The narrator cannot be set to null.");
+        if (n == null) {
+            throw new IllegalParamException(
+                    "The narrator cannot be set to null.");
         }
         this.narratorDelegate = n;
     }

@@ -13,6 +13,7 @@ import simulator.elements.InputLoader;
 
 /**
  * Description: Factory Invalid Test
+ * 
  * @author Chris Kurn, Patrick Stein
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.testing
@@ -26,15 +27,15 @@ import simulator.elements.InputLoader;
  */
 
 public class FactoryInvalidTest {
-    
-    
-    @Test (expected = FileNotFoundException.class)
-    public void propertiesInputLoaderTest() throws FileNotFoundException, NullFileException, IllegalParamException{
-        //File doesn't exist
+
+    @Test(expected = FileNotFoundException.class)
+    public void propertiesInputLoaderTest() throws FileNotFoundException,
+            NullFileException, IllegalParamException {
+        // File doesn't exist
         String fn = "thisFileDoesNotExist.properties";
         InputLoader i = InputLoaderFactory.build(fn);
         fail("Exception should have been thrown");
-        
+
     }
 
 }
