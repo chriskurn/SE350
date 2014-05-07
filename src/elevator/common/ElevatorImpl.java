@@ -26,7 +26,6 @@ public class ElevatorImpl implements Elevator, Runnable {
     private long floorTime;
     private long doorTime;
     private int numFloors;
-    // For later use
     @SuppressWarnings("unused")
     private int numPeoplePerElevator;
     private ElevatorDirection direction = ElevatorDirection.IDLE;
@@ -38,18 +37,25 @@ public class ElevatorImpl implements Elevator, Runnable {
     private int elevatorId;
     private boolean elevatorOn = true;
 
-    // no caching
+    /**
+     * method guarantees that communication happens between threads
+     * no caching
+     */
     private static volatile int elevatorCount = 1;
 
     /**
-     * Method for getting a unique elevatorID
-     * 
+     * method for getting a unique elevatorID
      * @return returns an integer that is a unique elevatorID
      */
     private static synchronized int getNewElevatorId() {
         return elevatorCount++;
     }
 
+    /**
+     * method throws an exception if illegal param is passed
+     * @param info
+     * @throws IllegalParamException
+     */
     public ElevatorImpl(SimulationInformation info)
             throws IllegalParamException {
         this.setTimeout(info.elevatorSleepTime);
@@ -66,6 +72,9 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     @Override
+    /**
+     * 
+     */
     public void run() {
         try {
             this.controlState();
@@ -76,21 +85,33 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     @Override
+    /**
+     * The current direction of the elevator
+     */
     public ElevatorDirection getDirection() {
         return this.direction;
     }
 
     @Override
+    /**
+     * Do destinations remain? True/False
+     */
     public boolean destinationsLeft() {
         return !this.getDestinations().isEmpty();
     }
 
     @Override
+    /**
+     * Retrieves the current elevator floor
+     */
     public int getCurrentFloor() {
         return this.currentFloor;
     }
 
     @Override
+    /**
+     * 
+     */
     public int getDestination() throws NoNewDestinationException {
         if (this.getDestinations().isEmpty() == false) {
             return this.getDestinations().get(0);
@@ -101,21 +122,37 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     @Override
+    /**
+     * Starts an elevator thread
+     */
     public void startElevator() {
         this.myThread.start();
     }
 
     @Override
+    /**
+     * Stops the elevator
+     */
     public void stopElevator() {
         this.elevatorOn = false;
     }
 
     @Override
+    /**
+     * method to add a floor
+     * @param floor, ElevatorDirection
+     * @throws InvalidFloorException
+     */
     public void addFloor(int floor) throws InvalidFloorException {
         this.addFloorHelper(floor);
     }
 
     @Override
+    /**
+     * method to add a floor
+     * @param floor, ElevatorDirection
+     * @throws InvalidFloorException
+     */
     public void addFloor(int floor, ElevatorDirection dir)
             throws InvalidFloorException {
         if (dir == this.getDirection()
@@ -127,11 +164,15 @@ public class ElevatorImpl implements Elevator, Runnable {
         }
 
     }
-
+    
+	/**
+	 * Checks if the floor is valid. throw error is it is less than one or it
+	 * is greater than the number of floors.
+	 * @param floor
+	 * @throws InvalidFloorException
+	 */
     public synchronized void addFloorHelper(int floor)
             throws InvalidFloorException {
-        // Check if the floor is valid. throw error is it is less than one or it
-        // is greater than the number of floors.
         if ((floor < 1) || floor > this.getNumFloors()) {
             throw new InvalidFloorException(String.format(
                     "The floor must be between 1 and %d.", this.getNumFloors()));
@@ -214,6 +255,10 @@ public class ElevatorImpl implements Elevator, Runnable {
         }
     }
 
+    /**
+     * A method for adding the floor to a queue
+     * @param floorAdded
+     */
     private synchronized void addFloorToQueue(int floorAdded) {
         // Get the list of destinations
         ArrayList<Integer> dests = this.getDestinations();
@@ -233,6 +278,10 @@ public class ElevatorImpl implements Elevator, Runnable {
         notifyAll();
     }
 
+    /**
+     * A method to move elevator to all requested floors
+     * @throws InterruptedException
+     */
     private void moveToAllFloors() throws InterruptedException {
         while (this.destinationsLeft() == true) {
             // Move and update the destination queue
@@ -248,6 +297,11 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.updateDirection();
     }
 
+    /**
+     * A method to move elevator to the next destination (floor)
+     * @throws InterruptedException
+     * @throws NoNewDestinationException
+     */
     private void moveToNextDestination() throws InterruptedException,
             NoNewDestinationException {
         // get the first destination
@@ -354,6 +408,10 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.moveToAllFloors();
     }
 
+    /**
+     * This method opens the doors
+     * @throws InterruptedException
+     */
     private void openDoors() throws InterruptedException {
         Simulator.getInstance().logEvent(
                 String.format(
@@ -366,26 +424,50 @@ public class ElevatorImpl implements Elevator, Runnable {
                         this.getElevatorId(), this.getCurrentFloor()));
     }
 
+    /**
+     * This method sets the current floor
+     */
     private synchronized void setCurrentFloor(int i) {
         this.currentFloor = i;
     }
 
+    /**
+     * This method retrieves the door time
+     * @return the door time
+     */
     private long getDoorTime() {
         return this.doorTime;
     }
 
+    /**
+     * This method retrieves the timeout
+     * @return the timeout
+     */
     private long getTimeout() {
         return this.timeOut;
     }
 
+    /**
+     * This method retrieves the timeout
+     * @return defaultFloor
+     */
     private int getDefaultFloor() {
         return this.defaultFloor;
     }
 
+    /**
+     * This method retrieves the floor time
+     * @return floorTime
+     */
     private long getFloorTime() {
         return this.floorTime;
     }
 
+    /**
+     * This method sets the door time
+     * @param dt
+     * @throws IllegalParamException
+     */
     private void setDoorTime(int dt) throws IllegalParamException {
         if (dt <= 0) {
             throw new IllegalParamException(
@@ -394,6 +476,11 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.doorTime = dt;
     }
 
+    /**
+     * This method sets the number of people in the elevator
+     * @param num
+     * @throws IllegalParamException
+     */
     private void setNumpeopleperElevator(int num) throws IllegalParamException {
         if (num <= 0) {
             throw new IllegalParamException(
@@ -402,6 +489,11 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.numPeoplePerElevator = num;
     }
 
+    /**
+     * This method sets the time out
+     * @param to
+     * @throws IllegalParamException
+     */
     private void setTimeout(long to) throws IllegalParamException {
         if (to <= 0) {
             throw new IllegalParamException(
@@ -410,6 +502,11 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.timeOut = to;
     }
 
+    /**
+     * This method sets the floor time
+     * @param fo
+     * @throws IllegalParamException
+     */
     private void setFloorTime(long fo) throws IllegalParamException {
         if (fo <= 0) {
             throw new IllegalParamException(
@@ -418,6 +515,11 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.floorTime = fo;
     }
 
+    /**
+     * This method sets the number of floors in the building
+     * @param nf
+     * @throws IllegalParamException
+     */
     private void setNumFloors(int nf) throws IllegalParamException {
         if (nf <= 0) {
             throw new IllegalParamException(
@@ -427,14 +529,26 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     }
 
+    /**
+     * This method retrieves the number of floors
+     * @return number of floors
+     */
     private int getNumFloors() {
         return this.numFloors;
     }
 
+    /**
+     * This method retrieves the destinations from an arraylist
+     * @return destinations
+     */
     private ArrayList<Integer> getDestinations() {
         return this.destinations;
     }
 
+    /**
+     * This method retrieves an elevator id
+     * @return elevator id
+     */
     private int getElevatorId() {
         return this.elevatorId;
     }
