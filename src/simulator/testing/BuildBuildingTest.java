@@ -1,7 +1,7 @@
 package simulator.testing;
+
 import java.io.IOException;
 import java.util.Random;
-
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -12,10 +12,25 @@ import simulator.common.SimulationInformation;
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.testing
+ * @see import java.io.IOException;
+ * @see import java.util.Random;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.NullFileException;
+ * @see import simulator.common.SimulationInformation;
  */
 
 public class BuildBuildingTest {
 
+	/**
+	 * Build Building simulation.
+	 * Create a new person
+	 * Select a start and destination floor
+     * Add the person to the start floor *
+     * Press the appropriate button (up/down) on that floor
+     * [Elevator controller and elevator behaviors will handle things from here]
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -29,7 +44,10 @@ public class BuildBuildingTest {
 		SimulationInformation info = Simulator.getInstance().getSimulationInfo();
 		
 			
-		//read in # elevators
+		/**
+		 * Read in simulation parameters. Set building boundaries
+		 * Floors, People, Simulation Time
+		 */
 		int numElevators = info.numElevators;
 		int minFloor = 1;
 		int maxFloor = info.numFloors;
@@ -43,17 +61,15 @@ public class BuildBuildingTest {
 		Random randNum2 = new Random();
 		long currentTime = (System.currentTimeMillis() - sysTime);
 		
-			
-		//System.out.println ("CurrentTime = " + currentTime);
-		//System.out.println ("CurrentTime + SimTime = " + simTime);
-		//System.out.println ("CurrentTime + SimEnd = " + simEnd);
-		//System.out.println ("PeopleMin = " + peopleMin);
+		System.out.println ("Simulation Begins");
 		
-		
-		//simulation period
+		/**
+		 * Simulation while loop
+		 * Creates person/minute, adds a start floor
+		 */
 		while (currentTime < simEnd) {
-			System.out.println ("CurrentTime = " + currentTime);
-			System.out.println ("CurrentTime + SimTime = " + simTime);
+			System.out.println ("SystemTime = " + sysTime);
+			System.out.println ("Simulation ends = " + simEnd);
 			
 			do {
 				startFloor = randNum.nextInt((maxFloor - minFloor) + 1) + minFloor;
@@ -62,19 +78,26 @@ public class BuildBuildingTest {
 			
 			
 			try {
-				Thread.sleep((60/1)*1000);
+				Thread.sleep((60/peopleMin)*1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
+			
+			System.out.println ("Creating a new person");	
+			
 			//create a new person obj
-			System.out.println ("Create a new person");		
+			
 			System.out.println ("Start Floor = " + startFloor);
+			
 			//add person to the start floor
+			
 			System.out.println ("End Floor = " + destFloor);
-			System.out.println ("Add person to start floor");
+			System.out.println ("Adding person to start floor");
+			
 			//enterFloor();
+			
 			System.out.println();
 			
 			currentTime = (System.currentTimeMillis() - sysTime);
