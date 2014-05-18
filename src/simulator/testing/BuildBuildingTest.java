@@ -32,15 +32,11 @@ public class BuildBuildingTest {
 		//read in # elevators
 		int numElevators = info.numElevators;
 		int minFloor = 1;
-		//read in # floors
 		int maxFloor = info.numFloors;
-		
-		//read in people/min
 		int peopleMin = info.personPerMin;
-		//read in simulation time
 		long simTime = info.simRunTime;
 		long sysTime = System.currentTimeMillis();	
-		long simEnd = sysTime+simTime;		
+		long simEnd = (sysTime + simTime);		
 		int startFloor;
 		int destFloor;
 		Random randNum = new Random();
@@ -48,8 +44,14 @@ public class BuildBuildingTest {
 		long currentTime = (System.currentTimeMillis() - sysTime);
 		
 			
+		//System.out.println ("CurrentTime = " + currentTime);
+		//System.out.println ("CurrentTime + SimTime = " + simTime);
+		//System.out.println ("CurrentTime + SimEnd = " + simEnd);
+		//System.out.println ("PeopleMin = " + peopleMin);
+		
+		
 		//simulation period
-		while (currentTime < simTime) {
+		while (currentTime < simEnd) {
 			System.out.println ("CurrentTime = " + currentTime);
 			System.out.println ("CurrentTime + SimTime = " + simTime);
 			
@@ -60,7 +62,7 @@ public class BuildBuildingTest {
 			
 			
 			try {
-				Thread.sleep((60/peopleMin)*1000);
+				Thread.sleep((60/1)*1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
