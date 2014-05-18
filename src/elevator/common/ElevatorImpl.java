@@ -105,12 +105,13 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     @Override
     public int getDestination() throws NoNewDestinationException {
-        if (this.getDestinations().isEmpty() == false) {
-            return this.getDestinations().get(0);
-        } else {
-            throw new NoNewDestinationException(
-                    "There are no more destinations in the queue.");
+        synchronized(this){
+            if (this.getDestinations().isEmpty() == false) {
+                return this.getDestinations().get(0);
+            }
         }
+        throw new NoNewDestinationException(
+                "There are no more destinations in the queue.");
     }
 
     @Override
