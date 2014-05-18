@@ -46,7 +46,7 @@ public class Simulator implements Narrator {
      * Singleton method for creating and returning the only instance of the
      * Simulator class.
      * 
-     * @return returns the only instance of the SImulator class.
+     * @return returns the only instance of the Simulator class.
      */
     public static Simulator getInstance() {
 

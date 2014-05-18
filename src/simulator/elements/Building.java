@@ -1,5 +1,7 @@
 package simulator.elements;
 
+import elevator.common.InvalidFloorException;
+
 /**
  * Description: Building interface class
  * 
@@ -10,5 +12,17 @@ package simulator.elements;
  */
 
 public interface Building {
+	
+	
+	//public void enterFloor (Person P, int floor){
+		
+		//add to array list
+	//}
+	
 
+	
 }
+
+
+
+	

@@ -10,5 +10,7 @@ package simulator.elements;
  */
 
 public interface Person {
+	
+	
 
 }
