@@ -219,14 +219,16 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private void controlState() throws InterruptedException {
         // Continue forever until we are asked to end
+        long currentTimeout = this.getTimeout();
         while (this.elevatorOn) {
 
             // ask if a destination has been added
             this.moveToAllFloors();
-            // Change this maybe?
+            long waitStartTime = System.currentTimeMillis();
             synchronized (this) {
                 try {
-                    wait(this.getTimeout());
+                    // TODO Test new variable timeout code
+                    wait(currentTimeout);
                 } catch (InterruptedException e) {
                     Simulator
                             .getInstance()
@@ -239,7 +241,8 @@ public class ElevatorImpl implements Elevator, Runnable {
             }
             // DON'T CALL MOVE DURING A SYNCH BLOCK OR ELEVATORS CANNOT BE ADDED
             // TO THE QUEUE
-            this.handleWakeUp();
+            // Also calculates the new timeout time
+            currentTimeout = this.handleWakeUp(waitStartTime);
         }
     }
 
@@ -288,6 +291,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     private int getDefaultFloor() {
         return this.defaultFloor;
     }
+
     /**
      * This method retrieves the destinations from an arraylist
      * 
@@ -296,6 +300,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     private ArrayList<Integer> getDestinations() {
         return this.destinations;
     }
+
     /**
      * This method retrieves the door time
      * 
@@ -364,8 +369,15 @@ public class ElevatorImpl implements Elevator, Runnable {
      *             throws an interrupted exception if the thread is interrupted
      *             during movement to the default floor.
      */
-    private void handleWakeUp() throws InterruptedException {
+    private long handleWakeUp(long waitStartTime) throws InterruptedException {
 
+        // NEW: Change to make sure the timeout is being variable so the timeout
+        // is
+        // TODO handle variable timeout time
+        // TODO test new variable timeout time
+        long newTimeout = System.currentTimeMillis() - waitStartTime;
+        // Timeout is a defined if there are no new floors in the destination
+        // queue and the current floor is not the default floor
         if (this.destinationsLeft() == false
                 && this.getCurrentFloor() != this.getDefaultFloor()) {
             // add default floor to the elevator queue
@@ -383,8 +395,19 @@ public class ElevatorImpl implements Elevator, Runnable {
                 Simulator.getInstance().logEvent(
                         "Invalid floor added during a timeout");
             }
+            // Since we have reset to the default floor. Let's reset the
+            // timeout.
+            newTimeout = this.getTimeout();
+        } else if (newTimeout >= this.getTimeout()
+                && this.getCurrentFloor() == this.getDefaultFloor()) {
+            // Handles the case in which the elevator has already timed out
+            // before and has timed out again
+            // We want to reset the timeout to it's original amount
+            newTimeout = this.getTimeout();
         }
+        // Try to move to any floor that we can
         this.moveToAllFloors();
+        return newTimeout;
     }
 
     /**
@@ -405,6 +428,8 @@ public class ElevatorImpl implements Elevator, Runnable {
                 break;
             }
         }
+        // We are now done moving to all floors in our queue.
+        // Update the location so we can handle new requests
         this.updateDirection();
     }
 
