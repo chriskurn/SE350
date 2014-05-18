@@ -36,12 +36,15 @@ public class InputLoaderProperties implements InputLoader {
     private int numFloors;
     private int numExpressElevators;
     private int numPersonsPerElevators;
-    private int floorTime;
-    private int doorTime;
-    private int elevatorSleepTime;
+    private int personPerMin;
+    private long floorTime;
+    private long doorTime;
+    private long elevatorSleepTime;
+    private long simRunTime;
 
     private final int MIN_ELEVATORS = 1;
     private final int MIN_FLOORS = 1;
+    private final long MIN_EXECUTION = 5000;
 
     /**
      * A basic constructor that takes a Properties file name with its full path.
@@ -80,7 +83,9 @@ public class InputLoaderProperties implements InputLoader {
         this.setNumFloors(prop.getProperty("numFloors"));
         this.setNumPersonsPerElevators(prop
                 .getProperty("maxPersonsPerElevator"));
-
+        this.setPersonPerMin(prop.getProperty("personPerMin"));
+        this.setSimRunTime(prop.getProperty("simRunTime"));
+        
         return this.getSimulationInfo();
     }
 
@@ -95,8 +100,32 @@ public class InputLoaderProperties implements InputLoader {
         info.numExpressElevators = this.numExpressElevators;
         info.numFloors = this.numFloors;
         info.numPeoplePerElevator = this.numPersonsPerElevators;
+        info.personPerMin = this.personPerMin;
+        info.simRunTime = this.simRunTime;
 
         return info;
+    }
+    
+    
+    private void setSimRunTime(String attribute) throws IllegalParamException {
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        if (n <= MIN_EXECUTION) {
+            throw new IllegalParamException(
+                    "The simulation run time must be greater than or equal to 5 seconds.");
+        }
+        this.simRunTime = n;
+       
+    }
+
+    private void setPersonPerMin(String attribute) throws IllegalParamException{
+        // TODO Auto-generated method stub
+        int n = Integer.parseInt(attribute);
+        if (n <= 1) {
+            throw new IllegalParamException(
+                    "Number of persons per minute must be greater than or equal to 1.");
+        }
+        this.personPerMin = n;
     }
 
     /**

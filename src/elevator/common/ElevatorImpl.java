@@ -524,7 +524,8 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @throws IllegalParamException
      *             Thrown if the above parameter condition is not met.
      */
-    private void setDoorTime(int dt) throws IllegalParamException {
+    private void setDoorTime(long dt) throws IllegalParamException {
+        // TODO auto change check for valid
         if (dt <= 0) {
             throw new IllegalParamException(
                     "The doortime must be greater than 0.");

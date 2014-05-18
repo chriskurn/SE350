@@ -20,10 +20,10 @@ public class SimulationInformation {
     public int numFloors;
     public int numExpressElevators;
     public int numPeoplePerElevator;
-    public int floorTime;
-    public int doorTime;
-    public int elevatorSleepTime;
     public int personPerMin;
+    public long floorTime;
+    public long doorTime;
+    public long elevatorSleepTime;
     public long	simRunTime;
 
 }
