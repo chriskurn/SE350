@@ -1,5 +1,11 @@
 package simulator.testing;
+import java.io.IOException;
 import java.util.Random;
+
+import simulator.Simulator;
+import simulator.common.IllegalParamException;
+import simulator.common.NullFileException;
+import simulator.common.SimulationInformation;
 
 /**
  * @author Patrick Stein
@@ -13,27 +19,39 @@ public class BuildBuildingTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		try {
+			Simulator.getInstance().buildSimulator("simInput.properties");
+		} catch (NullFileException | IllegalParamException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Simulator.getInstance().getSimulationInfo();
+		SimulationInformation info = Simulator.getInstance().getSimulationInfo();
+		
+			
 		//read in # elevators
-		int numElevators = 4;
+		int numElevators = info.numElevators;
 		int minFloor = 1;
 		//read in # floors
-		int maxFloor = 10;
+		int maxFloor = info.numFloors;
+		
 		//read in people/min
-		int peopleMin = 10;
+		int peopleMin = info.personPerMin;
 		//read in simulation time
-		long simTime = 60000;
+		long simTime = info.simRunTime;
 		long sysTime = System.currentTimeMillis();	
 		long simEnd = sysTime+simTime;		
 		int startFloor;
 		int destFloor;
 		Random randNum = new Random();
 		Random randNum2 = new Random();
+		long currentTime = (System.currentTimeMillis() - sysTime);
 		
-	
+			
 		//simulation period
-		while (System.currentTimeMillis() < simEnd) {
-			System.out.println ("CurrentTime = " + System.currentTimeMillis());
-			System.out.println ("CurrentTime+SimTime = " + simEnd);
+		while (currentTime < simTime) {
+			System.out.println ("CurrentTime = " + currentTime);
+			System.out.println ("CurrentTime + SimTime = " + simTime);
 			
 			do {
 				startFloor = randNum.nextInt((maxFloor - minFloor) + 1) + minFloor;
@@ -56,6 +74,8 @@ public class BuildBuildingTest {
 			System.out.println ("Add person to start floor");
 			//enterFloor();
 			System.out.println();
+			
+			currentTime = (System.currentTimeMillis() - sysTime);
 		}
 		
 		System.out.println ("Simulation ends");

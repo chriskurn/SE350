@@ -10,6 +10,10 @@ package simulator.common;
  *      of the data associated with building and running the simulation.
  */
 
+/**
+ * Defines simulation parameters
+ *
+ */
 public class SimulationInformation {
 
     public int numElevators;
@@ -19,5 +23,7 @@ public class SimulationInformation {
     public int floorTime;
     public int doorTime;
     public int elevatorSleepTime;
+    public int personPerMin;
+    public long	simRunTime;
 
 }
