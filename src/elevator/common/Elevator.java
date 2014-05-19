@@ -1,5 +1,7 @@
 package elevator.common;
 
+import building.common.Person;
+
 /**
  * Description: Elevator interface class
  * 
@@ -71,5 +73,14 @@ public interface Elevator {
      * @return true or false
      */
     boolean destinationsLeft();
+    
+    /**
+     * A public method for entering an elevator. It must be on the floor you are on with its doors open
+     * 
+     * @param p
+     */
+    public void enterElevator(Person p);
+    
+    public boolean doorsOpen();
 
 }

@@ -3,6 +3,8 @@ package elevator.common;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import building.common.Person;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
@@ -33,6 +35,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     private final int STARTINGFLOOR = 1;
     private int currentFloor;
     private ArrayList<Integer> destinations = new ArrayList<Integer>();
+    private ArrayList<Person> elevatorPeople = new ArrayList<Person>();
 
     private Thread myThread;
     private int elevatorId;
@@ -617,6 +620,18 @@ public class ElevatorImpl implements Elevator, Runnable {
         } catch (NoNewDestinationException e) {
             this.direction = ElevatorDirection.IDLE;
         }
+    }
+
+    @Override
+    public void enterElevator(Person p) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean doorsOpen() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

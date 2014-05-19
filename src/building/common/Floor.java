@@ -1,4 +1,7 @@
-package simulator.elements;
+package building.common;
+
+import simulator.common.IllegalParamException;
+
 
 /**
  * Description: Floor itnerface class
@@ -11,8 +14,12 @@ package simulator.elements;
 
 public interface Floor {
 
-    public void setFloor(int floor);
 
     public int getFloor();
+    
+    public void enterFloor(Person p) throws IllegalParamException;
+    
+    public void leaveFloor(Person p);
+    
 
 }

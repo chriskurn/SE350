@@ -3,11 +3,12 @@ package simulator.testing;
 import java.io.IOException;
 import java.util.Random;
 
+import building.common.Person;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
-import simulator.elements.Person;
 
 
 /**

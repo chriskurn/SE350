@@ -99,6 +99,7 @@ public class Simulator implements Narrator {
         // Create narrator
         // TODO put parameters in config file maybe?
         this.setNarratorDelegate(NarratorFactory.build(false, 1));
+        
 
     }
 
@@ -108,64 +109,6 @@ public class Simulator implements Narrator {
      * 
      */
     public void runSimulator() {
-        Elevator ele1 = null;
-        Elevator ele2 = null;
-        Elevator ele3 = null;
-        Elevator ele4 = null;
-
-        SimulationInformation info = this.getSimulationInfo();
-
-        try {
-            ele1 = new ElevatorImpl(info);
-            ele2 = new ElevatorImpl(info);
-            ele3 = new ElevatorImpl(info);
-            ele4 = new ElevatorImpl(info);
-        } catch (IllegalParamException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        ele1.startElevator();
-        ele2.startElevator();
-        ele3.startElevator();
-        ele4.startElevator();
-
-        try {
-            Thread.sleep(1000);
-            ele1.addFloor(11, ElevatorDirection.UP);
-            ele2.addFloor(14, ElevatorDirection.UP);
-            Thread.sleep(1000);
-            ele2.addFloor(13, ElevatorDirection.UP);
-            ele2.addFloor(15, ElevatorDirection.UP);
-            Thread.sleep(30000);
-            ele3.addFloor(5, ElevatorDirection.UP);
-            Thread.sleep(2000);
-            ele3.addFloor(3, ElevatorDirection.UP);
-        } catch (InvalidFloorException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            Simulator.getInstance().logEvent(e.toString());
-        }
-
-        try {
-            Thread.sleep(2000);
-            ele3.addFloor(16);
-            Thread.sleep(2000);
-            ele3.addFloor(1);
-        } catch (InvalidFloorException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            Simulator.getInstance().logEvent(e.toString());
-        }
-        try {
-            Thread.sleep(5000);
-            ele3.addFloor(2);
-            Thread.sleep(1000);
-            ele3.addFloor(5);
-            Thread.sleep(500);
-            ele3.addFloor(3);
-        } catch (InvalidFloorException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            Simulator.getInstance().logEvent(e.toString());
-        }
 
     }
 

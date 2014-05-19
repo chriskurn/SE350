@@ -1,6 +1,7 @@
 package elevator.control;
 
 import java.util.ArrayList;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
@@ -31,6 +32,7 @@ final public class ElevatorController implements Runnable {
     private Thread myThread;
     private ArrayList<ElevatorRequest> pendingRequests;
     private int numberOfFloors;
+    ArrayList<Elevator> myElevators = new ArrayList<Elevator>();
 
     private ElevatorController(){
         SimulationInformation simInfo = Simulator.getInstance().getSimulationInfo();
@@ -151,7 +153,10 @@ final public class ElevatorController implements Runnable {
         this.running = false;
     }
     
-
+    public void startElevatorController(){
+        this.running = true;
+        this.myThread.start();
+    }
     /**
      * Private method for acquiring all of the elevators
      * 

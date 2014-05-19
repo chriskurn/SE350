@@ -1,4 +1,4 @@
-package simulator.elements;
+package building.common;
 
 import elevator.common.InvalidFloorException;
 
@@ -14,5 +14,6 @@ import elevator.common.InvalidFloorException;
 
 public interface Person {
 	
-	public void setFloor(int floor) throws InvalidFloorException;
+	public int getFloor();
+	public int getPersonId();
 }
