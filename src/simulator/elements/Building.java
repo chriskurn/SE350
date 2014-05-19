@@ -13,16 +13,9 @@ import elevator.common.InvalidFloorException;
 
 public interface Building {
 	
-	
-	//public void enterFloor (Person P, int floor){
-		
-		//add to array list
-	//}
-	
-
+	public void EnterFloor(Person P, int floor){
+		//add to arraylist
+		//use narrator
+	}
 	
 }
-
-
-
-	
