@@ -14,6 +14,11 @@ import simulator.elements.StandardNarratorImpl;
  * @see import simulator.elements.StandardNarratorImpl;
  */
 
+
+/**
+ * Narrator Factory Class
+ * Outputs text from simulation
+ */
 public class NarratorFactory {
 
     public static Narrator build(boolean saveToFile, int sizeOfMessageQueue) {

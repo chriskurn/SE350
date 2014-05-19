@@ -9,6 +9,9 @@ package elevator.control;
  * @see package elevator.control
  */
 
+/**
+ * Interface Callbox
+ */
 public interface Callbox {
 
 }

@@ -10,7 +10,6 @@ package simulator.common;
  */
 
 public class IllegalParamException extends Exception {
-
     public IllegalParamException(String msg) {
         super(msg);
     }

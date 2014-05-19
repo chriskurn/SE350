@@ -11,8 +11,8 @@ package simulator.common;
  */
 
 /**
- * Defines simulation parameters
- * 
+ * Defines simulation parameters for project.
+ * Parameters are read in from external file: simInput.properties
  */
 public class SimulationInformation {
 

@@ -34,12 +34,20 @@ import elevator.control.ElevatorController;
 final public class Building {
 
     /**
-     * Add floors to array list
+     * Add floors in building to to array list
      */
 	ArrayList<Floor> myFloors = new ArrayList<Floor>();
     private int numberOfFloors;
     private static volatile Building instance;
 
+    
+    /**
+     * Enter Floors
+     * @param p
+     * @param floor
+     * @throws IllegalParamException
+     * @throws InvalidFloorException
+     */
     public void enterFloor(Person p, int floor) throws IllegalParamException,
             InvalidFloorException {
         if (floor > this.getNumberOfFloors() || floor <= 0) {
@@ -78,6 +86,9 @@ final public class Building {
 
     }
 
+    /**
+     * Build floors
+     */
     private void buildFloors() {
         int numFloors = this.getNumberOfFloors();
         Simulator.getInstance().logEvent(
@@ -88,6 +99,9 @@ final public class Building {
 
     }
 
+    /**
+     * @return myFloors
+     */
     private ArrayList<Floor> getMyFloors() {
         return this.myFloors;
     }

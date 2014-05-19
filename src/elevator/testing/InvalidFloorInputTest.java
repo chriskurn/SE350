@@ -45,6 +45,10 @@ import simulator.common.SimulationInformation;
  * @see import simulator.common.SimulationInformation;
  */
 
+/**
+ * InvalidFloorInputTest Class
+ * Checks for invalid floors (input)
+ */
 @RunWith(Parameterized.class)
 public class InvalidFloorInputTest {
 
@@ -53,6 +57,11 @@ public class InvalidFloorInputTest {
     private int floorNumber;
     private Elevator elevator;
 
+    /**
+     * InvalidFloorInputTest
+     * @param floorNum
+     * @throws IllegalParamException
+     */
     public InvalidFloorInputTest(int floorNum) throws IllegalParamException {
         this.floorNumber = floorNum;
     }

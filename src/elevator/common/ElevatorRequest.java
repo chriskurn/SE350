@@ -17,6 +17,9 @@ import simulator.common.SimulationInformation;
  */
 
 
+/**
+ * Elevator Request Class
+ */
 public class ElevatorRequest {
 
     private int floor;
@@ -29,6 +32,11 @@ public class ElevatorRequest {
 
     }
 
+    /**
+     * Sets the floor within a building
+     * @param floorRequestedFrom
+     * @throws IllegalParamException
+     */
     private void setFloor(int floorRequestedFrom) throws IllegalParamException {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
@@ -39,6 +47,11 @@ public class ElevatorRequest {
         floor = floorRequestedFrom;
     }
 
+    /**
+     * Sets elevator travel direction
+     * @param directionOfTravel
+     * @throws IllegalParamException
+     */
     private void setDirection(ElevatorDirection directionOfTravel)
             throws IllegalParamException {
         if (directionOfTravel == ElevatorDirection.IDLE) {
