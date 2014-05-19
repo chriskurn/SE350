@@ -12,7 +12,7 @@ package simulator.common;
 
 /**
  * Defines simulation parameters
- *
+ * 
  */
 public class SimulationInformation {
 
@@ -24,6 +24,6 @@ public class SimulationInformation {
     public long floorTime;
     public long doorTime;
     public long elevatorSleepTime;
-    public long	simRunTime;
+    public long simRunTime;
 
 }

@@ -2,7 +2,6 @@ package building.common;
 
 import simulator.common.IllegalParamException;
 
-
 /**
  * Description: Floor itnerface class
  * 
@@ -14,12 +13,10 @@ import simulator.common.IllegalParamException;
 
 public interface Floor {
 
-
     public int getFloor();
-    
+
     public void enterFloor(Person p) throws IllegalParamException;
-    
+
     public void leaveFloor(Person p);
-    
 
 }

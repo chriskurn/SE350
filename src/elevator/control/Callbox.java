@@ -10,6 +10,5 @@ package elevator.control;
  */
 
 public interface Callbox {
-    
-    
+
 }

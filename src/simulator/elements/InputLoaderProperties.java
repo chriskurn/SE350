@@ -85,7 +85,7 @@ public class InputLoaderProperties implements InputLoader {
                 .getProperty("maxPersonsPerElevator"));
         this.setPersonPerMin(prop.getProperty("personPerMin"));
         this.setSimRunTime(prop.getProperty("simRunTime"));
-        
+
         return this.getSimulationInfo();
     }
 
@@ -105,8 +105,7 @@ public class InputLoaderProperties implements InputLoader {
 
         return info;
     }
-    
-    
+
     private void setSimRunTime(String attribute) throws IllegalParamException {
         // TODO Auto-generated method stub
         int n = Integer.parseInt(attribute);
@@ -115,10 +114,10 @@ public class InputLoaderProperties implements InputLoader {
                     "The simulation run time must be greater than or equal to 5 seconds.");
         }
         this.simRunTime = n;
-       
+
     }
 
-    private void setPersonPerMin(String attribute) throws IllegalParamException{
+    private void setPersonPerMin(String attribute) throws IllegalParamException {
         // TODO Auto-generated method stub
         int n = Integer.parseInt(attribute);
         if (n <= 1) {

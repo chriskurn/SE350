@@ -108,7 +108,7 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     @Override
     public int getDestination() throws NoNewDestinationException {
-        synchronized(this){
+        synchronized (this) {
             if (this.getDestinations().isEmpty() == false) {
                 return this.getDestinations().get(0);
             }
@@ -625,7 +625,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     @Override
     public void enterElevator(Person p) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override

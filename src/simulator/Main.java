@@ -33,19 +33,15 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        System.out.println("Start the Elevator Simulation");
-
         Simulator mySim = Simulator.getInstance();
         /* create mySim object - simInput.xml data loaded via constructor */
         try {
             mySim.buildSimulator("simInput.properties");
             mySim.runSimulator();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.out.println(e);
         }
-        System.out.println("Ended main function.");
 
     }
 

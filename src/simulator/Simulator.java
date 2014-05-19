@@ -1,6 +1,11 @@
 package simulator;
 
 import java.io.IOException;
+import java.util.Random;
+
+import building.Building;
+import building.common.Person;
+import building.common.PersonFactory;
 
 import elevator.common.Elevator;
 import elevator.common.ElevatorDirection;
@@ -37,6 +42,8 @@ public class Simulator implements Narrator {
     private volatile static Simulator instance;
     private InputLoader inputLoaderDelegate;
     private Narrator narratorDelegate;
+    private Building simulatorBuilding;
+    private boolean running = true;
 
     private Simulator() {
         // TODO fill later
@@ -96,10 +103,11 @@ public class Simulator implements Narrator {
         this.setInputLoader(InputLoaderFactory.build(file));
         this.getInputLoader().loadInput();
 
-        // Create narrator
-        // TODO put parameters in config file maybe?
+        // Create logging class
         this.setNarratorDelegate(NarratorFactory.build(false, 1));
-        
+
+        this.setBuilding(Building.getInstance());
+        this.logEvent("Ended building the simulation");
 
     }
 
@@ -110,6 +118,58 @@ public class Simulator implements Narrator {
      */
     public void runSimulator() {
 
+        SimulationInformation info = getSimulationInfo();
+
+        // Read/Create simulation parameters. Set building boundaries
+        // Floors, People, Simulation Time, Start Floor, Destination Floor
+
+        int minFloor = 1;
+        int maxFloor = info.numFloors;
+        int peopleMin = info.personPerMin;
+        long startTime = System.currentTimeMillis();
+        long simEnd = info.simRunTime;
+        long currentTime = (System.currentTimeMillis() - startTime);
+        Random startFloorRandom = new Random();
+        Random destFloorRandom = new Random();
+
+        while (currentTime < simEnd && running) {
+
+            int startFloor;
+            int destFloor;
+            do {
+                startFloor = startFloorRandom
+                        .nextInt((maxFloor - minFloor) + 1) + minFloor;
+                destFloor = destFloorRandom.nextInt((maxFloor - minFloor) + 1)
+                        + minFloor;
+            } while (startFloor == destFloor);
+
+            // create a new person object
+            Person p = PersonFactory.build(startFloor, destFloor);
+            try {
+                // Add him to the start floor
+                this.getSimulatorBuilding().enterFloor(p, p.getStartFloor());
+                // start that person up
+                p.startPerson();
+            } catch (IllegalParamException | InvalidFloorException e1) {
+                // Ignore the person and continue on
+                this.logEvent(String
+                        .format("The following person could not enter the building: %s. Skipping this peron and continuing on.",
+                                p.toString()));
+                this.logEvent(e1.getMessage());
+            }
+
+            // Sleep for whatever the simulation demands to create so many people per minute
+            try {
+                Thread.sleep((60 / peopleMin) * 1000);
+            } catch (InterruptedException e) {
+                this.logEvent("Another thread has tried to interrupt the main thread during the sleep cycle associated with" +
+                		" people object creation. Moving on");
+            }
+
+            // Get delta time
+            currentTime = (System.currentTimeMillis() - startTime);
+        }
+        this.logEvent("End of person generation for the simulation");
     }
 
     /**
@@ -128,8 +188,8 @@ public class Simulator implements Narrator {
      * If needed, will end the simulation
      */
     public void endSimulator() {
-        // TODO Auto-generated method stub
-
+        // makes the running variable false to end the simulation.
+        this.running = false;
     }
 
     /**
@@ -138,9 +198,12 @@ public class Simulator implements Narrator {
      * @param il
      *            a new instance of a class that implements the InputLoader
      *            interface. Must match the file type.
+     * @throws IllegalParamException
      */
-    private void setInputLoader(InputLoader il) {
-        // TODO Error checking
+    private void setInputLoader(InputLoader il) throws IllegalParamException {
+        if (il == null) {
+            throw new IllegalParamException("Cannot have a null input loader.");
+        }
         this.inputLoaderDelegate = il;
     }
 
@@ -179,6 +242,21 @@ public class Simulator implements Narrator {
         this.narratorDelegate = n;
     }
 
+    private void setBuilding(Building b) throws IllegalParamException {
+        if (b == null) {
+            throw new IllegalParamException(
+                    "The building has returned null. This is very bad!");
+        }
+        this.simulatorBuilding = b;
+    }
+
+    /**
+     * @return the simulatorBuilding
+     */
+    private Building getSimulatorBuilding() {
+        return simulatorBuilding;
+    }
+
     @Override
     public boolean writeToFile() {
         return this.getNarratorDelegate().writeToFile();
@@ -188,5 +266,4 @@ public class Simulator implements Narrator {
     public int getMessageQueueLength() {
         return this.getNarratorDelegate().getMessageQueueLength();
     }
-
 }

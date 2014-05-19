@@ -13,7 +13,12 @@ import elevator.common.InvalidFloorException;
  */
 
 public interface Person {
-	
-	public int getFloor();
-	public int getPersonId();
+
+    public int getCurrentFloor();
+    public int getStartFloor();
+    public int getDestinationFloor();
+
+    public int getPersonId();
+    
+    public void startPerson();
 }

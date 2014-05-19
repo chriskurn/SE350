@@ -1,16 +1,16 @@
 package building.common;
 
-public class PersonImpl implements Person,Runnable{
-    
-    
+import simulator.Simulator;
+
+public class PersonImpl implements Person, Runnable {
+
     private int startFloor;
     private int destinationFloor;
     private int currentFloor;
     private int personId;
     private PersonState currentState;
     Thread myThread;
-    
-    
+
     private static volatile int personCount = 1;
 
     /**
@@ -21,33 +21,46 @@ public class PersonImpl implements Person,Runnable{
     private static synchronized int getNewPersonId() {
         return personCount++;
     }
-    
-    PersonImpl(int startF, int destF){
-        
+
+    PersonImpl(int startF, int destF) {
+
         this.setStartFloor(startF);
         this.setDestinationFloor(destF);
-        
-        
         this.setPersonId(PersonImpl.getNewPersonId());
         this.myThread = new Thread(this);
-    }
-    
-
-    @Override
-    public int getFloor() {
-        return this.currentFloor;
+        
+        Simulator.getInstance().logEvent(String.format("New person created: %s",this.toString()));
     }
 
     @Override
     public int getPersonId() {
         return this.personId;
     }
-
+    @Override
+    public int getCurrentFloor() {
+        return this.currentFloor;
+    }
+    @Override
+    public int getStartFloor() {
+        return startFloor;
+    }
+    @Override
+    public int getDestinationFloor() {
+        return destinationFloor;
+    }
+    
+    @Override
+    public void startPerson() {
+        this.myThread.start();
+    }
 
     @Override
     public void run() {
         // TODO Auto-generated method stub
-        
+        Simulator.getInstance().logEvent(
+                String.format("Person %d has started running",
+                        this.getPersonId()));
+
     }
 
     /**
@@ -58,45 +71,41 @@ public class PersonImpl implements Person,Runnable{
     }
 
     /**
-     * @param currentState the currentState to set
+     * @param currentState
+     *            the currentState to set
      */
     private void setCurrentState(PersonState cs) {
         this.currentState = cs;
     }
 
     /**
-     * @param personId the personId to set
+     * @param personId
+     *            the personId to set
      */
     private void setPersonId(int pid) {
         this.personId = pid;
     }
-
     /**
-     * @return the destinationFloor
-     */
-    private int getDestinationFloor() {
-        return destinationFloor;
-    }
-
-    /**
-     * @param destinationFloor the destinationFloor to set
+     * @param destinationFloor
+     *            the destinationFloor to set
      */
     private void setDestinationFloor(int destF) {
         this.destinationFloor = destF;
     }
 
     /**
-     * @return the startFloor
-     */
-    private int getStartFloor() {
-        return startFloor;
-    }
-
-    /**
-     * @param startFloor the startFloor to set
+     * @param startFloor
+     *            the startFloor to set
      */
     private void setStartFloor(int startF) {
         this.startFloor = startF;
+    }
+
+    public String toString() {
+        return String
+                .format("Person %d with starting floor as %d and destination floor as %d",
+                        this.getPersonId(), this.getStartFloor(),
+                        this.getDestinationFloor());
     }
 
 
