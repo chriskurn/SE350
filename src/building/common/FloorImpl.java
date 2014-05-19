@@ -1,6 +1,3 @@
-/**
- * 
- */
 package building.common;
 
 import java.util.ArrayList;
@@ -9,9 +6,17 @@ import simulator.Simulator;
 import simulator.common.IllegalParamException;
 
 /**
- * @author Patrick Stein
+ * Description: Floor interface class
  * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package building.common
+ * @see import java.util.ArrayList;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.IllegalParamException;
  */
+
 public class FloorImpl implements Floor {
 
     private int myFloor;

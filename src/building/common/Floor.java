@@ -14,9 +14,7 @@ import simulator.common.IllegalParamException;
 public interface Floor {
 
     public int getFloor();
-
     public void enterFloor(Person p) throws IllegalParamException;
-
     public void leaveFloor(Person p);
 
 }

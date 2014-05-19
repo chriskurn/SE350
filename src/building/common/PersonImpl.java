@@ -2,6 +2,16 @@ package building.common;
 
 import simulator.Simulator;
 
+/**
+ * Description: PersonImpl
+ * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package building.common
+ * @see import simulator.Simulator
+ */
+
 public class PersonImpl implements Person, Runnable {
 
     private int startFloor;

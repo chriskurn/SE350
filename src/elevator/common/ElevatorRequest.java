@@ -4,6 +4,19 @@ import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
+/**
+ * Description: ElevatorRequest class
+ * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ * @see package elevator.common;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.SimulationInformation;
+ */
+
+
 public class ElevatorRequest {
 
     private int floor;

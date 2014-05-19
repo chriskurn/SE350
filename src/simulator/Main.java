@@ -15,11 +15,6 @@ package simulator;
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator
- * @see import elevator.common.Elevator;
- * @see import elevator.common.ElevatorImpl;
- * @see import elevator.common.InvalidFloorException;
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.SimulationInformation;
  */
 
 public class Main {

@@ -15,11 +15,13 @@ import simulator.common.SimulationInformation;
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package elevator.common\
- * @see elevator.adding.ElevatorAdder;
- * @see elevator.adding.ElevatorAdderFactory;
- * @see simulator.common.IllegalParamException;
- * @see simulator.common.SimulationInformation;
+ * @see package elevator.common
+ * @see import java.util.ArrayList;
+ * @see import java.util.Collections;
+ * @see import building.common.Person;
+ * @see import simulator.Simulator;
+ * @see import simulator.common.IllegalParamException;
+ * @see import simulator.common.SimulationInformation;
  */
 
 public class ElevatorImpl implements Elevator, Runnable {

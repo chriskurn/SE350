@@ -19,11 +19,24 @@ import elevator.control.ElevatorController;
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * @see package simulator.elements
+ * @see import java.util.ArrayList;
+ * @import simulator.Simulator;
+ * @import simulator.common.IllegalParamException;
+ * @import simulator.common.SimulationInformation;
+ * @import building.common.Floor;
+ * @import building.common.FloorFactory;
+ * @import building.common.Person;
+ * @import elevator.common.InvalidFloorException;
+ * @import elevator.control.ElevatorController;
+ * 
  */
 
 final public class Building {
 
-    ArrayList<Floor> myFloors = new ArrayList<Floor>();
+    /**
+     * Add floors to array list
+     */
+	ArrayList<Floor> myFloors = new ArrayList<Floor>();
     private int numberOfFloors;
     private static volatile Building instance;
 
@@ -39,6 +52,9 @@ final public class Building {
         }
     }
 
+    /**
+     * Create Building
+     */
     private Building() {
         Simulator sim = Simulator.getInstance();
         sim.logEvent("Building being created.");

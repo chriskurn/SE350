@@ -25,8 +25,16 @@ import simulator.elements.Narrator;
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator
+ * @see package simulator;
  * @see import java.io.IOException;
+ * @see import java.util.Random;
+ * @see import building.Building;
+ * @see import building.common.Person;
+ * @see import building.common.PersonFactory;
+ * @see import elevator.common.Elevator;
+ * @see import elevator.common.ElevatorDirection;
+ * @see import elevator.common.ElevatorImpl;
+ * @see import elevator.common.InvalidFloorException;
  * @see import simulator.common.NarratorFactory;
  * @see import simulator.common.SimulationInformation;
  * @see import simulator.common.IllegalParamException;
