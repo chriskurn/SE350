@@ -9,7 +9,6 @@ import elevator.common.Elevator;
 import elevator.common.ElevatorDirection;
 import elevator.common.ElevatorFactory;
 import elevator.common.ElevatorRequest;
-import elevator.common.InvalidFloorException;
 
 /**
  * Description: class ElevatorController
@@ -211,8 +210,7 @@ final public class ElevatorController implements Runnable {
     }
 
     private void setNumberOfFloors(long numFloors) throws IllegalParamException {
-        SimulationInformation simInfo = Simulator.getInstance()
-                .getSimulationInfo();
+        SimulationInformation simInfo = Simulator.getInstance().getSimulationInfo();
         if (numFloors > simInfo.numFloors || numFloors <= 0) {
             throw new IllegalParamException(
                     "Invalid number of floors. Cannot exceed the number of floors in the simulation information or go below 0");
