@@ -5,15 +5,15 @@ import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: ElevatorRequest class
- * 
+ * Description: ElevatorRequest class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
- * @since Version 1.0 - Spring Quarter 2014
  * @see package elevator.common;
  * @see import simulator.Simulator;
  * @see import simulator.common.IllegalParamException;
  * @see import simulator.common.SimulationInformation;
+ * @since Version 1.0 - Spring Quarter 2014
  */
 
 /**
@@ -21,9 +21,19 @@ import simulator.common.SimulationInformation;
  */
 public class ElevatorRequest {
 
+    /** The floor. */
     private int floor;
+    
+    /** The direction. */
     private ElevatorDirection direction;
 
+    /**
+     * Instantiates a new elevator request.
+     *
+     * @param floorRequestedFrom the floor requested from
+     * @param directionOfTravel the direction of travel
+     * @throws IllegalParamException the illegal param exception
+     */
     public ElevatorRequest(int floorRequestedFrom,
             ElevatorDirection directionOfTravel) throws IllegalParamException {
         this.setDirection(directionOfTravel);
@@ -32,10 +42,10 @@ public class ElevatorRequest {
     }
 
     /**
-     * Sets the floor within a building
-     * 
-     * @param floorRequestedFrom
-     * @throws IllegalParamException
+     * Sets the floor within a building.
+     *
+     * @param floorRequestedFrom the new floor
+     * @throws IllegalParamException the illegal param exception
      */
     private void setFloor(int floorRequestedFrom) throws IllegalParamException {
         SimulationInformation info = Simulator.getInstance()
@@ -48,10 +58,10 @@ public class ElevatorRequest {
     }
 
     /**
-     * Sets elevator travel direction
-     * 
-     * @param directionOfTravel
-     * @throws IllegalParamException
+     * Sets elevator travel direction.
+     *
+     * @param directionOfTravel the new direction
+     * @throws IllegalParamException the illegal param exception
      */
     private void setDirection(ElevatorDirection directionOfTravel)
             throws IllegalParamException {
@@ -63,14 +73,27 @@ public class ElevatorRequest {
 
     }
 
+    /**
+     * Gets the floor.
+     *
+     * @return the floor
+     */
     public int getFloor() {
         return this.floor;
     }
 
+    /**
+     * Gets the direction.
+     *
+     * @return the direction
+     */
     public ElevatorDirection getDirection() {
         return this.direction;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     public String toString() {
         String dir = this.getDirection() == ElevatorDirection.UP ? "up"
                 : "down";
@@ -80,7 +103,10 @@ public class ElevatorRequest {
 
     /**
      * Must be an ElevatorRequest object that is not null This will only return
-     * true if the floor and direction are both equal
+     * true if the floor and direction are both equal.
+     *
+     * @param obj the obj
+     * @return true, if successful
      */
     public boolean equals(Object obj) {
         if (obj == null) {

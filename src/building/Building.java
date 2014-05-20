@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
-
 import building.common.Floor;
 import building.common.FloorFactory;
 import building.common.Person;
@@ -13,40 +12,32 @@ import elevator.common.InvalidFloorException;
 import elevator.control.ElevatorController;
 
 /**
- * Description: Building interface class
- * 
+ * Description: Building interface class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.elements
- * @see import java.util.ArrayList;
- * @import simulator.Simulator;
- * @import simulator.common.IllegalParamException;
- * @import simulator.common.SimulationInformation;
- * @import building.common.Floor;
- * @import building.common.FloorFactory;
- * @import building.common.Person;
- * @import elevator.common.InvalidFloorException;
- * @import elevator.control.ElevatorController;
- * 
  */
 
 final public class Building {
 
-    /**
-     * Add floors in building to to array list
-     */
+    /** Add floors in building to to array list. */
 	ArrayList<Floor> myFloors = new ArrayList<Floor>();
+    
+    /** The number of floors. */
     private int numberOfFloors;
+    
+    /** The instance. */
     private static volatile Building instance;
 
     
     /**
-     * Enter Floors
-     * @param p
-     * @param floor
-     * @throws IllegalParamException
-     * @throws InvalidFloorException
+     * Enter Floors.
+     *
+     * @param p the p
+     * @param floor the floor
+     * @throws IllegalParamException the illegal param exception
+     * @throws InvalidFloorException the invalid floor exception
      */
     public void enterFloor(Person p, int floor) throws IllegalParamException,
             InvalidFloorException {
@@ -61,7 +52,7 @@ final public class Building {
     }
 
     /**
-     * Create Building
+     * Create Building.
      */
     private Building() {
         Simulator sim = Simulator.getInstance();
@@ -73,6 +64,11 @@ final public class Building {
 
     }
 
+    /**
+     * Gets the single instance of Building.
+     *
+     * @return single instance of Building
+     */
     public static Building getInstance() {
 
         if (instance == null) {
@@ -87,7 +83,7 @@ final public class Building {
     }
 
     /**
-     * Build floors
+     * Build floors.
      */
     private void buildFloors() {
         int numFloors = this.getNumberOfFloors();
@@ -100,6 +96,8 @@ final public class Building {
     }
 
     /**
+     * Gets the my floors.
+     *
      * @return myFloors
      */
     private ArrayList<Floor> getMyFloors() {
@@ -107,6 +105,8 @@ final public class Building {
     }
 
     /**
+     * Gets the number of floors.
+     *
      * @return the numberOfFloors
      */
     public int getNumberOfFloors() {
@@ -114,8 +114,9 @@ final public class Building {
     }
 
     /**
-     * @param numberOfFloors
-     *            the numberOfFloors to set
+     * Sets the number of floors.
+     *
+     * @param numF the new number of floors
      */
     private void setNumberOfFloors(int numF) {
         this.numberOfFloors = numF;

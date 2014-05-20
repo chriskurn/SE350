@@ -9,22 +9,18 @@ import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 
 /**
- * Description: Factory Valid Test
- * 
- * @author Chris Kurn, Patrick Stein
+ * Description: Factory Valid Test.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.testing
- * @see import org.junit.Test;
- * @see import static org.junit.Assert.*;
- * @see import simulator.common.InputLoaderFactory;
- * @see import simulator.common.NarratorFactory;
- * @see import simulator.elements.InputLoader;
- * @see import simulator.elements.Narrator; TODO add additional tests for blank
- *      files
- */
+ * */
 
 public class FactoryValidTest {
 
+    /**
+     * Standard narrator creation test.
+     */
     @Test
     public void standardNarratorCreationTest() {
 
@@ -35,6 +31,9 @@ public class FactoryValidTest {
 
     }
 
+    /**
+     * Properties input loader test.
+     */
     @Test
     public void propertiesInputLoaderTest() {
         String fn = "validDestConfigFile.properties";

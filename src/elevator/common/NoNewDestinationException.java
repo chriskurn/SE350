@@ -1,15 +1,19 @@
 package elevator.common;
 
 /**
- * Description: NoNewDestinationException class
- * 
+ * Description: NoNewDestinationException class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package elevator.common
  */
 public class NoNewDestinationException extends Exception {
 
+    /**
+     * Instantiates a new no new destination exception.
+     *
+     * @param msg the msg
+     */
     public NoNewDestinationException(String msg) {
         super(msg);
     }

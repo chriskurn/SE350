@@ -1,32 +1,42 @@
 package simulator.elements;
 
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.util.Calendar;
 
-import simulator.common.IllegalParamException;
-import simulator.common.NullFileException;
+//import simulator.common.IllegalParamException;
+//import simulator.common.NullFileException;
 
 /**
- * Description: StandardNarratorImpl class
- * 
+ * Description: StandardNarratorImpl class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.elements
- * @see import java.util.Calendar;
  */
 
 public class StandardNarratorImpl implements Narrator {
 
+    /** The save to file. */
     private final boolean saveToFile;
+    
+    /** The recent messages. */
     private String[] recentMessages;
 
+    /**
+     * Instantiates a new standard narrator impl.
+     *
+     * @param stf the stf
+     * @param sizeOfMessageQueue the size of message queue
+     */
     public StandardNarratorImpl(boolean stf, int sizeOfMessageQueue) {
         // Do you want to save the log to a file
         saveToFile = stf;
         recentMessages = new String[sizeOfMessageQueue];
     }
 
+    /* (non-Javadoc)
+     * @see simulator.elements.Narrator#logEvent(java.lang.String)
+     */
     @Override
     /**
      * Method that logs elevator events.
@@ -37,6 +47,9 @@ public class StandardNarratorImpl implements Narrator {
                 event));
     }
 
+    /* (non-Javadoc)
+     * @see simulator.elements.Narrator#writeToFile()
+     */
     @Override
     /**
      * Method that writes elevator info to a file.
@@ -45,6 +58,9 @@ public class StandardNarratorImpl implements Narrator {
         return this.saveToFile;
     }
 
+    /* (non-Javadoc)
+     * @see simulator.elements.Narrator#getMessageQueueLength()
+     */
     @Override
     /**
      * Method retrieves message queue length.

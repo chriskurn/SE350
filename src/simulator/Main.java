@@ -10,21 +10,19 @@ package simulator;
  * elevator configuration for a given building. Additionally this application
  * can predict the expected effect of taking an elevator down for repairs on the
  * building’s population.
- * 
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator
  */
 
 public class Main {
 
     /**
      * The main java class (runnable) creates a mySim object - data loaded via
-     * constructor
-     * 
-     * @param args
-     *            command line arguments. Not currently being used.
+     * constructor.
+     *
+     * @param args            command line arguments. Not currently being used.
      */
     public static void main(String[] args) {
 

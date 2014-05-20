@@ -5,29 +5,37 @@ import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 
 /**
- * Description: InputLoader
- * 
+ * Description: InputLoader.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.elements
- * @see import java.io.IOException;
- * @see import simulator.common.SimulationInformation;
- * @see import simulator.common.IllegalParamException;
  */
 
 public interface InputLoader {
+    
     /**
-     * 
-     * @return
-     * @throws IOException
-     * @throws IllegalParamException
+     * Load input.
+     *
+     * @return the simulation information
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IllegalParamException the illegal param exception
      */
     public SimulationInformation loadInput() throws IOException,
             IllegalParamException;
 
+    /**
+     * Gets the simulation info.
+     *
+     * @return the simulation info
+     */
     public SimulationInformation getSimulationInfo();
 
+    /**
+     * Gets the resource name.
+     *
+     * @return the resource name
+     */
     public String getResourceName();
 
 }
