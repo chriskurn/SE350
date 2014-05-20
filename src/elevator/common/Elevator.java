@@ -84,4 +84,6 @@ public interface Elevator {
 
     public boolean doorsOpen();
 
+    public int getElevatorId();
+
 }

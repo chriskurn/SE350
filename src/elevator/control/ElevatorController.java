@@ -9,6 +9,7 @@ import elevator.common.Elevator;
 import elevator.common.ElevatorDirection;
 import elevator.common.ElevatorFactory;
 import elevator.common.ElevatorRequest;
+import elevator.common.InvalidFloorException;
 
 /**
  * Description: class ElevatorController
@@ -30,8 +31,9 @@ final public class ElevatorController implements Runnable {
     private ArrayList<Elevator> elevators;
     private long timeoutTime = 2000;
     private Thread myThread;
-    private ArrayList<ElevatorRequest> pendingRequests;
+    private ArrayList<ElevatorRequest> pendingRequests = new ArrayList<ElevatorRequest>();
     private int numberOfFloors;
+    private ElevatorRequestHandler delegate;
     ArrayList<Elevator> myElevators = new ArrayList<Elevator>();
 
     private ElevatorController() {
@@ -39,6 +41,7 @@ final public class ElevatorController implements Runnable {
                 .getSimulationInfo();
         try {
             this.createElevators(simInfo);
+            this.setNumberOfFloors(simInfo.numFloors);
         } catch (IllegalParamException e) {
             Simulator
                     .getInstance()
@@ -46,11 +49,8 @@ final public class ElevatorController implements Runnable {
                             "Invalid simulation input provided. Cannot continue with this simulation. Please provide valid input");
             // TODO handle this exception
         }
-        this.pendingRequests = new ArrayList<ElevatorRequest>();
-
         // This should only be created once
         this.myThread = new Thread(this);
-        // TODO add start
     }
 
     /**
@@ -92,7 +92,7 @@ final public class ElevatorController implements Runnable {
     public void addNewRequest(int floor, ElevatorDirection direction)
             throws IllegalParamException {
         // Make sure it is a valid floor request
-
+        // Direction can't be idle and the 
         if (direction == ElevatorDirection.IDLE || floor <= 0
                 || floor >= this.getNumberOfFloors()) {
             throw new IllegalParamException(
@@ -100,19 +100,19 @@ final public class ElevatorController implements Runnable {
         }
         // We are good to add the request
         ElevatorRequest req = new ElevatorRequest(floor, direction);
-        synchronized (this) {
-            // add the request to the pending queue
+        //if this does not already contain this request, then add it
+        if(!this.getPendingRequests().contains(req)){
             this.addNewRequest(req);
-            this.notifyAll();
+            Simulator.getInstance().logEvent(
+                    String.format("The following request has been added: %s",
+                            req.toString()));
         }
-        Simulator.getInstance().logEvent(
-                String.format("The follow request has been added: %s",
-                        req.toString()));
-
+        // TODO Maybe print out a duplicate request has been sent?
     }
 
     private synchronized void addNewRequest(ElevatorRequest req) {
         this.getPendingRequests().add(req);
+        this.notifyAll();
     }
 
     @Override
@@ -144,14 +144,36 @@ final public class ElevatorController implements Runnable {
             for (ElevatorRequest req : this.getPendingRequests()) {
                 // For each request in our list of pending requests
                 // Call our delegate to handle this
-                handleRequest(req);
+                try {
+                    this.setDelegate(ElevatorRequestHandlerFactory.build(this.getElevators()));
+                } catch (IllegalParamException e) {
+                    Simulator.getInstance().logEvent("Unable to build delegate in the ElevatorController. Skipping this request.");
+                    continue;
+                }            
+                if(this.getDelegate().handleRequest(req)){
+                    //remove from the arraylist
+                    synchronized(this){
+                        this.getPendingRequests().remove(req);
+                    }
+                }else{
+                    //move to the next request
+                    //Maybe mark it in the log?
+                    continue;
+                }
             }
         }
 
     }
 
-    private void handleRequest(ElevatorRequest req) {
-        // TODO implement this function with delegation
+
+    private void setDelegate(ElevatorRequestHandler del) throws IllegalParamException {
+        if(del == null){
+            throw new IllegalParamException("Delegate cannot be set to null.");
+        }
+        this.delegate = del;
+    }
+    private ElevatorRequestHandler getDelegate(){
+        return this.delegate;
     }
 
     private synchronized boolean areTherePendingRequests() {

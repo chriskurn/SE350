@@ -99,6 +99,11 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     @Override
+    public int getElevatorId() {
+        return this.elevatorId;
+    }
+
+    @Override
     public boolean destinationsLeft() {
         return !this.getDestinations().isEmpty();
     }
@@ -314,15 +319,6 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private long getDoorTime() {
         return this.doorTime;
-    }
-
-    /**
-     * This method retrieves an elevator id
-     * 
-     * @return elevator id
-     */
-    private int getElevatorId() {
-        return this.elevatorId;
     }
 
     /**

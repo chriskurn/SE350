@@ -76,5 +76,29 @@ public class ElevatorRequest {
         return String.format("Request from floor %d for direction %s.",
                 this.getFloor(), dir);
     }
+    /**
+     * Must be an ElevatorRequest object that is not null
+     * This will only return true if the floor and direction are both equal
+     */
+    public boolean equals(Object obj){
+        if (obj == null){
+            return false;
+        }
+        if (obj == this){
+            return true;
+        }
+        if (!(obj instanceof ElevatorRequest)){
+            return false;
+        }
+        
+        ElevatorRequest rhs = (ElevatorRequest) obj;
+        
+        if(this.getFloor() == rhs.getFloor() && this.getDirection() == rhs.getDirection()){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
 
 }
