@@ -3,10 +3,10 @@ package simulator.testing;
 import java.io.IOException;
 import java.util.Random;
 
+import elevator.common.InvalidFloorException;
 import building.Building;
 import building.common.Person;
 import building.common.PersonFactory;
-
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -98,13 +98,18 @@ public class BuildBuildingTest {
             /**
              * Create Person Object
              */
-            PersonFactory.build(startFloor, destFloor);
+            Person P = PersonFactory.build(startFloor, destFloor);
 
             System.out.println("Start Floor = " + startFloor);
-            System.out.println("End Floor = " + destFloor);
+            System.out.println("Destination Floor = " + destFloor);
             System.out.println("Adding person to start floor");
 
-			Building.getInstance().enterFloor (Person P, destFloor);
+			try {
+				Building.getInstance().enterFloor (P, destFloor);
+			} catch (IllegalParamException | InvalidFloorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             System.out.println();
 
