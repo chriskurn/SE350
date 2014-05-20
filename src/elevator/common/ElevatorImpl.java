@@ -27,7 +27,8 @@ import simulator.common.SimulationInformation;
 public class ElevatorImpl implements Elevator, Runnable {
 
     private int defaultFloor = 1;
-    private long timeOut;
+    private long currentTimeOut;
+    private long maxTimeOutTime;
     private long floorTime;
     private long doorTime;
     private int numFloors;
@@ -71,7 +72,8 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     public ElevatorImpl(SimulationInformation info)
             throws IllegalParamException {
-        this.setTimeout(info.elevatorSleepTime);
+        this.setCurrentTimeout(info.elevatorSleepTime);
+        this.setMaxTimeoutTime(info.elevatorSleepTime);
         this.setFloorTime(info.floorTime);
         this.setDoorTime(info.doorTime);
         this.setNumFloors(info.numFloors);
@@ -230,7 +232,6 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private void controlState() throws InterruptedException {
         // Continue forever until we are asked to end
-        long currentTimeout = this.getTimeout();
         while (this.elevatorOn) {
 
             // ask if a destination has been added
@@ -239,7 +240,7 @@ public class ElevatorImpl implements Elevator, Runnable {
             synchronized (this) {
                 try {
                     // TODO Test new variable timeout code
-                    wait(currentTimeout);
+                    wait(this.getCurrentTimeout());
                 } catch (InterruptedException e) {
                     Simulator
                             .getInstance()
@@ -253,7 +254,7 @@ public class ElevatorImpl implements Elevator, Runnable {
             // DON'T CALL MOVE DURING A SYNCH BLOCK OR ELEVATORS CANNOT BE ADDED
             // TO THE QUEUE
             // Also calculates the new timeout time
-            currentTimeout = this.handleWakeUp(waitStartTime);
+            this.handleWakeUp(waitStartTime);
         }
     }
 
@@ -360,8 +361,13 @@ public class ElevatorImpl implements Elevator, Runnable {
      * 
      * @return the timeout
      */
-    private long getTimeout() {
-        return this.timeOut;
+    private long getCurrentTimeout() {
+        return this.currentTimeOut;
+    }
+
+    private long getMaxTimeout() {
+        // TODO Auto-generated method stub
+        return this.maxTimeOutTime;
     }
 
     /**
@@ -371,7 +377,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      *             throws an interrupted exception if the thread is interrupted
      *             during movement to the default floor.
      */
-    private long handleWakeUp(long waitStartTime) throws InterruptedException {
+    private void handleWakeUp(long waitStartTime) throws InterruptedException {
 
         // NEW: Change to make sure the timeout is being variable so the timeout
         // is
@@ -380,9 +386,35 @@ public class ElevatorImpl implements Elevator, Runnable {
         long newTimeout = System.currentTimeMillis() - waitStartTime;
         // Timeout is a defined if there are no new floors in the destination
         // queue and the current floor is not the default floor
-        if (this.destinationsLeft() == false
-                && this.getCurrentFloor() != this.getDefaultFloor()) {
+
+        if (this.destinationsLeft()) {
+            // if destination left lets return and reset the current timeout
+            try {
+                this.setCurrentTimeout(this.getMaxTimeout());
+            } catch (IllegalParamException e) {
+                Simulator
+                        .getInstance()
+                        .logEvent(
+                                "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
+            }
+            return;
+        } else if (this.destinationsLeft() == false
+                && newTimeout < this.getMaxTimeout()) {
+            // I was woken up unexpectedly with nothing to do
+            try {
+                this.setCurrentTimeout(newTimeout);
+            } catch (IllegalParamException e) {
+                Simulator
+                        .getInstance()
+                        .logEvent(
+                                "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
+            }
+            return;
+        } else if (this.destinationsLeft() == false //if there are no destinations
+                && newTimeout >= this.getMaxTimeout() // if the delta time has exceeded the maximum timeout time allowed
+                && this.getCurrentFloor() != this.getDefaultFloor()) { // if the current floor is not the default floor
             // add default floor to the elevator queue
+            // and move to it
             Simulator
                     .getInstance()
                     .logEvent(
@@ -399,17 +431,8 @@ public class ElevatorImpl implements Elevator, Runnable {
             }
             // Since we have reset to the default floor. Let's reset the
             // timeout.
-            newTimeout = this.getTimeout();
-        } else if (newTimeout >= this.getTimeout()
-                && this.getCurrentFloor() == this.getDefaultFloor()) {
-            // Handles the case in which the elevator has already timed out
-            // before and has timed out again
-            // We want to reset the timeout to it's original amount
-            newTimeout = this.getTimeout();
+
         }
-        // Try to move to any floor that we can
-        this.moveToAllFloors();
-        return newTimeout;
     }
 
     /**
@@ -419,20 +442,36 @@ public class ElevatorImpl implements Elevator, Runnable {
      *             throws if the thread is interrupted during execution.
      */
     private void moveToAllFloors() throws InterruptedException {
-        while (this.destinationsLeft() == true) {
-            // Move and update the destination queue
+
+        if (this.destinationsLeft() == false) {
+            this.updateDirection();
+            return;
+        } else {
+            while (this.destinationsLeft() == true) {
+                // Move and update the destination queue
+                try {
+                    this.moveToNextDestination();
+                    this.removeMostRecentDestination();
+                    this.openDoors();
+                } catch (NoNewDestinationException e) {
+                    // No new destinations to be moved to. Let's break for lunch
+                    break;
+                }
+            }
+            // We are now done moving to all floors in our queue.
+            // Update the location so we can handle new requests
+            this.updateDirection();
+            // Set the max timeout time again
             try {
-                this.moveToNextDestination();
-                this.removeMostRecentDestination();
-                this.openDoors();
-            } catch (NoNewDestinationException e) {
-                // No new destinations to be moved to. Let's break for lunch
-                break;
+                this.setCurrentTimeout(this.getMaxTimeout());
+            } catch (IllegalParamException e) {
+                Simulator
+                        .getInstance()
+                        .logEvent(
+                                "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
             }
         }
-        // We are now done moving to all floors in our queue.
-        // Update the location so we can handle new requests
-        this.updateDirection();
+
     }
 
     /**
@@ -453,6 +492,8 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.updateDirection();
         while (destination != curFloor) {
             Thread.sleep(this.getFloorTime());
+            //if it is up, increment the floor up
+            //if it is down, then increment the floor down
             if (this.getDirection() == ElevatorDirection.UP) {
                 this.setCurrentFloor(++curFloor);
             } else if (this.getDirection() == ElevatorDirection.DOWN) {
@@ -591,12 +632,20 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @throws IllegalParamException
      *             Thrown if the above parameter condition is not met.
      */
-    private void setTimeout(long to) throws IllegalParamException {
+    private void setCurrentTimeout(long to) throws IllegalParamException {
         if (to <= 0) {
             throw new IllegalParamException(
-                    "Timeout time cannot be less than or equal to zero.");
+                    "Current timeout time cannot be less than or equal to zero.");
         }
-        this.timeOut = to;
+        this.currentTimeOut = to;
+    }
+
+    private void setMaxTimeoutTime(long to) throws IllegalParamException {
+        if (to <= 0) {
+            throw new IllegalParamException(
+                    "Max timeout time cannot be less than or equal to zero.");
+        }
+        this.maxTimeOutTime = to;
     }
 
     /**

@@ -14,10 +14,8 @@ import simulator.common.SimulationInformation;
  * @see import simulator.common.SimulationInformation;
  */
 
-
 /**
- * ElevatorFactory class
- * Builds an elevator
+ * ElevatorFactory class Builds an elevator
  */
 public class ElevatorFactory {
 

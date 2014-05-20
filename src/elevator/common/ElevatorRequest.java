@@ -16,7 +16,6 @@ import simulator.common.SimulationInformation;
  * @see import simulator.common.SimulationInformation;
  */
 
-
 /**
  * Elevator Request Class
  */
@@ -34,6 +33,7 @@ public class ElevatorRequest {
 
     /**
      * Sets the floor within a building
+     * 
      * @param floorRequestedFrom
      * @throws IllegalParamException
      */
@@ -49,6 +49,7 @@ public class ElevatorRequest {
 
     /**
      * Sets elevator travel direction
+     * 
      * @param directionOfTravel
      * @throws IllegalParamException
      */
@@ -76,29 +77,31 @@ public class ElevatorRequest {
         return String.format("Request from floor %d for direction %s.",
                 this.getFloor(), dir);
     }
+
     /**
-     * Must be an ElevatorRequest object that is not null
-     * This will only return true if the floor and direction are both equal
+     * Must be an ElevatorRequest object that is not null This will only return
+     * true if the floor and direction are both equal
      */
-    public boolean equals(Object obj){
-        if (obj == null){
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        if (obj == this){
+        if (obj == this) {
             return true;
         }
-        if (!(obj instanceof ElevatorRequest)){
+        if (!(obj instanceof ElevatorRequest)) {
             return false;
         }
-        
+
         ElevatorRequest rhs = (ElevatorRequest) obj;
-        
-        if(this.getFloor() == rhs.getFloor() && this.getDirection() == rhs.getDirection()){
+
+        if (this.getFloor() == rhs.getFloor()
+                && this.getDirection() == rhs.getDirection()) {
             return true;
-        }else{
+        } else {
             return false;
         }
-        
+
     }
 
 }
