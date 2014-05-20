@@ -3,7 +3,9 @@ package simulator.testing;
 import java.io.IOException;
 import java.util.Random;
 
+import building.Building;
 import building.common.Person;
+import building.common.PersonFactory;
 
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
@@ -25,7 +27,7 @@ import simulator.common.SimulationInformation;
 
 public class BuildBuildingTest {
 
-    /**
+	/**
      * Build Building simulation. Create a new person Select a start and
      * destination floor Add the person to the start floor * Press the
      * appropriate button (up/down) on that floor [Elevator controller and
@@ -93,14 +95,16 @@ public class BuildBuildingTest {
 
             System.out.println("Creating a new person");
 
-            // Person P = new Person();
+            /**
+             * Create Person Object
+             */
+            PersonFactory.build(startFloor, destFloor);
 
             System.out.println("Start Floor = " + startFloor);
             System.out.println("End Floor = " + destFloor);
             System.out.println("Adding person to start floor");
 
-            // add start floor to person
-            // enterFloor();
+			Building.getInstance().enterFloor (Person P, destFloor);
 
             System.out.println();
 
