@@ -49,7 +49,7 @@ public class Simulator implements Narrator {
     private boolean running = true;
     private ArrayList<Person> runningPeople = new ArrayList<Person>();
     /** An array list for debugging purposes. If someone gets lost during execution add him/her here.*/
-    private ArrayList<Person> lostPeple = new ArrayList<Person>();
+    private ArrayList<Person> lostPeople = new ArrayList<Person>();
 
     /**
      * Instantiates a new simulator.
