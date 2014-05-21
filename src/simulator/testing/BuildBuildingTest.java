@@ -3,6 +3,10 @@ package simulator.testing;
 import java.io.IOException;
 import java.util.Random;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import elevator.common.InvalidFloorException;
 import building.Building;
 import building.common.Person;
@@ -20,6 +24,7 @@ import simulator.common.SimulationInformation;
  * @since Version 1.0 - Spring Quarter 2014
  */
 
+
 public class BuildBuildingTest {
 
 	/**
@@ -28,9 +33,10 @@ public class BuildBuildingTest {
 	 * appropriate button (up/down) on that floor [Elevator controller and
 	 * elevator behaviors will handle things from here]
 	 *
-	 * @param args the arguments
 	 */
-    public static void main(String[] args) {
+ 
+	@Test
+	public void BuildBuildingTest() {
         // TODO Auto-generated method stub
 
         /**
@@ -52,7 +58,6 @@ public class BuildBuildingTest {
          * Read/Create simulation parameters. Set building boundaries Floors,
          * People, Simulation Time, Start Floor, Destination Floor
          */
-        // int numElevators = info.numElevators;
         int minFloor = 1;
         int maxFloor = info.numFloors;
         int peopleMin = info.personPerMin;

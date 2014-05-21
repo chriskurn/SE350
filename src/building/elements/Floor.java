@@ -24,6 +24,7 @@ public interface Floor {
      * @throws IllegalParamException
      *             throws this exception if the person is null. I don't need no
      *             null people!
+     * @return the floor number where this person entered.       
      */
     public int enterFloor(Person p) throws IllegalParamException;
 
@@ -38,7 +39,7 @@ public interface Floor {
      * Are there any people on this floor? If there are none then returns true.
      * Else false.
      * 
-     * @return Returns true if nobobdy is on this floor. Else it is false.
+     * @return Returns true if nobody is on this floor. Else it is false.
      */
     public boolean isEmpty();
 
