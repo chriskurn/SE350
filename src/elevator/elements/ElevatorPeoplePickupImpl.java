@@ -15,7 +15,7 @@ import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 
 /**
- * @author Patrick
+ * @author Patrick Stein
  *
  */
 public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {

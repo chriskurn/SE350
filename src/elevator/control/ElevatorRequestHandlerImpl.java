@@ -3,7 +3,6 @@ package elevator.control;
 import java.util.ArrayList;
 
 import simulator.common.IllegalParamException;
-
 import elevator.common.ElevatorDirection;
 import elevator.common.ElevatorRequest;
 import elevator.common.InvalidFloorException;
@@ -11,31 +10,37 @@ import elevator.elements.Elevator;
 
 /**
  * The Class ElevatorRequestHandlerImpl.
- *
+ * 
  * @author Patrick Stein
  */
 public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
-    
+
     /** The elevators. */
     private ArrayList<Elevator> elevators;
-    
 
     /**
      * Instantiates a new elevator request handler impl.
-     *
-     * @param theElevators the the elevators
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param theElevators
+     *            the the elevators
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
-    public ElevatorRequestHandlerImpl(ArrayList<Elevator> theElevators) throws IllegalParamException {
+    public ElevatorRequestHandlerImpl(ArrayList<Elevator> theElevators)
+            throws IllegalParamException {
         this.setElevators(theElevators);
     }
 
-    /* (non-Javadoc)
-     * @see elevator.control.ElevatorRequestHandler#handleRequests(java.util.ArrayList)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * elevator.control.ElevatorRequestHandler#handleRequests(java.util.ArrayList
+     * )
      */
     @Override
     public boolean handleRequest(ElevatorRequest eleRequest) {
-        
+
         ElevatorDirection requestedDirection = eleRequest.getDirection();
         int targetFloor = eleRequest.getFloor();
 
@@ -55,37 +60,39 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
                 }
             } catch (InvalidFloorException exception) {
                 // unable to add try a different elevator
-                //Try a different one
+                // Try a different one
                 continue;
             }
         }
         return false;
 
     }
-    
+
     /**
      * Gets the elevators.
-     *
+     * 
      * @return the elevators
      */
     private ArrayList<Elevator> getElevators() {
         return this.elevators;
-        
+
     }
 
     /**
      * Sets the elevators.
-     *
-     * @param theElevators the new elevators
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param theElevators
+     *            the new elevators
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
-    private void setElevators(ArrayList<Elevator> theElevators) throws IllegalParamException{
-        if(theElevators == null){
+    private void setElevators(ArrayList<Elevator> theElevators)
+            throws IllegalParamException {
+        if (theElevators == null) {
             throw new IllegalParamException("The elevators cannot be null.");
         }
         this.elevators = theElevators;
-        
+
     }
-    
 
 }
