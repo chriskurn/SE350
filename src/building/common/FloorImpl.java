@@ -35,6 +35,12 @@ public class FloorImpl implements Floor {
     public FloorImpl(int floorNumber) {
         this.setMyFloor(floorNumber);
     }
+    
+
+    @Override
+    public synchronized boolean isEmpty() {
+        return getFloorPeople().isEmpty();
+    }
 
     /*
      * (non-Javadoc)
@@ -70,7 +76,6 @@ public class FloorImpl implements Floor {
                 int pid = p.getPersonId();
                 String personFinished = String.format("Person %d has finished by entering his destination floor %d.", pid,thisFloor);
                 Simulator.getInstance().logEvent(personFinished);
-                Simulator.getInstance().finishedExecution(pid);
             }
         }else{
             //else he needs to be added to the already waiting people

@@ -106,7 +106,6 @@ final public class ElevatorController implements Runnable {
         }
 
     }
-
     /**
      * Adds the new request.
      *
@@ -307,6 +306,26 @@ final public class ElevatorController implements Runnable {
      */
     private ArrayList<ElevatorRequest> getPendingRequests() {
         return this.pendingRequests;
+    }
+
+    /**
+     * This will only return true if each elevator has no destination left and
+     * the elevator controller has no requests left
+     * @return
+     */
+    public synchronized boolean elevatorWorkLeft() {
+        boolean ecNoRequests =  this.getPendingRequests().isEmpty();
+        boolean elesNoMovement = false;
+
+        //
+        for(Elevator e : this.getElevators()){
+            if(e.destinationsLeft() == true){
+                elesNoMovement = false;
+            }
+        }
+        elesNoMovement = true;
+        
+        return (ecNoRequests && elesNoMovement);
     }
 
 }

@@ -12,6 +12,7 @@ import building.common.PersonFactory;
 //import elevator.common.ElevatorDirection;
 //import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
+import elevator.control.ElevatorController;
 
 import simulator.common.NarratorFactory;
 import simulator.common.SimulationInformation;
@@ -47,13 +48,13 @@ public class Simulator implements Narrator {
     /** The running. */
     private boolean running = true;
     private ArrayList<Person> runningPeople = new ArrayList<Person>();
-    private ArrayList<Person> finishedPeople = new ArrayList<Person>();
+    /** An array list for debugging purposes. If someone gets lost during execution add him/her here.*/
+    private ArrayList<Person> lostPeple = new ArrayList<Person>();
 
     /**
      * Instantiates a new simulator.
      */
     private Simulator() {
-        // TODO fill later
     }
 
     /**
@@ -182,28 +183,29 @@ public class Simulator implements Narrator {
         }
         logEvent("End of person generation for the simulation");
         
-        //Check to see if we can end the simulation
-/*        while(this.getRunningPeople().isEmpty() == false){
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                Simulator.getInstance().logEvent("An attempt to interrupt the simulation thread was made. Go die please.");
-            }
-        }*/
-        //End simulation now that everything is done
-        
-        
+        simulationEnd();
     }
+    
+    private void simulationEnd(){
+        //Check to see if we can end the simulation
+       while(Building.getInstance().isEmpty() && ElevatorController.getInstance().elevatorWorkLeft()){
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                Simulator.getInstance().logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
+            }
+        }
+        //End simulation now that everything is done
+       logEvent("The simulator has now ended.");
+       ElevatorController.getInstance().shutDownElevatorController();
+       logEvent("The elevator controller has been shut down.");
+       ElevatorController.getInstance().stopAllElevators();
+       logEvent("All elevators have been shut down.");
+    }
+    
     private ArrayList<Person> getRunningPeople() {
         return runningPeople;
     }
-
-    //Remove from the array list
-    public void finishedExecution(int personId){
-        logEvent(String.format("Person %d needs to be removed!",personId));
-    }
-    
-    
     
     /**
      * Returns all of the parameters related to elevators. How many floors, how

@@ -170,9 +170,9 @@ public class PersonImpl implements Person {
      */
     public String toString() {
         return String
-                .format("Person %d with starting floor as %d and destination floor as %d",
+                .format("Person %d with starting floor as %d and destination floor as %d [Current floor: %d]",
                         getPersonId(), getStartFloor(),
-                        getDestinationFloor());
+                        getDestinationFloor(),getCurrentFloor());
     }
     
     

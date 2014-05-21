@@ -99,7 +99,7 @@ public class InvalidFloorInputTest {
     @Parameters
     public static Collection data() {
         return Arrays.asList(new Object[][] { { -1 }, // expected, input
-                { 0 }, { 250 }, { -300 }, { 1 }, { 17 } });
+                { 0 }, { 250 }, { -300 }, { 500 }, { 17 } });
     }
 
     /**

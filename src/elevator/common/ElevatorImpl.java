@@ -619,7 +619,6 @@ public class ElevatorImpl implements Elevator, Runnable {
         int curFloor = getCurrentFloor();
         Iterator<Person> p = currentPeople.iterator();
         
-        // TODO throws concurrent modification exception
         while(p.hasNext()){
             Person person = p.next();
             int pid = person.getPersonId();

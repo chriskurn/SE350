@@ -15,6 +15,12 @@ import simulator.common.IllegalParamException;
  */
 
 public interface Floor {
+    
+    /**
+     * Are there any people on this floor? If there are none then returns true. Else false.
+     * @return
+     */
+    public boolean isEmpty();
 
     /**
      * Gets the floor.
@@ -33,7 +39,6 @@ public interface Floor {
     
     /**
      * Leave floor.
-     * TODO Maybe pass the previous direction of travel ?
      */
    public  ArrayList<Person> leaveFloor(ElevatorDirection dir);
 

@@ -83,8 +83,16 @@ final public class Building {
     public ArrayList<Person> loadPeople(int floor, ElevatorDirection dir) throws InvalidFloorException {
         //ask the specific floor for ask it's nice people leave the floor
         return this.getAFloor(floor).leaveFloor(dir);
+    }
+    
+    public boolean isEmpty(){
         
-        
+        for(Floor f : getMyFloors()){
+            if(f.isEmpty() == false){
+                return false;
+            }
+        }
+        return true;
     }
     
     private void checkValidFloor(int f) throws InvalidFloorException{
