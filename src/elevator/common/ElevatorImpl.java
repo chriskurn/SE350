@@ -45,6 +45,9 @@ public class ElevatorImpl implements Elevator, Runnable {
     /** The direction. */
     private ElevatorDirection direction = ElevatorDirection.IDLE;
     
+    /** Is the elevator moving?*/
+    private boolean isMoving = false;
+    
     /** The startingfloor. */
     private final int STARTINGFLOOR = 1;
     
@@ -138,7 +141,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @see elevator.common.Elevator#destinationsLeft()
      */
     @Override
-    public boolean destinationsLeft() {
+    public synchronized boolean destinationsLeft() {
         return !this.getDestinations().isEmpty();
     }
 
@@ -223,9 +226,9 @@ public class ElevatorImpl implements Elevator, Runnable {
                     "The floor must be between 1 and %d.", this.getNumFloors()));
         }
         // BEWARE RACE CONDITIONS WITH THIS STATEMENT
+        // TODO test this I am changing it to open the doors if they are on the same floor
         if (floor == this.getCurrentFloor()) {
-            throw new InvalidFloorException(
-                    "Cannot add this floor because we are already at it.");
+            openDoors();
         }
         // The floor must be in the same direction as the current floor
         // destination
@@ -244,8 +247,6 @@ public class ElevatorImpl implements Elevator, Runnable {
                                     "Elevator %d has added floor: %d. [Floor requests: %s]",
                                     this.getElevatorId(), floor,
                                     this.getFloorRequests()));
-        } else {
-            Simulator.getInstance().logEvent("This floor already exists.");
         }
     }
 
@@ -289,7 +290,6 @@ public class ElevatorImpl implements Elevator, Runnable {
             long waitStartTime = System.currentTimeMillis();
             synchronized (this) {
                 try {
-                    // TODO Test new variable timeout code
                     wait(this.getCurrentTimeout());
                 } catch (InterruptedException e) {
                     Simulator
@@ -315,7 +315,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      *            the floor you want to check against the queue
      * @return a boolean indicating if the floor already exists in the queue
      */
-    private boolean destinationExists(int floorAdded) {
+    private synchronized boolean destinationExists(int floorAdded) {
         return this.getDestinations().contains(floorAdded);
     }
 
@@ -592,7 +592,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      *
      * @throws InterruptedException the interrupted exception
      */
-    private void openDoors() throws InterruptedException {
+    private void openDoors() {
         Simulator.getInstance().logEvent(
                 String.format(
                         "The doors are now open in elevator %d on floor: %d",
@@ -601,7 +601,12 @@ public class ElevatorImpl implements Elevator, Runnable {
         loadPeople();
         //Ask for new destinations
         getNewDestinationsFromPeople();
-        Thread.sleep(this.getDoorTime());
+        try {
+            Thread.sleep(this.getDoorTime());
+        } catch (InterruptedException e) {
+            String event = String.format("Elevator %d's thread has been interrupted during open door time. Moving on.", getElevatorId());
+            Simulator.getInstance().logEvent(event);
+        }
         Simulator.getInstance().logEvent(
                 String.format(
                         "The doors are now closed in elevator %d on floor: %d",
@@ -614,6 +619,7 @@ public class ElevatorImpl implements Elevator, Runnable {
         int curFloor = getCurrentFloor();
         Iterator<Person> p = currentPeople.iterator();
         
+        // TODO throws concurrent modification exception
         while(p.hasNext()){
             Person person = p.next();
             int pid = person.getPersonId();
@@ -623,13 +629,14 @@ public class ElevatorImpl implements Elevator, Runnable {
                 this.addFloor(destFloor);
             } catch (InvalidFloorException e) {
                 String event = String.format("Person %d tried to request his destination %d." +
-                        " in elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId());
+                        " in elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId(),curFloor);
                 try {
                     Building.getInstance().enterFloor(person,curFloor);
                 } catch (IllegalParamException | InvalidFloorException e1) {
                     String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d." +
                             " This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
                     Simulator.getInstance().logEvent(eve);
+                    // TODO add to lost  people pile
                 }
             }
             
@@ -660,6 +667,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                     String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d. This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
                     Simulator.getInstance().logEvent(eve);
                 }
+                // TODO java.util.ConcurrentModificationExceptiom
                 p.remove();
             }
         }
@@ -692,11 +700,25 @@ public class ElevatorImpl implements Elevator, Runnable {
     /**
      * Removes the most recent destination from the queue.
      */
-    private void removeMostRecentDestination() {
+    private synchronized void removeMostRecentDestination() {
         // Remove the very first element
         if (this.getDestinations().isEmpty() == false) {
             this.getDestinations().remove(0);
         }
+    }
+
+    /**
+     * @return the isMoving
+     */
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    /**
+     * @param isMoving the isMoving to set
+     */
+    public void setMoving(boolean isMoving) {
+        this.isMoving = isMoving;
     }
 
     /**
@@ -715,7 +737,6 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @throws IllegalParamException             Thrown if the above parameter condition is not met.
      */
     private void setDoorTime(long dt) throws IllegalParamException {
-        // TODO auto change check for valid
         if (dt <= 0) {
             throw new IllegalParamException(
                     "The doortime must be greater than 0.");
@@ -797,7 +818,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     /**
      * A method for determining the direction based on the new floor being added.
      */
-    private void updateDirection() {
+    private synchronized void updateDirection() {
         int cf = this.getCurrentFloor();
         int destination = 0;
         try {

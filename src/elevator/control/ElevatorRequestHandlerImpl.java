@@ -56,13 +56,7 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
                 }
             } catch (InvalidFloorException exception) {
                 // unable to add try a different elevator
-                Simulator
-                        .getInstance()
-                        .logEvent(
-                                String.format(
-                                        "Unable to add target floor: %d with direction: %s to elevator: %d.",
-                                        targetFloor, requestedDirection,
-                                        e.getElevatorId()));
+                //Try a different one
                 continue;
             }
         }

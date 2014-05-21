@@ -134,7 +134,6 @@ final public class ElevatorController implements Runnable {
                     String.format("The following request has been added: %s",
                             req.toString()));
         }
-        // TODO Maybe print out a duplicate request has been sent?
     }
 
     /**
