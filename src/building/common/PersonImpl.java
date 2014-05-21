@@ -7,34 +7,48 @@ import simulator.Simulator;
 import simulator.common.IllegalParamException;
 
 /**
- * Description: PersonImpl
- * 
+ * Description: PersonImpl.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package building.common
- * @see import simulator.Simulator
  */
 
 public class PersonImpl implements Person {
 
+    /** The start floor. */
     private int startFloor;
+    
+    /** The destination floor. */
     private int destinationFloor;
+    
+    /** The current floor. */
     private int currentFloor;
+    
+    /** The person id. */
     private int personId;
+    
+    /** The current state. */
     private PersonState currentState;
-
+    /** The my thread. */
+    Thread myThread;
+    /** The person count. */
     private static volatile int personCount = 1;
-
     /**
-     * method for getting a unique personId
-     * 
+     * method for getting a unique personId.
+     *
      * @return returns an integer that is a unique personId
      */
     private static synchronized int getNewPersonId() {
         return personCount++;
     }
 
+    /**
+     * Instantiates a new person impl.
+     *
+     * @param startF the start f
+     * @param destF the dest f
+     */
     PersonImpl(int startF, int destF) {
 
         setStartFloor(startF);
@@ -46,30 +60,47 @@ public class PersonImpl implements Person {
                 String.format("New person created: %s", toString()));
     }
 
+    /* (non-Javadoc)
+     * @see building.common.Person#getPersonId()
+     */
     @Override
     public int getPersonId() {
         return personId;
     }
-
+    
+    /* (non-Javadoc)
+     * @see building.common.Person#getCurrentFloor()
+     */
     @Override
     public int getCurrentFloor() {
         return currentFloor;
     }
-
+    
+    /* (non-Javadoc)
+     * @see building.common.Person#getStartFloor()
+     */
     @Override
     public int getStartFloor() {
         return startFloor;
     }
-
+    /* (non-Javadoc)
+     * @see building.common.Person#getDestinationFloor()
+     */
     @Override
     public int getDestinationFloor() {
         return destinationFloor;
     }
+    /* (non-Javadoc)
+     * @see building.common.Person#startPerson()
+     */
     @Override
     public void setCurrentFloor(int floorNumber) {
         currentFloor = floorNumber;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Runnable#run()
+     */
     @Override
     public void startPerson() {
         int destFloor = getDestinationFloor();
@@ -90,6 +121,8 @@ public class PersonImpl implements Person {
     }
 
     /**
+     * Gets the current state.
+     *
      * @return the currentState
      */
     private PersonState getCurrentState() {
@@ -97,37 +130,44 @@ public class PersonImpl implements Person {
     }
 
     /**
-     * @param currentState
-     *            the currentState to set
+     * Sets the current state.
+     *
+     * @param cs the new current state
      */
     private void setCurrentState(PersonState cs) {
         currentState = cs;
     }
 
     /**
-     * @param personId
-     *            the personId to set
+     * Sets the person id.
+     *
+     * @param pid the new person id
      */
     private void setPersonId(int pid) {
         personId = pid;
     }
 
     /**
-     * @param destinationFloor
-     *            the destinationFloor to set
+     * Sets the destination floor.
+     *
+     * @param destF the new destination floor
      */
     private void setDestinationFloor(int destF) {
         destinationFloor = destF;
     }
 
     /**
-     * @param startFloor
-     *            the startFloor to set
+     * Sets the start floor.
+     *
+     * @param startF the new start floor
      */
     private void setStartFloor(int startF) {
         startFloor = startF;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     public String toString() {
         return String
                 .format("Person %d with starting floor as %d and destination floor as %d",

@@ -9,23 +9,29 @@ import simulator.Simulator;
 import simulator.common.IllegalParamException;
 
 /**
- * Description: Floor interface class
- * 
+ * Description: Floor interface class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package building.common
- * @see import java.util.ArrayList;
- * @see import simulator.Simulator;
- * @see import simulator.common.IllegalParamException;
  */
 
 public class FloorImpl implements Floor {
 
+    /** The my floor. */
     private int myFloor;
+    
+    /** The floor peoples. */
     private ArrayList<Person> floorPeoples = new ArrayList<Person>();
+    
+    /** The finished people. */
     private ArrayList<Person> finishedPeople = new ArrayList<Person>();
 
+    /**
+     * Instantiates a new floor impl.
+     *
+     * @param floorNumber the floor number
+     */
     public FloorImpl(int floorNumber) {
         this.setMyFloor(floorNumber);
     }
@@ -72,7 +78,7 @@ public class FloorImpl implements Floor {
                 this.getFloorPeople().add(p);
             }
         }
-        return getFloor();
+        return thisFloor;
     }
 
     /*
@@ -104,8 +110,9 @@ public class FloorImpl implements Floor {
     }
 
     /**
-     * @param myFloor
-     *            the myFloor to set
+     * Sets the my floor.
+     *
+     * @param floor the new my floor
      */
     private void setMyFloor(int floor) {
         // TODO Auto-generated method stub

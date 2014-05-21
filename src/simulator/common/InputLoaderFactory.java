@@ -5,15 +5,11 @@ import simulator.elements.InputLoader;
 import simulator.elements.InputLoaderProperties;
 
 /**
- * Description: InputLoaderFactory class
- * 
+ * Description: InputLoaderFactory class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.common
- * @see import java.io.FileNotFoundException;
- * @see import simulator.elements.InputLoader;
- * @see import simulator.elements.InputLoaderProperties;
  */
 
 public class InputLoaderFactory {
@@ -21,18 +17,14 @@ public class InputLoaderFactory {
     /**
      * Takes a filename and returns an appropriate implementation that loads
      * that file.
-     * 
-     * @param fileName
-     *            A string that contains the full path to the file. Make sure it
+     *
+     * @param fileName            A string that contains the full path to the file. Make sure it
      *            has an extension
      * @return Returns a new object that will load the file provided.
-     * @throws NullFileException
-     *             throws if the file name is null.
-     * @throws IllegalParamException
-     *             throws if the file name violates @InputLoaderProperties
+     * @throws NullFileException             throws if the file name is null.
+     * @throws FileNotFoundException             throws if when opening the file it does not exist.
+     * @throws IllegalParamException             throws if the file name violates @InputLoaderProperties
      *             specifications.
-     * @throws FileNotFoundException
-     *             throws if when opening the file it does not exist.
      */
     public static InputLoader build(String fileName) throws NullFileException,
             FileNotFoundException, IllegalParamException {

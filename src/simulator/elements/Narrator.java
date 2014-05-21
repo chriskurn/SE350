@@ -1,21 +1,19 @@
 package simulator.elements;
 
 /**
- * Description: Narrator interface class
- * 
+ * Description: Narrator interface class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.elements
  */
 
 public interface Narrator {
 
     /**
-     * Logs an event that occurs in the programs runtime
-     * 
-     * @param event
-     *            a string containing some information about the event.
+     * Logs an event that occurs in the programs runtime.
+     *
+     * @param event            a string containing some information about the event.
      */
     public void logEvent(String event);
 

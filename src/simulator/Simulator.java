@@ -8,9 +8,9 @@ import building.Building;
 import building.common.Person;
 import building.common.PersonFactory;
 
-import elevator.common.Elevator;
-import elevator.common.ElevatorDirection;
-import elevator.common.ElevatorImpl;
+//import elevator.common.Elevator;
+//import elevator.common.ElevatorDirection;
+//import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
 
 import simulator.common.NarratorFactory;
@@ -22,40 +22,36 @@ import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 
 /**
- * 
+ * The Class Simulator.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator;
- * @see import java.io.IOException;
- * @see import java.util.Random;
- * @see import building.Building;
- * @see import building.common.Person;
- * @see import building.common.PersonFactory;
- * @see import elevator.common.Elevator;
- * @see import elevator.common.ElevatorDirection;
- * @see import elevator.common.ElevatorImpl;
- * @see import elevator.common.InvalidFloorException;
- * @see import simulator.common.NarratorFactory;
- * @see import simulator.common.SimulationInformation;
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.InputLoaderFactory;
- * @see import simulator.common.NullFileException;
- * @see import simulator.elements.InputLoader;
- * @see import simulator.elements.Narrator;
  */
 
 // singleton
 public class Simulator implements Narrator {
 
+    /** The instance. */
     private volatile static Simulator instance;
+    
+    /** The input loader delegate. */
     private InputLoader inputLoaderDelegate;
+    
+    /** The narrator delegate. */
     private Narrator narratorDelegate;
+    
+    /** The simulator building. */
     private Building simulatorBuilding;
+    
+    /** The running. */
     private boolean running = true;
     private ArrayList<Person> runningPeople = new ArrayList<Person>();
     private ArrayList<Person> finishedPeople = new ArrayList<Person>();
 
+    /**
+     * Instantiates a new simulator.
+     */
     private Simulator() {
         // TODO fill later
     }
@@ -81,10 +77,9 @@ public class Simulator implements Narrator {
 
     /**
      * Is a method for logging events that occur throughout the runtime of the
-     * simulation
-     * 
-     * @param event
-     *            event corresponds to a string that logs an activity that just
+     * simulation.
+     *
+     * @param event            event corresponds to a string that logs an activity that just
      *            occurred.
      */
     @Override
@@ -223,7 +218,7 @@ public class Simulator implements Narrator {
     }
 
     /**
-     * If needed, will end the simulation
+     * If needed, will end the simulation.
      */
     public void endSimulator() {
         // makes the running variable false to end the simulation.
@@ -231,12 +226,11 @@ public class Simulator implements Narrator {
     }
 
     /**
-     * Private set method for the input loader variable
-     * 
-     * @param il
-     *            a new instance of a class that implements the InputLoader
+     * Private set method for the input loader variable.
+     *
+     * @param il            a new instance of a class that implements the InputLoader
      *            interface. Must match the file type.
-     * @throws IllegalParamException
+     * @throws IllegalParamException the illegal param exception
      */
     private void setInputLoader(InputLoader il) throws IllegalParamException {
         if (il == null) {
@@ -246,8 +240,8 @@ public class Simulator implements Narrator {
     }
 
     /**
-     * Get method to acquire the input loader delegate
-     * 
+     * Get method to acquire the input loader delegate.
+     *
      * @return returns the delegate that loads the file input.
      */
     private InputLoader getInputLoader() {
@@ -280,6 +274,12 @@ public class Simulator implements Narrator {
         this.narratorDelegate = n;
     }
 
+    /**
+     * Sets the building.
+     *
+     * @param b the new building
+     * @throws IllegalParamException the illegal param exception
+     */
     private void setBuilding(Building b) throws IllegalParamException {
         if (b == null) {
             throw new IllegalParamException(
@@ -289,17 +289,25 @@ public class Simulator implements Narrator {
     }
 
     /**
+     * Gets the simulator building.
+     *
      * @return the simulatorBuilding
      */
     private Building getSimulatorBuilding() {
         return simulatorBuilding;
     }
 
+    /* (non-Javadoc)
+     * @see simulator.elements.Narrator#writeToFile()
+     */
     @Override
     public boolean writeToFile() {
         return this.getNarratorDelegate().writeToFile();
     }
 
+    /* (non-Javadoc)
+     * @see simulator.elements.Narrator#getMessageQueueLength()
+     */
     @Override
     public int getMessageQueueLength() {
         return this.getNarratorDelegate().getMessageQueueLength();

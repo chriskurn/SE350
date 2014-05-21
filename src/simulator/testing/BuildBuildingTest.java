@@ -13,28 +13,23 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
+ * The Class BuildBuildingTest
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package simulator.testing
- * @see import java.io.IOException;
- * @see import java.util.Random;
- * @see import simulator.Simulator;
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.NullFileException;
- * @see import simulator.common.SimulationInformation;
  */
 
 public class BuildBuildingTest {
 
 	/**
-     * Build Building simulation. Create a new person Select a start and
-     * destination floor Add the person to the start floor * Press the
-     * appropriate button (up/down) on that floor [Elevator controller and
-     * elevator behaviors will handle things from here]
-     * 
-     * @param args
-     */
+	 * Build Building simulation. Create a new person Select a start and
+	 * destination floor Add the person to the start floor * Press the
+	 * appropriate button (up/down) on that floor [Elevator controller and
+	 * elevator behaviors will handle things from here]
+	 *
+	 * @param args the arguments
+	 */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
 

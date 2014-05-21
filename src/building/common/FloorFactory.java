@@ -1,16 +1,21 @@
 package building.common;
 
 /**
- * Description: FloorFactory class
- * 
+ * Description: FloorFactory class.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package building.common
  */
 
 public class FloorFactory {
 
+    /**
+     * Builds the.
+     *
+     * @param floorNumber the floor number
+     * @return the floor
+     */
     public static Floor build(int floorNumber) {
         return new FloorImpl(floorNumber);
     }

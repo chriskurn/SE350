@@ -11,29 +11,45 @@ import elevator.common.ElevatorFactory;
 import elevator.common.ElevatorRequest;
 
 /**
- * Description: class ElevatorController
- * 
+ * Description: class ElevatorController.
+ *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
- * @see package elevator.control
- * @see import java.util.ArrayList;
- * @see import simulator.Simulator;
- * @see import simulator.common.SimulationInformation;
- * @see import elevator.common.Elevator;
  */
 
 final public class ElevatorController implements Runnable {
 
+    /** The instance. */
     private volatile static ElevatorController instance;
+    
+    /** The running. */
     private boolean running;
+    
+    /** The elevators. */
+    private ArrayList<Elevator> elevators;
+    
+    /** The timeout time. */
     private long timeoutTime = 2000;
+    
+    /** The my thread. */
     private Thread myThread;
+    
+    /** The pending requests. */
     private ArrayList<ElevatorRequest> pendingRequests = new ArrayList<ElevatorRequest>();
+    
+    /** The number of floors. */
     private int numberOfFloors;
+    
+    /** The delegate. */
     private ElevatorRequestHandler delegate;
+    
+    /** The my elevators. */
     ArrayList<Elevator> myElevators = new ArrayList<Elevator>();
 
+    /**
+     * Instantiates a new elevator controller.
+     */
     private ElevatorController() {
         SimulationInformation simInfo = Simulator.getInstance()
                 .getSimulationInfo();
@@ -55,8 +71,8 @@ final public class ElevatorController implements Runnable {
 
     /**
      * The singleton method for creating and returning a single instance of the
-     * ElevatorController
-     * 
+     * ElevatorController.
+     *
      * @return returns the one Elevator controller in existence.
      */
     public static ElevatorController getInstance() {
@@ -75,9 +91,9 @@ final public class ElevatorController implements Runnable {
 
     /**
      * Private method to encapsulate the elevator creation logic.
-     * 
-     * @param simInfo
-     * @throws IllegalParamException
+     *
+     * @param simInfo the sim info
+     * @throws IllegalParamException the illegal param exception
      */
     private void createElevators(SimulationInformation simInfo)
             throws IllegalParamException {
@@ -91,6 +107,13 @@ final public class ElevatorController implements Runnable {
 
     }
 
+    /**
+     * Adds the new request.
+     *
+     * @param floor the floor
+     * @param direction the direction
+     * @throws IllegalParamException the illegal param exception
+     */
     public void addNewRequest(int floor, ElevatorDirection direction)
             throws IllegalParamException {
         // Make sure it is a valid floor request
@@ -114,11 +137,19 @@ final public class ElevatorController implements Runnable {
         // TODO Maybe print out a duplicate request has been sent?
     }
 
+    /**
+     * Adds the new request.
+     *
+     * @param req the req
+     */
     private synchronized void addNewRequest(ElevatorRequest req) {
         this.getPendingRequests().add(req);
         this.notifyAll();
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Runnable#run()
+     */
     @Override
     public void run() {
         // While the elevator controller is running handle all requests
@@ -141,6 +172,9 @@ final public class ElevatorController implements Runnable {
         }
     }
 
+    /**
+     * Handle pending requests.
+     */
     private void handlePendingRequests() {
 
         // While there are pending requests lets handle them
@@ -171,22 +205,45 @@ final public class ElevatorController implements Runnable {
     }
 
 
+    /**
+     * Sets the delegate.
+     *
+     * @param del the new delegate
+     * @throws IllegalParamException the illegal param exception
+     */
     private void setDelegate(ElevatorRequestHandler del) throws IllegalParamException {
         if(del == null){
             throw new IllegalParamException("Delegate cannot be set to null.");
         }
         this.delegate = del;
     }
+    
+    /**
+     * Gets the delegate.
+     *
+     * @return the delegate
+     */
     private ElevatorRequestHandler getDelegate(){
         return this.delegate;
     }
 
+    /**
+     * Are there pending requests.
+     *
+     * @return true, if successful
+     */
     private synchronized boolean areTherePendingRequests() {
         return !this.getPendingRequests().isEmpty();
     }
 
     /**
-     * Public method to stop the execution of the elevator method
+     * Public method to stop the execution of the elevator controller.
+     */
+    public void shutDownElevatorController() {
+        this.running = false;
+    }
+    /**
+     * Start elevator controller.
      */
     public void startElevatorController() {
         this.running = true;
@@ -203,9 +260,9 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * Private method for acquiring all of the elevators
-     * 
-     * @return
+     * Private method for acquiring all of the elevators.
+     *
+     * @return the elevators
      */
     private ArrayList<Elevator> getElevators() {
         return myElevators;
@@ -220,6 +277,12 @@ final public class ElevatorController implements Runnable {
         return this.timeoutTime;
     }
 
+    /**
+     * Sets the number of floors.
+     *
+     * @param numFloors the new number of floors
+     * @throws IllegalParamException the illegal param exception
+     */
     private void setNumberOfFloors(int numFloors) throws IllegalParamException {
         SimulationInformation simInfo = Simulator.getInstance().getSimulationInfo();
         if (numFloors > simInfo.numFloors || numFloors <= 0) {
@@ -229,10 +292,20 @@ final public class ElevatorController implements Runnable {
         numberOfFloors = numFloors;
     }
 
+    /**
+     * Gets the number of floors.
+     *
+     * @return the number of floors
+     */
     private int getNumberOfFloors() {
         return this.numberOfFloors;
     }
 
+    /**
+     * Gets the pending requests.
+     *
+     * @return the pending requests
+     */
     private ArrayList<ElevatorRequest> getPendingRequests() {
         return this.pendingRequests;
     }

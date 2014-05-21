@@ -1,6 +1,3 @@
-/**
- * 
- */
 package elevator.control;
 
 import java.util.ArrayList;
@@ -14,14 +11,22 @@ import elevator.common.ElevatorRequest;
 import elevator.common.InvalidFloorException;
 
 /**
- * @author Patrick
+ * The Class ElevatorRequestHandlerImpl.
  *
+ * @author Patrick
  */
 public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
     
+    /** The elevators. */
     private ArrayList<Elevator> elevators;
     
 
+    /**
+     * Instantiates a new elevator request handler impl.
+     *
+     * @param theElevators the the elevators
+     * @throws IllegalParamException the illegal param exception
+     */
     public ElevatorRequestHandlerImpl(ArrayList<Elevator> theElevators) throws IllegalParamException {
         this.setElevators(theElevators);
     }
@@ -65,11 +70,22 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
 
     }
     
+    /**
+     * Gets the elevators.
+     *
+     * @return the elevators
+     */
     private ArrayList<Elevator> getElevators() {
         return this.elevators;
         
     }
 
+    /**
+     * Sets the elevators.
+     *
+     * @param theElevators the new elevators
+     * @throws IllegalParamException the illegal param exception
+     */
     private void setElevators(ArrayList<Elevator> theElevators) throws IllegalParamException{
         if(theElevators == null){
             throw new IllegalParamException("The elevators cannot be null.");
