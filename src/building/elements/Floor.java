@@ -20,7 +20,7 @@ public interface Floor {
     
     /**
      * Are there any people on this floor? If there are none then returns true. Else false.
-     * @return
+     * @return boolean
      */
     public boolean isEmpty();
 

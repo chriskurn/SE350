@@ -4,15 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import simulator.Simulator;
-import simulator.common.IllegalParamException;
-import simulator.common.SimulationInformation;
-import building.common.Floor;
-import building.common.FloorFactory;
-import building.common.Person;
-import elevator.common.ElevatorDirection;
-import elevator.common.InvalidFloorException;
-import elevator.control.ElevatorController;
 
 /**
  * The Class NarratorTest()

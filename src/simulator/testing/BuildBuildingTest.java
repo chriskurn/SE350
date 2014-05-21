@@ -33,11 +33,10 @@ public class BuildBuildingTest {
 	 * appropriate button (up/down) on that floor [Elevator controller and
 	 * elevator behaviors will handle things from here]
 	 *
-	 * @param args the arguments
 	 */
-    
+ 
 	@Test
-	public void main() {
+	public void BuildBuildingTest() {
         // TODO Auto-generated method stub
 
         /**
