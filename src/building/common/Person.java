@@ -1,7 +1,5 @@
 package building.common;
 
-//import elevator.common.InvalidFloorException;
-
 /**
  * Description: Person interface class.
  *

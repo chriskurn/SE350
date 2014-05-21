@@ -16,7 +16,7 @@ package building.common;
 public class PersonFactory {
 
     /**
-     * Builds the.
+     * Builds the PersonFactory
      *
      * @param startF the start f
      * @param destF the dest f
