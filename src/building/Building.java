@@ -18,6 +18,10 @@ import elevator.control.ElevatorController;
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
+ * 
+ * The building is a singleton facade responsible for managing the floors.
+ * It also has methods that allow for movement of people to different floors and people leaving a floor.
+ * 
  */
 
 final public class Building {
@@ -32,7 +36,7 @@ final public class Building {
     private static volatile Building instance;
 
     /**
-     * Gets the single instance of Building.
+     * Gets the single instance of Building for this singleton.
      * 
      * @return single instance of Building
      */
@@ -50,7 +54,7 @@ final public class Building {
     }
 
     /**
-     * Create Building.
+     * Private constructor for creating the building. 
      */
     private Building() {
         Simulator sim = Simulator.getInstance();
@@ -63,7 +67,7 @@ final public class Building {
                     .getInstance()
                     .logEvent(
                             "Building provided an invalid number of floors. Exiting now.");
-            System.exit(-1);
+            System.exit(1);
         }
         // make floors
         this.buildFloors();
@@ -73,18 +77,28 @@ final public class Building {
     }
 
     /**
-     * Build floors.
+     * Builds the floors in the building that is being created. Should only be called once!!
      */
     private void buildFloors() {
         int numFloors = this.getNumberOfFloors();
         Simulator.getInstance().logEvent(
                 String.format("Building %d number of floors.", numFloors));
         for (int i = 0; i < numFloors; i++) {
-            this.getMyFloors().add(FloorFactory.build(i + 1));
+            try {
+                this.getMyFloors().add(FloorFactory.build(i + 1));
+            } catch (IllegalParamException e) {
+                Simulator.getInstance().logEvent(String.format("Building was unable to create floor %d. Exiting application.",i));
+                System.exit(1);
+            }
         }
 
     }
 
+    /**
+     * A function that encapsulates the logic of determining if a given integer is a valid floor in this building.
+     * @param f The floor you want to check if it is valid
+     * @throws InvalidFloorException Throws this exception if the floor is below or equal to 0 or exceeds the buildings number of floors.
+     */
     private void checkValidFloor(int f) throws InvalidFloorException {
         if (f > getNumberOfFloors() || f <= 0) {
             throw new InvalidFloorException(
@@ -94,15 +108,15 @@ final public class Building {
     }
 
     /**
-     * Enter Floors.
+     * Takes a person object and enters the floor provided in the floor integer.
      * 
-     * @param p
-     * @param floor
-     *            the floor
+     * @param p The person who wishes to enter the building
+     * @param floor an integer representing which floor it is.
+     *            
      * @throws IllegalParamException
-     *             the illegal param exception
+     *             Thrown if the person is null.
      * @throws InvalidFloorException
-     *             the invalid floor exception
+     *             Thrown if the floor cannot be in this building. Greater than the current number of floors or less than 1.
      */
     public int enterFloor(Person p, int floor) throws IllegalParamException,
             InvalidFloorException {
@@ -110,6 +124,13 @@ final public class Building {
         return floorEntered;
     }
 
+    /**
+     * Private method for getting a specific floor out of the floor array.
+     * @param floorNumber the floor you want to acquire
+     * @return returns the floor based on the integer you provided
+     * @throws InvalidFloorException thrown if the floorNumber parameter cannot be in this building.
+     * It cannot be greater than the current number of floors or less than 1. 
+     */
     private Floor getAFloor(int floorNumber) throws InvalidFloorException {
         // -1 offset because arrays start at 0!!!
         // Throws a runtime exception for index out of bounds
@@ -118,9 +139,9 @@ final public class Building {
     }
 
     /**
-     * Gets the my floors.
+     * Gets the floor array.
      * 
-     * @return myFloors
+     * @return myFloors the array of floors member.
      */
     private ArrayList<Floor> getMyFloors() {
         return this.myFloors;
@@ -135,6 +156,10 @@ final public class Building {
         return numberOfFloors;
     }
 
+    /**
+     * Checks to see if the building is empty of people. 
+     * @return Returns true if nobody is currently waiting on an elevator on any floor. 
+     */
     public boolean isEmpty() {
 
         for (Floor f : getMyFloors()) {
@@ -146,10 +171,12 @@ final public class Building {
     }
 
     /**
-     * Method designed to get all of the people on a floor that are waiting for
-     * this elevator.
-     * 
-     * @param dir
+     * A method for removing people from a given floor that want to go a given direction. 
+     * Up or down.
+     * @param floor the floor you wish to get people from
+     * @param dir the direction those people are waiting for.
+     * @return an arraylist of type Person to move to another object
+     * @throws InvalidFloorException thrown if the floorNumber parameter cannot be in this building.
      */
     public ArrayList<Person> loadPeople(int floor, ElevatorDirection dir)
             throws InvalidFloorException {
@@ -162,7 +189,7 @@ final public class Building {
      * 
      * @param numF
      *            the new number of floors
-     * @throws IllegalParamException
+     * @throws IllegalParamException thrown if the number of floors passed is below 1.
      */
     private void setNumberOfFloors(int numF) throws IllegalParamException {
         if (numF < 1) {

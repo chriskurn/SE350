@@ -1,9 +1,9 @@
 package elevator.common;
 
-import elevator.elements.Elevator;
-import elevator.elements.ElevatorImpl;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
+import elevator.elements.Elevator;
+import elevator.elements.ElevatorImpl;
 
 /**
  * Description: ElevatorFactory class.
@@ -22,11 +22,15 @@ import simulator.common.SimulationInformation;
 public class ElevatorFactory {
 
     /**
-     * Builds the.
-     *
-     * @param info the info
-     * @return the elevator
-     * @throws IllegalParamException the illegal param exception
+     * Builds a new elevator.
+     * 
+     * @param info
+     *            the simulation information required to build an elevator. This
+     *            is a DTO provided by Simulator.
+     * @return a new elevator based on the DTO provided
+     * @throws IllegalParamException
+     *             thrown if any of the in the DTO are null or if the floor
+     *             cannot possible be in the building.
      */
     public static Elevator build(SimulationInformation info)
             throws IllegalParamException {

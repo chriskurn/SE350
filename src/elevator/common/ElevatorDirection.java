@@ -13,11 +13,11 @@ package elevator.common;
  * public class A elevator variable set of predefined constants (UP,DOWN,IDLE)
  */
 public enum ElevatorDirection {
-    
+
     /** The up. */
-    UP, 
- /** The down. */
- DOWN, 
- /** The idle. */
- IDLE;
+    UP,
+    /** The down. */
+    DOWN,
+    /** The idle. */
+    IDLE;
 }

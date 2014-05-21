@@ -188,13 +188,14 @@ public class Simulator implements Narrator {
     
     private void simulationEnd(){
         //Check to see if we can end the simulation
-       while(Building.getInstance().isEmpty() && ElevatorController.getInstance().elevatorWorkLeft()){
+        
+       do{
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 Simulator.getInstance().logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
             }
-        }
+        }while(allPersonsDone() == false);
         //End simulation now that everything is done
        logEvent("The simulator has now ended.");
        ElevatorController.getInstance().shutDownElevatorController();
@@ -203,6 +204,21 @@ public class Simulator implements Narrator {
        logEvent("All elevators have been shut down.");
     }
     
+    /**
+     * A test to see if there are people still running
+     * @return returns true if all of the people have finished their trip in the building
+     */
+    private boolean allPersonsDone() {
+        ArrayList<Person> peopleActive = this.getRunningPeople();
+        
+        for(Person p : peopleActive){
+            if(p.getCurrentFloor() != p.getDestinationFloor()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private ArrayList<Person> getRunningPeople() {
         return runningPeople;
     }

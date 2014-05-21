@@ -307,8 +307,8 @@ final public class ElevatorController implements Runnable {
 
     /**
      * This will only return true if each elevator has no destination left and
-     * the elevator controller has no requests left
-     * @return
+     * the elevator controller has no requests left.
+     * @return returns true if any elevators have destinations left and if there are elevator requests in the ElevatorController's request queue.
      */
     public synchronized boolean elevatorWorkLeft() {
         boolean ecNoRequests =  this.getPendingRequests().isEmpty();

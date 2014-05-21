@@ -12,7 +12,7 @@ import elevator.elements.Elevator;
 /**
  * The Class ElevatorRequestHandlerImpl.
  *
- * @author Patrick
+ * @author Patrick Stein
  */
 public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
     

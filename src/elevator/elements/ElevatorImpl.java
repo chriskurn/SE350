@@ -229,10 +229,6 @@ public class ElevatorImpl implements Elevator, Runnable {
             throw new InvalidFloorException(String.format(
                     "The floor must be between 1 and %d.", this.getNumFloors()));
         }
-        // BEWARE RACE CONDITIONS WITH THIS STATEMENT
-        if (floor == this.getCurrentFloor()) {
-            openDoors();
-        }
         // The floor must be in the same direction as the current floor
         // destination
         if (floorInSameDirection(floor) == false) {
