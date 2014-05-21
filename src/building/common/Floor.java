@@ -34,7 +34,6 @@ public interface Floor {
     /**
      * Leave floor.
      * TODO Maybe pass the previous direction of travel ?
-     * @param p the p
      */
    public  ArrayList<Person> leaveFloor(ElevatorDirection dir);
 

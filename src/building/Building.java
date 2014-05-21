@@ -66,7 +66,7 @@ final public class Building {
     /**
      * Enter Floors.
      *
-     * @param p the p
+     * @param p
      * @param floor the floor
      * @throws IllegalParamException the illegal param exception
      * @throws InvalidFloorException the invalid floor exception
@@ -78,7 +78,6 @@ final public class Building {
     }
     /**
      * Method designed to get all of the people on a floor that are waiting for this elevator.
-     * @param curFloor
      * @param dir
      */
     public ArrayList<Person> loadPeople(int floor, ElevatorDirection dir) throws InvalidFloorException {
