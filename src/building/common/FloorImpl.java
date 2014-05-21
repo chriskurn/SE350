@@ -1,6 +1,9 @@
 package building.common;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import elevator.common.ElevatorDirection;
 
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
@@ -43,18 +46,25 @@ public class FloorImpl implements Floor {
      * @see building.common.Floor#enterFloor(building.common.Person)
      */
     @Override
-    public void enterFloor(Person p) throws IllegalParamException {
+    public int enterFloor(Person p) throws IllegalParamException {
+        int thisFloor = getFloor();
+        
         if (p == null) {
             throw new IllegalParamException(
-                    "Cannot add a null to the person array. Sorry about that.");
+                    String.format("Cannot add a null to the person array on floor %d.",getFloor()));
         }
         
         Simulator.getInstance().logEvent(String.format("Person %d has entered floor: %d",p.getPersonId(),this.getFloor()));
         
         //Then this person is done moving yay!
-        if(p.getDestinationFloor() == this.getFloor()){
+        if(p.getDestinationFloor() == thisFloor){
             synchronized (this) {
                 this.getFinishedPeople().add(p);
+                //send message to simulation
+                int pid = p.getPersonId();
+                String personFinished = String.format("Person %d has finished by entering his destination floor %d.", pid,thisFloor);
+                Simulator.getInstance().logEvent(personFinished);
+                Simulator.getInstance().finishedExecution(pid);
             }
         }else{
             //else he needs to be added to the already waiting people
@@ -62,13 +72,7 @@ public class FloorImpl implements Floor {
                 this.getFloorPeople().add(p);
             }
         }
-    }
-
-    private ArrayList<Person> getFloorPeople() {
-        return this.floorPeoples;
-    }
-    private ArrayList<Person> getFinishedPeople(){
-        return this.finishedPeople;
+        return getFloor();
     }
 
     /*
@@ -77,9 +81,26 @@ public class FloorImpl implements Floor {
      * @see building.common.Floor#leaveFloor(building.common.Person)
      */
     @Override
-    public void leaveFloor(Person p) {
-        // TODO Auto-generated method stub
+    public ArrayList<Person> leaveFloor(ElevatorDirection dir) {
+        int thisFloor = getFloor();
+        ArrayList<Person> leavingPeople = new ArrayList<Person>();
+        Iterator<Person> p = this.getFloorPeople().iterator();
+        while(p.hasNext()){
+            Person person = p.next();
+            //If the direction is up and the destination floor is above this floor
+            //Or if the direction is down and the destion floor is above this floor
+            //Then we are good to leave the floor
+            if(dir == ElevatorDirection.UP && person.getDestinationFloor() > thisFloor ||
+                    dir == ElevatorDirection.DOWN && person.getDestinationFloor() < thisFloor || 
+                    dir == ElevatorDirection.IDLE){
+                leavingPeople.add(person);
+                p.remove();
+            }
+            //TODO error handle
+            
+        }
 
+        return leavingPeople;
     }
 
     /**
@@ -90,6 +111,12 @@ public class FloorImpl implements Floor {
         // TODO Auto-generated method stub
         // error handling
         this.myFloor = floor;
+    }
+    private ArrayList<Person> getFloorPeople() {
+        return this.floorPeoples;
+    }
+    private ArrayList<Person> getFinishedPeople(){
+        return this.finishedPeople;
     }
 
 }

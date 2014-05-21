@@ -1,6 +1,10 @@
 package building.common;
 
+import elevator.common.ElevatorDirection;
+import elevator.common.ElevatorRequest;
+import elevator.control.ElevatorController;
 import simulator.Simulator;
+import simulator.common.IllegalParamException;
 
 /**
  * Description: PersonImpl
@@ -12,14 +16,13 @@ import simulator.Simulator;
  * @see import simulator.Simulator
  */
 
-public class PersonImpl implements Person, Runnable {
+public class PersonImpl implements Person {
 
     private int startFloor;
     private int destinationFloor;
     private int currentFloor;
     private int personId;
     private PersonState currentState;
-    Thread myThread;
 
     private static volatile int personCount = 1;
 
@@ -34,43 +37,56 @@ public class PersonImpl implements Person, Runnable {
 
     PersonImpl(int startF, int destF) {
 
-        this.setStartFloor(startF);
-        this.setDestinationFloor(destF);
-        this.setPersonId(PersonImpl.getNewPersonId());
-        this.myThread = new Thread(this);
-        
-        Simulator.getInstance().logEvent(String.format("New person created: %s",this.toString()));
+        setStartFloor(startF);
+        setCurrentFloor(startF);
+        setDestinationFloor(destF);
+        setPersonId(PersonImpl.getNewPersonId());
+
+        Simulator.getInstance().logEvent(
+                String.format("New person created: %s", toString()));
     }
 
     @Override
     public int getPersonId() {
-        return this.personId;
+        return personId;
     }
+
     @Override
     public int getCurrentFloor() {
-        return this.currentFloor;
+        return currentFloor;
     }
+
     @Override
     public int getStartFloor() {
         return startFloor;
     }
+
     @Override
     public int getDestinationFloor() {
         return destinationFloor;
     }
-    
     @Override
-    public void startPerson() {
-        this.myThread.start();
+    public void setCurrentFloor(int floorNumber) {
+        currentFloor = floorNumber;
     }
 
     @Override
-    public void run() {
-        // TODO Auto-generated method stub
-        Simulator.getInstance().logEvent(
-                String.format("Person %d has started running",
-                        this.getPersonId()));
+    public void startPerson() {
+        int destFloor = getDestinationFloor();
+        int curFloor = getCurrentFloor();
 
+        ElevatorDirection dir = (destFloor > curFloor) ? ElevatorDirection.UP
+                : ElevatorDirection.DOWN;
+
+        try {
+            ElevatorController.getInstance().addNewRequest(
+                    curFloor, dir);
+        } catch (IllegalParamException e) {
+            String event = String
+                    .format("Person %d was unable to make a valid floor request to floor %d from current floor %d. Skipping person.",
+                            getPersonId(), destFloor, curFloor);
+            Simulator.getInstance().logEvent(event);
+        }
     }
 
     /**
@@ -85,7 +101,7 @@ public class PersonImpl implements Person, Runnable {
      *            the currentState to set
      */
     private void setCurrentState(PersonState cs) {
-        this.currentState = cs;
+        currentState = cs;
     }
 
     /**
@@ -93,14 +109,15 @@ public class PersonImpl implements Person, Runnable {
      *            the personId to set
      */
     private void setPersonId(int pid) {
-        this.personId = pid;
+        personId = pid;
     }
+
     /**
      * @param destinationFloor
      *            the destinationFloor to set
      */
     private void setDestinationFloor(int destF) {
-        this.destinationFloor = destF;
+        destinationFloor = destF;
     }
 
     /**
@@ -108,15 +125,38 @@ public class PersonImpl implements Person, Runnable {
      *            the startFloor to set
      */
     private void setStartFloor(int startF) {
-        this.startFloor = startF;
+        startFloor = startF;
     }
 
     public String toString() {
         return String
                 .format("Person %d with starting floor as %d and destination floor as %d",
-                        this.getPersonId(), this.getStartFloor(),
-                        this.getDestinationFloor());
+                        getPersonId(), getStartFloor(),
+                        getDestinationFloor());
     }
+    
+    
+    public boolean equals(Object obj){
+        
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof PersonImpl)) {
+            return false;
+        }
 
+        PersonImpl rhs = (PersonImpl) obj;
+
+        if (getPersonId() == rhs.getPersonId()) {
+            return true;
+        } else {
+            return false;
+        }
+        
+        
+    }
 
 }

@@ -9,6 +9,7 @@ import simulator.common.SimulationInformation;
 import building.common.Floor;
 import building.common.FloorFactory;
 import building.common.Person;
+import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 import elevator.control.ElevatorController;
 
@@ -40,25 +41,6 @@ final public class Building {
     private int numberOfFloors;
     private static volatile Building instance;
 
-    
-    /**
-     * Enter Floors
-     * @param p
-     * @param floor
-     * @throws IllegalParamException
-     * @throws InvalidFloorException
-     */
-    public void enterFloor(Person p, int floor) throws IllegalParamException,
-            InvalidFloorException {
-        if (floor > this.getNumberOfFloors() || floor <= 0) {
-            throw new InvalidFloorException(
-                    "The floor exceeds the number of floors of this building.");
-        } else {
-            // -1 offset because arrays start at 0!!!
-            //Throws a runtime exception for index out of bounds
-            this.getMyFloors().get(floor-1).enterFloor(p);
-        }
-    }
 
     /**
      * Create Building
@@ -70,6 +52,8 @@ final public class Building {
         this.setNumberOfFloors(info.numFloors);
         // make floors
         this.buildFloors();
+        //Call get instance to make sure the elevator controller is alive
+        ElevatorController.getInstance().startElevatorController();
 
     }
 
@@ -85,6 +69,38 @@ final public class Building {
         return instance;
 
     }
+    /**
+     * Enter Floors
+     * @param p
+     * @param floor
+     * @return 
+     * @throws IllegalParamException
+     * @throws InvalidFloorException
+     */
+    public int enterFloor(Person p, int floor) throws IllegalParamException,
+            InvalidFloorException {        
+        int floorEntered = this.getAFloor(floor).enterFloor(p);
+        return floorEntered;
+    }
+    /**
+     * Method designed to get all of the people on a floor that are waiting for this elevator.
+     * @param curFloor
+     * @param dir
+     */
+    public ArrayList<Person> loadPeople(int floor, ElevatorDirection dir) throws InvalidFloorException {
+        //ask the specific floor for ask it's nice people leave the floor
+        return this.getAFloor(floor).leaveFloor(dir);
+        
+        
+    }
+    
+    private void checkValidFloor(int f) throws InvalidFloorException{
+        if (f > getNumberOfFloors() || f <= 0) {
+            throw new InvalidFloorException(
+                    "The floor exceeds the number of floors of this building.");
+        }
+        
+    }
 
     /**
      * Build floors
@@ -97,6 +113,13 @@ final public class Building {
             this.getMyFloors().add(FloorFactory.build(i + 1));
         }
 
+    }
+    
+    private Floor getAFloor(int floorNumber) throws InvalidFloorException{
+        // -1 offset because arrays start at 0!!!
+        //Throws a runtime exception for index out of bounds
+        checkValidFloor(floorNumber);
+        return this.getMyFloors().get(floorNumber - 1);
     }
 
     /**
@@ -118,6 +141,7 @@ final public class Building {
      *            the numberOfFloors to set
      */
     private void setNumberOfFloors(int numF) {
+        // TODO error handling
         this.numberOfFloors = numF;
     }
     

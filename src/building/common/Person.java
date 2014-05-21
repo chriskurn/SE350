@@ -15,6 +15,7 @@ import elevator.common.InvalidFloorException;
 public interface Person {
 
     public int getCurrentFloor();
+    public void setCurrentFloor(int floorNumber);
     public int getStartFloor();
     public int getDestinationFloor();
     public int getPersonId();   

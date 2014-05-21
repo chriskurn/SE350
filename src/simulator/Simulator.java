@@ -1,6 +1,7 @@
 package simulator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import building.Building;
@@ -52,6 +53,8 @@ public class Simulator implements Narrator {
     private Narrator narratorDelegate;
     private Building simulatorBuilding;
     private boolean running = true;
+    private ArrayList<Person> runningPeople = new ArrayList<Person>();
+    private ArrayList<Person> finishedPeople = new ArrayList<Person>();
 
     private Simulator() {
         // TODO fill later
@@ -155,9 +158,14 @@ public class Simulator implements Narrator {
             Person p = PersonFactory.build(startFloor, destFloor);
             try {
                 // Add him to the start floor
-                this.getSimulatorBuilding().enterFloor(p, p.getStartFloor());
-                // start that person up
-                p.startPerson();
+                int floorEntered = getSimulatorBuilding().enterFloor(p, p.getStartFloor());
+                if(floorEntered != p.getStartFloor()){
+                    logEvent(String.format("Person %d was put on the wrong starting floor. Skipping this person for now.",p.getPersonId()));
+                }else{
+                    // start that person up
+                    // all it does is request the floor from the elevator controller
+                    p.startPerson();
+                }
             } catch (IllegalParamException | InvalidFloorException e1) {
                 // Ignore the person and continue on
                 this.logEvent(String
@@ -177,9 +185,31 @@ public class Simulator implements Narrator {
             // Get delta time
             currentTime = (System.currentTimeMillis() - startTime);
         }
-        this.logEvent("End of person generation for the simulation");
+        logEvent("End of person generation for the simulation");
+        
+        //Check to see if we can end the simulation
+/*        while(this.getRunningPeople().isEmpty() == false){
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                Simulator.getInstance().logEvent("An attempt to interrupt the simulation thread was made. Go die please.");
+            }
+        }*/
+        //End simulation now that everything is done
+        
+        
+    }
+    private ArrayList<Person> getRunningPeople() {
+        return runningPeople;
     }
 
+    //Remove from the array list
+    public void finishedExecution(int personId){
+        logEvent(String.format("Person %d needs to be removed!",personId));
+    }
+    
+    
+    
     /**
      * Returns all of the parameters related to elevators. How many floors, how
      * many people can be in an elevator. Also, contains information related to

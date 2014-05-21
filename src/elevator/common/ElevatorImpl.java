@@ -2,7 +2,9 @@ package elevator.common;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
+import building.Building;
 import building.common.Person;
 
 import simulator.Simulator;
@@ -32,7 +34,6 @@ public class ElevatorImpl implements Elevator, Runnable {
     private long floorTime;
     private long doorTime;
     private int numFloors;
-    @SuppressWarnings("unused")
     private int numPeoplePerElevator;
     private ElevatorDirection direction = ElevatorDirection.IDLE;
     private final int STARTINGFLOOR = 1;
@@ -128,6 +129,7 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     @Override
     public void startElevator() {
+        elevatorOn = true;
         this.myThread.start();
     }
 
@@ -166,8 +168,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @throws InvalidFloorException
      *             will throw if the above conditions are not met.
      */
-    public synchronized void addFloorHelper(int floor)
-            throws InvalidFloorException {
+    public void addFloorHelper(int floor) throws InvalidFloorException {
         if ((floor < 1) || floor > this.getNumFloors()) {
             throw new InvalidFloorException(String.format(
                     "The floor must be between 1 and %d.", this.getNumFloors()));
@@ -329,9 +330,11 @@ public class ElevatorImpl implements Elevator, Runnable {
      * 
      * @return a string representing all of the pending floor requests
      */
-    private synchronized String getFloorRequests() {
+    private String getFloorRequests() {
         if (this.destinationsLeft()) {
-            return this.getDestinations().toString();
+            synchronized (this) {
+                return this.getDestinations().toString();
+            }
         } else {
             return "";
         }
@@ -366,8 +369,10 @@ public class ElevatorImpl implements Elevator, Runnable {
     }
 
     private long getMaxTimeout() {
-        // TODO Auto-generated method stub
         return this.maxTimeOutTime;
+    }
+    private ArrayList<Person> getElevatorPeople() {
+        return elevatorPeople;
     }
 
     /**
@@ -381,12 +386,9 @@ public class ElevatorImpl implements Elevator, Runnable {
 
         // NEW: Change to make sure the timeout is being variable so the timeout
         // is
-        // TODO handle variable timeout time
-        // TODO test new variable timeout time
         long newTimeout = System.currentTimeMillis() - waitStartTime;
         // Timeout is a defined if there are no new floors in the destination
         // queue and the current floor is not the default floor
-
         if (this.destinationsLeft()) {
             // if destination left lets return and reset the current timeout
             try {
@@ -410,9 +412,18 @@ public class ElevatorImpl implements Elevator, Runnable {
                                 "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
             }
             return;
-        } else if (this.destinationsLeft() == false //if there are no destinations
-                && newTimeout >= this.getMaxTimeout() // if the delta time has exceeded the maximum timeout time allowed
-                && this.getCurrentFloor() != this.getDefaultFloor()) { // if the current floor is not the default floor
+        } else if (this.destinationsLeft() == false // if there are no
+                                                    // destinations
+                && newTimeout >= this.getMaxTimeout() // if the delta time has
+                                                      // exceeded the maximum
+                                                      // timeout time allowed
+                && this.getCurrentFloor() != this.getDefaultFloor()) { // if the
+                                                                       // current
+                                                                       // floor
+                                                                       // is not
+                                                                       // the
+                                                                       // default
+                                                                       // floor
             // add default floor to the elevator queue
             // and move to it
             Simulator
@@ -452,6 +463,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                 try {
                     this.moveToNextDestination();
                     this.removeMostRecentDestination();
+                    this.updateDirection();
                     this.openDoors();
                 } catch (NoNewDestinationException e) {
                     // No new destinations to be moved to. Let's break for lunch
@@ -492,8 +504,8 @@ public class ElevatorImpl implements Elevator, Runnable {
         this.updateDirection();
         while (destination != curFloor) {
             Thread.sleep(this.getFloorTime());
-            //if it is up, increment the floor up
-            //if it is down, then increment the floor down
+            // if it is up, increment the floor up
+            // if it is down, then increment the floor down
             if (this.getDirection() == ElevatorDirection.UP) {
                 this.setCurrentFloor(++curFloor);
             } else if (this.getDirection() == ElevatorDirection.DOWN) {
@@ -534,11 +546,96 @@ public class ElevatorImpl implements Elevator, Runnable {
                 String.format(
                         "The doors are now open in elevator %d on floor: %d",
                         this.getElevatorId(), this.getCurrentFloor()));
+        unloadPeople();
+        loadPeople();
+        //Ask for new destinations
+        getNewDestinationsFromPeople();
         Thread.sleep(this.getDoorTime());
         Simulator.getInstance().logEvent(
                 String.format(
                         "The doors are now closed in elevator %d on floor: %d",
                         this.getElevatorId(), this.getCurrentFloor()));
+    }
+
+    private void getNewDestinationsFromPeople() {
+        
+        ArrayList<Person> currentPeople = getElevatorPeople();
+        int curFloor = getCurrentFloor();
+        Iterator<Person> p = currentPeople.iterator();
+        
+        while(p.hasNext()){
+            Person person = p.next();
+            int pid = person.getPersonId();
+            int destFloor = person.getDestinationFloor();
+            
+            try {
+                this.addFloor(destFloor);
+            } catch (InvalidFloorException e) {
+                String event = String.format("Person %d tried to request his destination %d." +
+                        " in elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId());
+                try {
+                    Building.getInstance().enterFloor(person,curFloor);
+                } catch (IllegalParamException | InvalidFloorException e1) {
+                    String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d." +
+                            " This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
+                    Simulator.getInstance().logEvent(eve);
+                }
+            }
+            
+        }
+        
+    }
+
+    private void unloadPeople() {
+        //TODO delegate this
+        int curFloor = getCurrentFloor();
+        ElevatorDirection dir = getDirection();
+        ArrayList<Person> currentPeople = getElevatorPeople();
+        
+        String event = String.format(
+                "Elevator %d now unloading people on floor %d.",
+                getElevatorId(), curFloor, dir);
+        Simulator.getInstance().logEvent(event);
+        
+        Iterator<Person> p = currentPeople.iterator();
+        
+        while(p.hasNext()){
+            //is this their floor?
+            Person person = p.next();
+            if(person.getDestinationFloor() == curFloor){
+                try {
+                    Building.getInstance().enterFloor(person, curFloor);
+                } catch (IllegalParamException | InvalidFloorException e) {
+                    String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d. This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
+                    Simulator.getInstance().logEvent(eve);
+                }
+                p.remove();
+            }
+        }
+        
+    }
+
+    private void loadPeople() {
+        //TODO delegate this
+        // Ask building to load in people for this floor
+        int curFloor = getCurrentFloor();
+        ElevatorDirection dir = getDirection();
+        ArrayList<Person> currentFriends = getElevatorPeople();
+        
+        String event = String.format(
+                "Elevator %d now loading people on floor %d for direction %s",
+                getElevatorId(), curFloor, dir);
+        Simulator.getInstance().logEvent(event);     
+        
+        //Let's get those people on the floor!
+        try {
+            ArrayList<Person> newFriends = Building.getInstance().loadPeople(curFloor,dir);
+            //TODO add a check to make sure the elevator is overflowing
+            currentFriends.addAll(newFriends);
+            
+        } catch (InvalidFloorException e) {
+            Simulator.getInstance().logEvent(String.format("Elevator %d unable to load people on floor %d.", getElevatorId(),curFloor));
+        }
     }
 
     /**
@@ -667,18 +764,6 @@ public class ElevatorImpl implements Elevator, Runnable {
         } catch (NoNewDestinationException e) {
             this.direction = ElevatorDirection.IDLE;
         }
-    }
-
-    @Override
-    public void enterElevator(Person p) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean doorsOpen() {
-        // TODO Auto-generated method stub
-        return false;
     }
 
 }

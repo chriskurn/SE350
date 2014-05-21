@@ -1,5 +1,9 @@
 package building.common;
 
+import java.util.ArrayList;
+
+import elevator.common.ElevatorDirection;
+
 import simulator.common.IllegalParamException;
 
 /**
@@ -14,7 +18,7 @@ import simulator.common.IllegalParamException;
 public interface Floor {
 
     public int getFloor();
-    public void enterFloor(Person p) throws IllegalParamException;
-    public void leaveFloor(Person p);
+    public int enterFloor(Person p) throws IllegalParamException;
+    public  ArrayList<Person> leaveFloor(ElevatorDirection dir);
 
 }

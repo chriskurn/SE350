@@ -120,7 +120,7 @@ public class InputLoaderProperties implements InputLoader {
     private void setPersonPerMin(String attribute) throws IllegalParamException {
         // TODO Auto-generated method stub
         int n = Integer.parseInt(attribute);
-        if (n <= 1) {
+        if (n < 1) {
             throw new IllegalParamException(
                     "Number of persons per minute must be greater than or equal to 1.");
         }

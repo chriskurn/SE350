@@ -27,7 +27,6 @@ final public class ElevatorController implements Runnable {
 
     private volatile static ElevatorController instance;
     private boolean running;
-    private ArrayList<Elevator> elevators;
     private long timeoutTime = 2000;
     private Thread myThread;
     private ArrayList<ElevatorRequest> pendingRequests = new ArrayList<ElevatorRequest>();
@@ -45,11 +44,13 @@ final public class ElevatorController implements Runnable {
             Simulator
                     .getInstance()
                     .logEvent(
-                            "Invalid simulation input provided. Cannot continue with this simulation. Please provide valid input");
+                            "Invalid simulation input provided. Cannot continue with this simulation. Please provide valid input breh.");
             // TODO handle this exception
+            System.exit(-1);
         }
         // This should only be created once
         this.myThread = new Thread(this);
+        Simulator.getInstance().logEvent("Elevator controller created.");
     }
 
     /**
@@ -83,7 +84,9 @@ final public class ElevatorController implements Runnable {
         ArrayList<Elevator> eles = this.getElevators();
 
         for (int i = 0; i < simInfo.numElevators; i++) {
-            eles.add(ElevatorFactory.build(simInfo));
+            Elevator ele = ElevatorFactory.build(simInfo);
+            eles.add(ele);
+            ele.startElevator();
         }
 
     }
@@ -92,8 +95,10 @@ final public class ElevatorController implements Runnable {
             throws IllegalParamException {
         // Make sure it is a valid floor request
         // Direction can't be idle and the 
+        int maxFloors = getNumberOfFloors();
+        
         if (direction == ElevatorDirection.IDLE || floor <= 0
-                || floor >= this.getNumberOfFloors()) {
+                || floor > maxFloors) {
             throw new IllegalParamException(
                     "Unable to accomdate this request because the elevator direction was idle or the floors exceeded the simulations parameters.");
         }
@@ -139,27 +144,28 @@ final public class ElevatorController implements Runnable {
     private void handlePendingRequests() {
 
         // While there are pending requests lets handle them
-        while (areTherePendingRequests()) {
-            for (ElevatorRequest req : this.getPendingRequests()) {
-                // For each request in our list of pending requests
-                // Call our delegate to handle this
-                try {
-                    this.setDelegate(ElevatorRequestHandlerFactory.build(this.getElevators()));
-                } catch (IllegalParamException e) {
-                    Simulator.getInstance().logEvent("Unable to build delegate in the ElevatorController. Skipping this request.");
-                    continue;
-                }            
-                if(this.getDelegate().handleRequest(req)){
-                    //remove from the arraylist
-                    synchronized(this){
-                        this.getPendingRequests().remove(req);
-                    }
-                }else{
-                    //move to the next request
-                    //Maybe mark it in the log?
-                    continue;
+        while (areTherePendingRequests() == true) {
+            
+            ElevatorRequest req = getPendingRequests().get(0);
+            // For each request in our list of pending requests
+            // Call our delegate to handle this
+            try {
+                this.setDelegate(ElevatorRequestHandlerFactory.build(this.getElevators()));
+            } catch (IllegalParamException e) {
+                Simulator.getInstance().logEvent("Unable to build delegate in the ElevatorController. Skipping this request.");
+                continue;
+            }            
+            if(this.getDelegate().handleRequest(req)){
+                //remove from the arraylist
+                synchronized(this){
+                    this.getPendingRequests().remove(0);
                 }
+            }else{
+                //move to the next request
+                //Maybe mark it in the log?
+                continue;
             }
+      
         }
 
     }
@@ -182,13 +188,18 @@ final public class ElevatorController implements Runnable {
     /**
      * Public method to stop the execution of the elevator method
      */
-    public void stopDownElevatorController() {
-        this.running = false;
-    }
-
     public void startElevatorController() {
         this.running = true;
         this.myThread.start();
+    }
+    public void stopElevatorController() {
+        this.running = false;
+    }
+    public void stopAllElevators(){
+        //stop it
+        for(Elevator e : getElevators()){
+            e.stopElevator();
+        }
     }
 
     /**
@@ -197,7 +208,7 @@ final public class ElevatorController implements Runnable {
      * @return
      */
     private ArrayList<Elevator> getElevators() {
-        return this.elevators;
+        return myElevators;
     }
 
     /**
@@ -209,12 +220,13 @@ final public class ElevatorController implements Runnable {
         return this.timeoutTime;
     }
 
-    private void setNumberOfFloors(long numFloors) throws IllegalParamException {
+    private void setNumberOfFloors(int numFloors) throws IllegalParamException {
         SimulationInformation simInfo = Simulator.getInstance().getSimulationInfo();
         if (numFloors > simInfo.numFloors || numFloors <= 0) {
             throw new IllegalParamException(
                     "Invalid number of floors. Cannot exceed the number of floors in the simulation information or go below 0");
         }
+        numberOfFloors = numFloors;
     }
 
     private int getNumberOfFloors() {
