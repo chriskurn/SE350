@@ -1,7 +1,6 @@
 package building.common;
 
 import elevator.common.ElevatorDirection;
-import elevator.common.ElevatorRequest;
 import elevator.control.ElevatorController;
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
@@ -16,6 +15,8 @@ import simulator.common.IllegalParamException;
 
 public class PersonImpl implements Person {
 
+    private boolean errorOccured;
+    
     /** The start floor. */
     private int startFloor;
     
@@ -28,8 +29,6 @@ public class PersonImpl implements Person {
     /** The person id. */
     private int personId;
     
-    /** The current state. */
-    private PersonState currentState;
     /** The my thread. */
     Thread myThread;
     /** The person count. */
@@ -58,6 +57,16 @@ public class PersonImpl implements Person {
 
         Simulator.getInstance().logEvent(
                 String.format("New person created: %s", toString()));
+    }
+    
+    @Override
+    public void setInvalidStatus() {
+        this.errorOccured = true;
+        
+    }
+    @Override
+    public boolean didErrorOccur() {
+        return this.errorOccured;
     }
 
     /* (non-Javadoc)
@@ -118,24 +127,6 @@ public class PersonImpl implements Person {
                             getPersonId(), destFloor, curFloor);
             Simulator.getInstance().logEvent(event);
         }
-    }
-
-    /**
-     * Gets the current state.
-     *
-     * @return the currentState
-     */
-    private PersonState getCurrentState() {
-        return currentState;
-    }
-
-    /**
-     * Sets the current state.
-     *
-     * @param cs the new current state
-     */
-    private void setCurrentState(PersonState cs) {
-        currentState = cs;
     }
 
     /**

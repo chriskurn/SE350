@@ -1,4 +1,4 @@
-package building.common;
+package building.elements;
 
 /**
  * Description: FloorFactory class.

@@ -1,7 +1,9 @@
-package building.common;
+package building.elements;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import building.common.Person;
 
 import elevator.common.ElevatorDirection;
 

@@ -45,4 +45,11 @@ public interface Person {
      * Start person.
      */
     public void startPerson();
+    
+    
+    
+    public void setInvalidStatus();
+    
+    public boolean didErrorOccur();
+    
 }

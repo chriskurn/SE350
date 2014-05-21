@@ -7,10 +7,10 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import elevator.common.Elevator;
-import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
 import elevator.common.NoNewDestinationException;
+import elevator.elements.Elevator;
+import elevator.elements.ElevatorImpl;
 
 import simulator.Simulator;
 import simulator.common.IllegalParamException;

@@ -1,4 +1,8 @@
-package elevator.common;
+package elevator.elements;
+
+import elevator.common.ElevatorDirection;
+import elevator.common.InvalidFloorException;
+import elevator.common.NoNewDestinationException;
 
 
 /**

@@ -7,6 +7,7 @@ package elevator.common;
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
+@SuppressWarnings("serial")
 public class NoNewDestinationException extends Exception {
 
     /**

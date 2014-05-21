@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
-import elevator.common.Elevator;
 import elevator.common.ElevatorDirection;
 import elevator.common.ElevatorFactory;
 import elevator.common.ElevatorRequest;
+import elevator.elements.Elevator;
 
 /**
  * Description: class ElevatorController.
@@ -25,9 +25,6 @@ final public class ElevatorController implements Runnable {
     
     /** The running. */
     private boolean running;
-    
-    /** The elevators. */
-    private ArrayList<Elevator> elevators;
     
     /** The timeout time. */
     private long timeoutTime = 2000;

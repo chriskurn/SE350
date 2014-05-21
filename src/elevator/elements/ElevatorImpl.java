@@ -1,8 +1,12 @@
-package elevator.common;
+package elevator.elements;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+
+import elevator.common.ElevatorDirection;
+import elevator.common.InvalidFloorException;
+import elevator.common.NoNewDestinationException;
 
 import building.Building;
 import building.common.Person;
@@ -226,7 +230,6 @@ public class ElevatorImpl implements Elevator, Runnable {
                     "The floor must be between 1 and %d.", this.getNumFloors()));
         }
         // BEWARE RACE CONDITIONS WITH THIS STATEMENT
-        // TODO test this I am changing it to open the doors if they are on the same floor
         if (floor == this.getCurrentFloor()) {
             openDoors();
         }
@@ -388,6 +391,9 @@ public class ElevatorImpl implements Elevator, Runnable {
             return "";
         }
 
+    }
+    private int getMaxNumberOfPeople() {
+        return this.numPeoplePerElevator;
     }
 
     /**
@@ -593,18 +599,33 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @throws InterruptedException the interrupted exception
      */
     private void openDoors() {
-        Simulator.getInstance().logEvent(
-                String.format(
-                        "The doors are now open in elevator %d on floor: %d",
-                        this.getElevatorId(), this.getCurrentFloor()));
-        unloadPeople();
-        loadPeople();
+        ArrayList<Person> currentPeople = getElevatorPeople();
+        int curFloor = getCurrentFloor();
+        ElevatorDirection dir = getDirection();
+        
+        ElevatorPeoplePickup delegate = ElevatorPeoplePickupFactory.build(currentPeople, curFloor, dir, this.getMaxNumberOfPeople());
+        
+        String event = String.format(
+                "Elevator %d now unloading people on floor %d.",
+                getElevatorId(), curFloor);
+        Simulator.getInstance().logEvent(event);
+        delegate.unloadPeople();
+
+        event = String.format(
+                "Elevator %d now accepting people on floor %d.",
+                getElevatorId(), getCurrentFloor());
+        Simulator.getInstance().logEvent(event);  
+        try {
+            delegate.loadPeople();
+        } catch (InvalidFloorException e1) {
+            event = String.format("Elevator %d unable to load people from floor %d. Continuing with execution.", getElevatorId(),curFloor);
+        }
         //Ask for new destinations
         getNewDestinationsFromPeople();
         try {
             Thread.sleep(this.getDoorTime());
         } catch (InterruptedException e) {
-            String event = String.format("Elevator %d's thread has been interrupted during open door time. Moving on.", getElevatorId());
+            event = String.format("Elevator %d's thread has been interrupted during open door time. Moving on.", getElevatorId());
             Simulator.getInstance().logEvent(event);
         }
         Simulator.getInstance().logEvent(
@@ -627,72 +648,20 @@ public class ElevatorImpl implements Elevator, Runnable {
             try {
                 this.addFloor(destFloor);
             } catch (InvalidFloorException e) {
-                String event = String.format("Person %d tried to request his destination %d." +
-                        " in elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId(),curFloor);
+                String event = String.format("Person %d tried to request his destination %d. In elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId(),curFloor);
+                Simulator.getInstance().logEvent(event);
                 try {
                     Building.getInstance().enterFloor(person,curFloor);
                 } catch (IllegalParamException | InvalidFloorException e1) {
                     String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d." +
                             " This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
                     Simulator.getInstance().logEvent(eve);
-                    // TODO add to lost  people pile
+                    
+                    p.remove();
+                    
                 }
             }
             
-        }
-        
-    }
-
-    private void unloadPeople() {
-        //TODO delegate this
-        int curFloor = getCurrentFloor();
-        ElevatorDirection dir = getDirection();
-        ArrayList<Person> currentPeople = getElevatorPeople();
-        
-        String event = String.format(
-                "Elevator %d now unloading people on floor %d.",
-                getElevatorId(), curFloor, dir);
-        Simulator.getInstance().logEvent(event);
-        
-        Iterator<Person> p = currentPeople.iterator();
-        
-        while(p.hasNext()){
-            //is this their floor?
-            Person person = p.next();
-            if(person.getDestinationFloor() == curFloor){
-                try {
-                    Building.getInstance().enterFloor(person, curFloor);
-                } catch (IllegalParamException | InvalidFloorException e) {
-                    String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d. This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
-                    Simulator.getInstance().logEvent(eve);
-                }
-                // TODO java.util.ConcurrentModificationExceptiom
-                p.remove();
-            }
-        }
-        
-    }
-
-    private void loadPeople() {
-        //TODO delegate this
-        // Ask building to load in people for this floor
-        int curFloor = getCurrentFloor();
-        ElevatorDirection dir = getDirection();
-        ArrayList<Person> currentFriends = getElevatorPeople();
-        
-        String event = String.format(
-                "Elevator %d now loading people on floor %d for direction %s",
-                getElevatorId(), curFloor, dir);
-        Simulator.getInstance().logEvent(event);     
-        
-        //Let's get those people on the floor!
-        try {
-            ArrayList<Person> newFriends = Building.getInstance().loadPeople(curFloor,dir);
-            //TODO add a check to make sure the elevator is overflowing
-            currentFriends.addAll(newFriends);
-            
-        } catch (InvalidFloorException e) {
-            Simulator.getInstance().logEvent(String.format("Elevator %d unable to load people on floor %d.", getElevatorId(),curFloor));
         }
     }
 

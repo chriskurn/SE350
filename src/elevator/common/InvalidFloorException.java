@@ -8,7 +8,8 @@ package elevator.common;
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class InvalidFloorException extends Exception {
+@SuppressWarnings("serial")
+final public class InvalidFloorException extends Exception {
     
     /**
      * Instantiates a new invalid floor exception.

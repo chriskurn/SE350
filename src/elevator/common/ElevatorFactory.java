@@ -1,5 +1,7 @@
 package elevator.common;
 
+import elevator.elements.Elevator;
+import elevator.elements.ElevatorImpl;
 import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 

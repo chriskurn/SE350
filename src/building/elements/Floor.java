@@ -1,6 +1,8 @@
-package building.common;
+package building.elements;
 
 import java.util.ArrayList;
+
+import building.common.Person;
 
 import elevator.common.ElevatorDirection;
 

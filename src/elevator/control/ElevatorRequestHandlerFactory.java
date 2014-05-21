@@ -2,7 +2,7 @@ package elevator.control;
 
 import java.util.ArrayList;
 import simulator.common.IllegalParamException;
-import elevator.common.Elevator;
+import elevator.elements.Elevator;
 
 /**
  * Description: A factory for creating ElevatorRequestHandler objects.

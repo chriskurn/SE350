@@ -11,9 +11,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import elevator.common.Elevator;
-import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
+import elevator.elements.Elevator;
+import elevator.elements.ElevatorImpl;
 
 import simulator.Simulator;
 import simulator.common.IllegalParamException;

@@ -218,6 +218,7 @@ public class Simulator implements Narrator {
     public SimulationInformation getSimulationInfo() {
         return this.getInputLoader().getSimulationInfo();
     }
+    
 
     /**
      * If needed, will end the simulation.

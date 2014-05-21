@@ -2,13 +2,12 @@ package elevator.control;
 
 import java.util.ArrayList;
 
-import simulator.Simulator;
 import simulator.common.IllegalParamException;
 
-import elevator.common.Elevator;
 import elevator.common.ElevatorDirection;
 import elevator.common.ElevatorRequest;
 import elevator.common.InvalidFloorException;
+import elevator.elements.Elevator;
 
 /**
  * The Class ElevatorRequestHandlerImpl.
