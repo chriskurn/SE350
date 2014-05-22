@@ -4,8 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import elevator.common.InvalidFloorException;
+import building.Building;
 import building.common.Person;
 import building.common.PersonFactory;
+import simulator.Simulator;
+import simulator.common.IllegalParamException;
+import simulator.common.NullFileException;
+import simulator.common.SimulationInformation;
+
 
 /**
  * The Class PersonTest
@@ -20,16 +27,16 @@ import building.common.PersonFactory;
  * Create a person object with a StartFloor and DestFloor
  * Return values
  */
-public class PersonTest {
+public class PersonBuildTest {
 	
-	
-	@Test
-	public void Persontest() {
-
+		@Test
+	public void Test() {
+			
 		int startFloor = 5;
 		int destFloor = 17;
 		Person P = PersonFactory.build(startFloor, destFloor);
-		System.out.println("Destination Floor = " + P.getDestinationFloor());	
+		System.out.println("Destination Floor = " + P.getCurrentFloor());
+		fail("Destination Not Found");
 	}
 
 }

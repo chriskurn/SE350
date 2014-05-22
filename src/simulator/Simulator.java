@@ -8,9 +8,6 @@ import building.Building;
 import building.common.Person;
 import building.common.PersonFactory;
 
-//import elevator.common.Elevator;
-//import elevator.common.ElevatorDirection;
-//import elevator.common.ElevatorImpl;
 import elevator.common.InvalidFloorException;
 import elevator.control.ElevatorController;
 

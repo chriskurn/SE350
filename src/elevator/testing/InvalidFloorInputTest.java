@@ -1,6 +1,5 @@
 package elevator.testing;
 
-//import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,23 +24,6 @@ import simulator.common.SimulationInformation;
  *
  * @author Patrick Stein
  * @author Chris Kurn
- * @see elevator.testing
- * @see import java.io.FileNotFoundException;
- * @see import java.io.IOException;
- * @see import java.util.Arrays;
- * @see import java.util.Collection;
- * @see import org.junit.Before;
- * @see import org.junit.Test;
- * @see import org.junit.runner.RunWith;
- * @see import org.junit.runners.Parameterized;
- * @see import org.junit.runners.Parameterized.Parameters;
- * @see import elevator.common.Elevator;
- * @see import elevator.common.ElevatorImpl;
- * @see import elevator.common.InvalidFloorException;
- * @see import simulator.Simulator;
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.NullFileException;
- * @see import simulator.common.SimulationInformation;
  * @since Version 1.0 - Spring Quarter 2014
  */
 

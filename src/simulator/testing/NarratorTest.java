@@ -1,6 +1,8 @@
 package simulator.testing;
 
 import static org.junit.Assert.*;
+import simulator.elements.Narrator;
+import simulator.elements.StandardNarratorImpl;
 
 import org.junit.Test;
 
@@ -17,7 +19,8 @@ public class NarratorTest {
 
 	@Test
 	public void Test() {
-		System.out.println("Test");
+		//System.out.println("Test");
+		//logEvent("Test Event");
 	}
 
 }

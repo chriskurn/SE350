@@ -1,6 +1,3 @@
-/**
- * 
- */
 package elevator.elements;
 
 import elevator.common.InvalidFloorException;
