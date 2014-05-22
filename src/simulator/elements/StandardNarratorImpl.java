@@ -3,9 +3,6 @@ package simulator.elements;
 //import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
-//import simulator.common.IllegalParamException;
-//import simulator.common.NullFileException;
-
 /**
  * Description: StandardNarratorImpl class.
  *

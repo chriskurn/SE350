@@ -36,7 +36,7 @@ public class BuildBuildingTest {
 	 */
  
 	@Test
-	public void BuildBuildingTest() {
+	public void BuildingTest() {
         // TODO Auto-generated method stub
 
         /**
