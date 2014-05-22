@@ -1,7 +1,6 @@
 package simulator.elements;
 
 //import java.io.FileNotFoundException;
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 //import simulator.common.IllegalParamException;
@@ -56,8 +55,13 @@ public class StandardNarratorImpl implements Narrator {
         
         long hr = TimeUnit.MILLISECONDS.toHours(l);
         long min = TimeUnit.MILLISECONDS.toMinutes(l - TimeUnit.HOURS.toMillis(hr));
-        long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
-        long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
+        
+        long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) -
+                                                   TimeUnit.MINUTES.toMillis(min));
+        
+        long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) -
+                                                  TimeUnit.MINUTES.toMillis(min) -
+                                                  TimeUnit.SECONDS.toMillis(sec));
         return String.format("%02d:%02d:%02d.%03d", hr, min, sec, ms);
         
     }
@@ -73,7 +77,7 @@ public class StandardNarratorImpl implements Narrator {
      * Method that writes elevator info to a file.
      */
     public boolean writeToFile() {
-        return this.saveToFile;
+        return saveToFile;
     }
 
     /* (non-Javadoc)
@@ -85,7 +89,7 @@ public class StandardNarratorImpl implements Narrator {
      * @return the message queue length
      */
     public int getMessageQueueLength() {
-        return this.recentMessages.length;
+        return recentMessages.length;
     }
 
 }

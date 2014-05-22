@@ -11,7 +11,8 @@ import elevator.common.ElevatorRequest;
 import elevator.elements.Elevator;
 
 /**
- * Description: class ElevatorController is a singleton facade designed to manage the elevators and their requests.
+ * Description: class ElevatorController is a singleton facade designed to
+ * manage the elevators and their requests.
  * 
  * 
  * @author Patrick Stein
@@ -91,8 +92,11 @@ final public class ElevatorController implements Runnable {
      * 
      * @param simInfo
      *            the simulation information DTO provided by the Simulator Class
-     * @throws IllegalParamException this exception is thrown if bad information is provided to the elevator being created.
-     * Things such as negative max floor numbers or negative door time will cause this exception to be thrown.
+     * @throws IllegalParamException
+     *             this exception is thrown if bad information is provided to
+     *             the elevator being created. Things such as negative max floor
+     *             numbers or negative door time will cause this exception to be
+     *             thrown.
      */
     private void createElevators(SimulationInformation simInfo)
             throws IllegalParamException {
@@ -114,7 +118,8 @@ final public class ElevatorController implements Runnable {
      * @param direction
      *            the direction in which the request will be going
      * @throws IllegalParamException
-     *             thrown if the anything is null or the floor is not in the range of the building
+     *             thrown if the anything is null or the floor is not in the
+     *             range of the building
      */
     public void addNewRequest(int floor, ElevatorDirection direction)
             throws IllegalParamException {
@@ -139,7 +144,8 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * Adds the new request. Primarily a single point to synchronize and notify all threads waiting.
+     * Adds the new request. Primarily a single point to synchronize and notify
+     * all threads waiting.
      * 
      * @param req
      *            the request that needs to be added.
@@ -177,9 +183,8 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * Handle pending requests.
-     * This method will iterate through the list of requests and assign them to a given
-     * elevator delegate.
+     * Handle pending requests. This method will iterate through the list of
+     * requests and assign them to a given elevator delegate.
      */
     private void handlePendingRequests() {
 
@@ -298,7 +303,8 @@ final public class ElevatorController implements Runnable {
      * @param numFloors
      *            the new number of floors
      * @throws IllegalParamException
-     *             the illegal param exception
+     *             thrown if the number of floors does not match the simulation
+     *             information
      */
     private void setNumberOfFloors(int numFloors) throws IllegalParamException {
         SimulationInformation simInfo = Simulator.getInstance()
@@ -339,7 +345,6 @@ final public class ElevatorController implements Runnable {
         boolean ecNoRequests = this.getPendingRequests().isEmpty();
         boolean elesNoMovement = false;
 
-        //
         for (Elevator e : this.getElevators()) {
             if (e.destinationsLeft() == true) {
                 elesNoMovement = false;

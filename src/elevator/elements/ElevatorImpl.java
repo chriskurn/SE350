@@ -4,20 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import simulator.Simulator;
+import simulator.common.IllegalParamException;
+import simulator.common.SimulationInformation;
+import building.Building;
+import building.common.Person;
 import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 import elevator.common.NoNewDestinationException;
 
-import building.Building;
-import building.common.Person;
-
-import simulator.Simulator;
-import simulator.common.IllegalParamException;
-import simulator.common.SimulationInformation;
-
 /**
  * Description: Elevator implementation class.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -27,49 +25,46 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /** The default floor. */
     private int defaultFloor = 1;
-    
+
     /** The current time out. */
     private long currentTimeOut;
-    
+
     /** The max time out time. */
     private long maxTimeOutTime;
-    
+
     /** The floor time. */
     private long floorTime;
-    
+
     /** The door time. */
     private long doorTime;
-    
+
     /** The num floors. */
     private int numFloors;
-    
+
     /** The num people per elevator. */
     private int numPeoplePerElevator;
-    
+
     /** The direction. */
     private ElevatorDirection direction = ElevatorDirection.IDLE;
-    
-    /** Is the elevator moving?*/
-    private boolean isMoving = false;
-    
+
     /** The startingfloor. */
     private final int STARTINGFLOOR = 1;
-    
+
     /** The current floor. */
     private int currentFloor;
-    
+
     /** The destinations. */
     private ArrayList<Integer> destinations = new ArrayList<Integer>();
-    
+
     /** The elevator people. */
     private ArrayList<Person> elevatorPeople = new ArrayList<Person>();
 
     /** The my thread. */
     private Thread myThread;
-    
+
     /** The elevator id. */
     private int elevatorId;
-    
+
     /** The elevator on. */
     private boolean elevatorOn = true;
 
@@ -78,7 +73,7 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /**
      * method for getting a unique elevatorID.
-     *
+     * 
      * @return returns an integer that is a unique elevatorID
      */
     private static synchronized int getNewElevatorId() {
@@ -99,112 +94,41 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     public ElevatorImpl(SimulationInformation info)
             throws IllegalParamException {
-        this.setCurrentTimeout(info.elevatorSleepTime);
-        this.setMaxTimeoutTime(info.elevatorSleepTime);
-        this.setFloorTime(info.floorTime);
-        this.setDoorTime(info.doorTime);
-        this.setNumFloors(info.numFloors);
-        this.setNumpeopleperElevator(info.numPeoplePerElevator);
-        this.setNumFloors(info.numFloors);
-        this.setCurrentFloor(this.STARTINGFLOOR);
-        this.elevatorId = ElevatorImpl.getNewElevatorId();
-        this.myThread = new Thread(this);
+        setCurrentTimeout(info.elevatorSleepTime);
+        setMaxTimeoutTime(info.elevatorSleepTime);
+        setFloorTime(info.floorTime);
+        setDoorTime(info.doorTime);
+        setNumFloors(info.numFloors);
+        setNumpeopleperElevator(info.numPeoplePerElevator);
+        setNumFloors(info.numFloors);
+        setCurrentFloor(STARTINGFLOOR);
+        elevatorId = ElevatorImpl.getNewElevatorId();
+        myThread = new Thread(this);
 
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Runnable#run()
-     */
-    @Override
-    public void run() {
-        try {
-            this.controlState();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt(); // restore interrupted status
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#getDirection()
-     */
-    @Override
-    public ElevatorDirection getDirection() {
-        return this.direction;
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#getElevatorId()
-     */
-    @Override
-    public int getElevatorId() {
-        return this.elevatorId;
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#destinationsLeft()
-     */
-    @Override
-    public synchronized boolean destinationsLeft() {
-        return !this.getDestinations().isEmpty();
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#getCurrentFloor()
-     */
-    @Override
-    public int getCurrentFloor() {
-        return this.currentFloor;
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#getDestination()
-     */
-    @Override
-    public int getDestination() throws NoNewDestinationException {
-        synchronized (this) {
-            if (this.getDestinations().isEmpty() == false) {
-                return this.getDestinations().get(0);
-            }
-        }
-        throw new NoNewDestinationException(
-                "There are no more destinations in the queue.");
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#startElevator()
-     */
-    @Override
-    public void startElevator() {
-        elevatorOn = true;
-        this.myThread.start();
-    }
-
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#stopElevator()
-     */
-    @Override
-    public void stopElevator() {
-        this.elevatorOn = false;
-    }
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see elevator.common.Elevator#addFloor(int)
      */
     @Override
     public void addFloor(int floor) throws InvalidFloorException {
-        this.addFloorHelper(floor);
+        addFloorHelper(floor);
     }
 
-    /* (non-Javadoc)
-     * @see elevator.common.Elevator#addFloor(int, elevator.common.ElevatorDirection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#addFloor(int,
+     * elevator.common.ElevatorDirection)
      */
     @Override
     public void addFloor(int floor, ElevatorDirection dir)
             throws InvalidFloorException {
-        if (dir == this.getDirection()
-                || this.getDirection() == ElevatorDirection.IDLE) {
-            this.addFloor(floor);
+        if (dir == getDirection()
+                || getDirection() == ElevatorDirection.IDLE) {
+            addFloor(floor);
         } else {
             throw new InvalidFloorException(
                     "Tried to add a floor request to an elevator going in a different direction.");
@@ -225,9 +149,9 @@ public class ElevatorImpl implements Elevator, Runnable {
      *             will throw if the above conditions are not met.
      */
     public void addFloorHelper(int floor) throws InvalidFloorException {
-        if ((floor < 1) || floor > this.getNumFloors()) {
+        if ((floor < 1) || floor > getNumFloors()) {
             throw new InvalidFloorException(String.format(
-                    "The floor must be between 1 and %d.", this.getNumFloors()));
+                    "The floor must be between 1 and %d.", getNumFloors()));
         }
         // The floor must be in the same direction as the current floor
         // destination
@@ -238,29 +162,30 @@ public class ElevatorImpl implements Elevator, Runnable {
         // If the destination already exists we want to ignore it / not add it
         if (destinationExists(floor) == false) {
             // add the destination
-            this.addFloorToQueue(floor);
+            addFloorToQueue(floor);
             Simulator
                     .getInstance()
                     .logEvent(
                             String.format(
                                     "Elevator %d has added floor: %d. [Floor requests: %s]",
-                                    this.getElevatorId(), floor,
-                                    this.getFloorRequests()));
+                                    getElevatorId(), floor,
+                                    getFloorRequests()));
         }
     }
 
     /**
      * A method for adding the floor to a queue.
-     *
-     * @param floorAdded the floor added
+     * 
+     * @param floorAdded
+     *            the floor added
      */
     private synchronized void addFloorToQueue(int floorAdded) {
         // Get the list of destinations
-        ArrayList<Integer> dests = this.getDestinations();
+        ArrayList<Integer> dests = getDestinations();
         // add the floor
         dests.add(floorAdded);
         // make sure it is still sorted
-        ElevatorDirection dir = this.getDirection();
+        ElevatorDirection dir = getDirection();
         if (dir == ElevatorDirection.UP) {
             // This should be sorted ascending
             Collections.sort(dests);
@@ -268,7 +193,7 @@ public class ElevatorImpl implements Elevator, Runnable {
             // This should be sorted descending
             Collections.sort(dests, Collections.reverseOrder());
         } else {
-            this.updateDirection();
+            updateDirection();
         }
         notifyAll();
     }
@@ -282,28 +207,28 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private void controlState() throws InterruptedException {
         // Continue forever until we are asked to end
-        while (this.elevatorOn) {
+        while (elevatorOn) {
 
             // ask if a destination has been added
-            this.moveToAllFloors();
+            moveToAllFloors();
             long waitStartTime = System.currentTimeMillis();
             synchronized (this) {
                 try {
-                    wait(this.getCurrentTimeout());
+                    wait(getCurrentTimeout());
                 } catch (InterruptedException e) {
                     Simulator
                             .getInstance()
                             .logEvent(
                                     String.format(
                                             "Elevator %d has been interrupted. Continuing execution.",
-                                            this.getElevatorId()));
-                    this.stopElevator();
+                                            getElevatorId()));
+                    stopElevator();
                 }
             }
             // DON'T CALL MOVE DURING A SYNCH BLOCK OR ELEVATORS CANNOT BE ADDED
             // TO THE QUEUE
             // Also calculates the new timeout time
-            this.handleWakeUp(waitStartTime);
+            handleWakeUp(waitStartTime);
         }
     }
 
@@ -315,7 +240,17 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @return a boolean indicating if the floor already exists in the queue
      */
     private synchronized boolean destinationExists(int floorAdded) {
-        return this.getDestinations().contains(floorAdded);
+        return getDestinations().contains(floorAdded);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#destinationsLeft()
+     */
+    @Override
+    public synchronized boolean destinationsLeft() {
+        return !getDestinations().isEmpty();
     }
 
     /**
@@ -331,10 +266,10 @@ public class ElevatorImpl implements Elevator, Runnable {
     private boolean floorInSameDirection(int floorAdded) {
         // if the direction is set to up and the current floor is less than the
         // floor added then we cannot add
-        int cf = this.getCurrentFloor();
-        if ((this.getDirection() == ElevatorDirection.UP) && cf > floorAdded) {
+        int cf = getCurrentFloor();
+        if ((getDirection() == ElevatorDirection.UP) && cf > floorAdded) {
             return false;
-        } else if ((this.getDirection() == ElevatorDirection.DOWN)
+        } else if ((getDirection() == ElevatorDirection.DOWN)
                 && floorAdded > cf) { // Same thing for down but the floor is
                                       // greater than the above floor
             return false;
@@ -344,31 +279,90 @@ public class ElevatorImpl implements Elevator, Runnable {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#getCurrentFloor()
+     */
+    @Override
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
     /**
      * This method retrieves the timeout.
-     *
+     * 
+     * @return the timeout
+     */
+    private long getCurrentTimeout() {
+        return currentTimeOut;
+    }
+
+    /**
+     * This method retrieves the timeout.
+     * 
      * @return defaultFloor
      */
     private int getDefaultFloor() {
-        return this.defaultFloor;
+        return defaultFloor;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#getDestination()
+     */
+    @Override
+    public int getDestination() throws NoNewDestinationException {
+        synchronized (this) {
+            if (getDestinations().isEmpty() == false) {
+                return getDestinations().get(0);
+            }
+        }
+        throw new NoNewDestinationException(
+                "There are no more destinations in the queue.");
     }
 
     /**
      * This method retrieves the destinations from an arraylist.
-     *
+     * 
      * @return destinations
      */
     private ArrayList<Integer> getDestinations() {
-        return this.destinations;
+        return destinations;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#getDirection()
+     */
+    @Override
+    public ElevatorDirection getDirection() {
+        return direction;
     }
 
     /**
      * This method retrieves the door time.
-     *
+     * 
      * @return the door time
      */
     private long getDoorTime() {
-        return this.doorTime;
+        return doorTime;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#getElevatorId()
+     */
+    @Override
+    public int getElevatorId() {
+        return elevatorId;
+    }
+
+    private ArrayList<Person> getElevatorPeople() {
+        return elevatorPeople;
     }
 
     /**
@@ -379,63 +373,94 @@ public class ElevatorImpl implements Elevator, Runnable {
      * @return a string representing all of the pending floor requests
      */
     private String getFloorRequests() {
-        if (this.destinationsLeft()) {
+        if (destinationsLeft()) {
             synchronized (this) {
-                return this.getDestinations().toString();
+                return getDestinations().toString();
             }
         } else {
             return "";
         }
 
     }
-    private int getMaxNumberOfPeople() {
-        return this.numPeoplePerElevator;
-    }
 
     /**
      * This method retrieves the floor time.
-     *
+     * 
      * @return floorTime
      */
     private long getFloorTime() {
-        return this.floorTime;
+        return floorTime;
     }
 
-    /**
-     * This method retrieves the number of floors.
-     *
-     * @return number of floors
-     */
-    private int getNumFloors() {
-        return this.numFloors;
-    }
-
-    /**
-     * This method retrieves the timeout.
-     *
-     * @return the timeout
-     */
-    private long getCurrentTimeout() {
-        return this.currentTimeOut;
+    private int getMaxNumberOfPeople() {
+        return numPeoplePerElevator;
     }
 
     /**
      * Gets the max timeout.
-     *
+     * 
      * @return the max timeout
      */
     private long getMaxTimeout() {
-        return this.maxTimeOutTime;
+        return maxTimeOutTime;
     }
-    private ArrayList<Person> getElevatorPeople() {
-        return elevatorPeople;
+
+    /**
+     * Asks all of the people in the elevator for their destinations. And adds
+     * any valid ones to the queue. If invalid, will reenter the floor they were
+     * just on.
+     */
+    private void getNewDestinationsFromPeople() {
+
+        ArrayList<Person> currentPeople = getElevatorPeople();
+        int curFloor = getCurrentFloor();
+        Iterator<Person> p = currentPeople.iterator();
+
+        while (p.hasNext()) {
+            Person person = p.next();
+            int pid = person.getPersonId();
+            int destFloor = person.getDestinationFloor();
+
+            try {
+                addFloor(destFloor);
+            } catch (InvalidFloorException e) {
+                String event = String
+                        .format("Person %d tried to request his destination %d. In elevator %d and failed. Moving back to floor %d.",
+                                pid, destFloor, getElevatorId(), curFloor);
+                Simulator.getInstance().logEvent(event);
+                try {
+                    Building.getInstance().enterFloor(person, curFloor);
+                } catch (IllegalParamException | InvalidFloorException e1) {
+                    String eve = String
+                            .format("Elevator %d tried to move a person from the elevator to floor %d."
+                                    + " This operation failed. Removing person and continuing on.",
+                                    getElevatorId(), curFloor);
+                    Simulator.getInstance().logEvent(eve);
+
+                    p.remove();
+
+                }
+            }
+
+        }
+    }
+
+    /**
+     * This method retrieves the number of floors.
+     * 
+     * @return number of floors
+     */
+    private int getNumFloors() {
+        return numFloors;
     }
 
     /**
      * Handle the timeout behavior. Returns to a default floor
-     *
-     * @param waitStartTime the wait start time
-     * @throws InterruptedException             throws an interrupted exception if the thread is interrupted
+     * 
+     * @param waitStartTime
+     *            the wait start time
+     * @throws InterruptedException
+     *             throws an interrupted exception if the thread is interrupted
      *             during movement to the default floor.
      */
     private void handleWakeUp(long waitStartTime) throws InterruptedException {
@@ -445,10 +470,10 @@ public class ElevatorImpl implements Elevator, Runnable {
         long newTimeout = System.currentTimeMillis() - waitStartTime;
         // Timeout is a defined if there are no new floors in the destination
         // queue and the current floor is not the default floor
-        if (this.destinationsLeft()) {
+        if (destinationsLeft()) {
             // if destination left lets return and reset the current timeout
             try {
-                this.setCurrentTimeout(this.getMaxTimeout());
+                setCurrentTimeout(getMaxTimeout());
             } catch (IllegalParamException e) {
                 Simulator
                         .getInstance()
@@ -456,11 +481,11 @@ public class ElevatorImpl implements Elevator, Runnable {
                                 "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
             }
             return;
-        } else if (this.destinationsLeft() == false
-                && newTimeout < this.getMaxTimeout()) {
+        } else if (destinationsLeft() == false
+                && newTimeout < getMaxTimeout()) {
             // I was woken up unexpectedly with nothing to do
             try {
-                this.setCurrentTimeout(newTimeout);
+                setCurrentTimeout(newTimeout);
             } catch (IllegalParamException e) {
                 Simulator
                         .getInstance()
@@ -468,12 +493,12 @@ public class ElevatorImpl implements Elevator, Runnable {
                                 "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
             }
             return;
-        } else if (this.destinationsLeft() == false // if there are no
+        } else if (destinationsLeft() == false // if there are no
                                                     // destinations
-                && newTimeout >= this.getMaxTimeout() // if the delta time has
+                && newTimeout >= getMaxTimeout() // if the delta time has
                                                       // exceeded the maximum
                                                       // timeout time allowed
-                && this.getCurrentFloor() != this.getDefaultFloor()) { // if the
+                && getCurrentFloor() != getDefaultFloor()) { // if the
                                                                        // current
                                                                        // floor
                                                                        // is not
@@ -487,9 +512,9 @@ public class ElevatorImpl implements Elevator, Runnable {
                     .logEvent(
                             String.format(
                                     "Elevator %d has timed out. Returning to default floor: %d.",
-                                    this.elevatorId, this.defaultFloor));
+                                    elevatorId, defaultFloor));
             try {
-                this.addFloorHelper(this.getDefaultFloor());
+                addFloorHelper(getDefaultFloor());
             } catch (InvalidFloorException e) {
                 // Even though this floor was added. Don't crash. Just log it
                 // and move on.
@@ -504,22 +529,23 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /**
      * A method to move elevator to all requested floors.
-     *
-     * @throws InterruptedException             throws if the thread is interrupted during execution.
+     * 
+     * @throws InterruptedException
+     *             throws if the thread is interrupted during execution.
      */
     private void moveToAllFloors() throws InterruptedException {
 
-        if (this.destinationsLeft() == false) {
-            this.updateDirection();
+        if (destinationsLeft() == false) {
+            updateDirection();
             return;
         } else {
-            while (this.destinationsLeft() == true) {
+            while (destinationsLeft() == true) {
                 // Move and update the destination queue
                 try {
-                    this.moveToNextDestination();
-                    this.removeMostRecentDestination();
-                    this.updateDirection();
-                    this.openDoors();
+                    moveToNextDestination();
+                    removeMostRecentDestination();
+                    updateDirection();
+                    openDoors();
                 } catch (NoNewDestinationException e) {
                     // No new destinations to be moved to. Let's break for lunch
                     break;
@@ -527,10 +553,10 @@ public class ElevatorImpl implements Elevator, Runnable {
             }
             // We are now done moving to all floors in our queue.
             // Update the location so we can handle new requests
-            this.updateDirection();
+            updateDirection();
             // Set the max timeout time again
             try {
-                this.setCurrentTimeout(this.getMaxTimeout());
+                setCurrentTimeout(getMaxTimeout());
             } catch (IllegalParamException e) {
                 Simulator
                         .getInstance()
@@ -543,26 +569,28 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /**
      * A method to move elevator to the next destination (floor).
-     *
-     * @throws InterruptedException             Thrown if the thread is interrupted during Thread.sleep()
-     * @throws NoNewDestinationException             This exception is thrown if there are no new destinations to
+     * 
+     * @throws InterruptedException
+     *             Thrown if the thread is interrupted during Thread.sleep()
+     * @throws NoNewDestinationException
+     *             This exception is thrown if there are no new destinations to
      *             move to.
      */
     private void moveToNextDestination() throws InterruptedException,
             NoNewDestinationException {
         // get the first destination
-        int destination = this.getDestination();
-        int curFloor = this.getCurrentFloor();
-        int eleId = this.getElevatorId();
-        this.updateDirection();
+        int destination = getDestination();
+        int curFloor = getCurrentFloor();
+        int eleId = getElevatorId();
+        updateDirection();
         while (destination != curFloor) {
-            Thread.sleep(this.getFloorTime());
+            Thread.sleep(getFloorTime());
             // if it is up, increment the floor up
             // if it is down, then increment the floor down
-            if (this.getDirection() == ElevatorDirection.UP) {
-                this.setCurrentFloor(++curFloor);
-            } else if (this.getDirection() == ElevatorDirection.DOWN) {
-                this.setCurrentFloor(--curFloor);
+            if (getDirection() == ElevatorDirection.UP) {
+                setCurrentFloor(++curFloor);
+            } else if (getDirection() == ElevatorDirection.DOWN) {
+                setCurrentFloor(--curFloor);
             } else {
                 // We shouldn't be moving
                 Simulator.getInstance().logEvent(
@@ -572,17 +600,17 @@ public class ElevatorImpl implements Elevator, Runnable {
                 return;
             }
             // This is just to keep it updated with the rest of the program.
-            curFloor = this.getCurrentFloor();
+            curFloor = getCurrentFloor();
             // this may change during moving
-            destination = this.getDestination();
+            destination = getDestination();
             Simulator
                     .getInstance()
                     .logEvent(
                             String.format(
                                     "Elevator %d Now at floor: %d. [Floor requests: %s]",
-                                    eleId, curFloor, this.getFloorRequests()));
+                                    eleId, curFloor, getFloorRequests()));
 
-            this.updateDirection();
+            updateDirection();
         }
         Simulator.getInstance().logEvent(
                 String.format("Elevator %d now done moving to floor: %d.",
@@ -591,74 +619,49 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /**
      * This method opens the doors to the elevator.
-     *
-     * @throws InterruptedException the interrupted exception
+     * 
+     * @throws InterruptedException
+     *             thrown if someone interrupts the elevator during its door
+     *             open time
      */
     private void openDoors() {
         ArrayList<Person> currentPeople = getElevatorPeople();
         int curFloor = getCurrentFloor();
         ElevatorDirection dir = getDirection();
-        
-        ElevatorPeoplePickup delegate = ElevatorPeoplePickupFactory.build(currentPeople, curFloor, dir, this.getMaxNumberOfPeople());
-        
+
+        ElevatorPeoplePickup delegate = ElevatorPeoplePickupFactory.build(
+                currentPeople, dir, getMaxNumberOfPeople());
+
         String event = String.format(
                 "Elevator %d now unloading people on floor %d.",
                 getElevatorId(), curFloor);
         Simulator.getInstance().logEvent(event);
-        delegate.unloadPeople();
+        delegate.unloadPeople(curFloor);
 
-        event = String.format(
-                "Elevator %d now accepting people on floor %d.",
+        event = String.format("Elevator %d now accepting people on floor %d.",
                 getElevatorId(), getCurrentFloor());
-        Simulator.getInstance().logEvent(event);  
+        Simulator.getInstance().logEvent(event);
         try {
-            delegate.loadPeople();
+            delegate.loadPeople(curFloor);
         } catch (InvalidFloorException e1) {
-            event = String.format("Elevator %d unable to load people from floor %d. Continuing with execution.", getElevatorId(),curFloor);
+            event = String
+                    .format("Elevator %d unable to load people from floor %d. Continuing with execution.",
+                            getElevatorId(), curFloor);
         }
-        //Ask for new destinations
+        // Ask for new destinations
         getNewDestinationsFromPeople();
         try {
-            Thread.sleep(this.getDoorTime());
+            Thread.sleep(getDoorTime());
         } catch (InterruptedException e) {
-            event = String.format("Elevator %d's thread has been interrupted during open door time. Moving on.", getElevatorId());
+            event = String
+                    .format("Elevator %d's thread has been interrupted during open door time. Moving on.",
+                            getElevatorId());
             Simulator.getInstance().logEvent(event);
         }
         Simulator.getInstance().logEvent(
                 String.format(
                         "The doors are now closed in elevator %d on floor: %d",
-                        this.getElevatorId(), this.getCurrentFloor()));
-    }
-
-    private void getNewDestinationsFromPeople() {
-        
-        ArrayList<Person> currentPeople = getElevatorPeople();
-        int curFloor = getCurrentFloor();
-        Iterator<Person> p = currentPeople.iterator();
-        
-        while(p.hasNext()){
-            Person person = p.next();
-            int pid = person.getPersonId();
-            int destFloor = person.getDestinationFloor();
-            
-            try {
-                this.addFloor(destFloor);
-            } catch (InvalidFloorException e) {
-                String event = String.format("Person %d tried to request his destination %d. In elevator %d and failed. Moving back to floor %d.", pid,destFloor,getElevatorId(),curFloor);
-                Simulator.getInstance().logEvent(event);
-                try {
-                    Building.getInstance().enterFloor(person,curFloor);
-                } catch (IllegalParamException | InvalidFloorException e1) {
-                    String eve = String.format("Elevator %d tried to move a person from the elevator to floor %d." +
-                            " This operation failed. Removing person and continuing on.", getElevatorId(),curFloor);
-                    Simulator.getInstance().logEvent(eve);
-                    
-                    p.remove();
-                    
-                }
-            }
-            
-        }
+                        getElevatorId(), getCurrentFloor()));
     }
 
     /**
@@ -666,134 +669,170 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private synchronized void removeMostRecentDestination() {
         // Remove the very first element
-        if (this.getDestinations().isEmpty() == false) {
-            this.getDestinations().remove(0);
+        if (getDestinations().isEmpty() == false) {
+            getDestinations().remove(0);
         }
     }
 
-    /**
-     * @return the isMoving
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Runnable#run()
      */
-    public boolean isMoving() {
-        return isMoving;
-    }
-
-    /**
-     * @param isMoving the isMoving to set
-     */
-    public void setMoving(boolean isMoving) {
-        this.isMoving = isMoving;
+    @Override
+    public void run() {
+        try {
+            controlState();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt(); // restore interrupted status
+        }
     }
 
     /**
      * This method sets the current floor.
-     *
-     * @param i the new current floor
+     * 
+     * @param i
+     *            the new current floor
      */
     private synchronized void setCurrentFloor(int i) {
-        this.currentFloor = i;
-    }
-
-    /**
-     * This method sets the door time.
-     *
-     * @param dt            the door time integer must be greater than or equal to 0.
-     * @throws IllegalParamException             Thrown if the above parameter condition is not met.
-     */
-    private void setDoorTime(long dt) throws IllegalParamException {
-        if (dt <= 0) {
-            throw new IllegalParamException(
-                    "The doortime must be greater than 0.");
-        }
-        this.doorTime = dt;
-    }
-
-    /**
-     * This method sets the floor time.
-     *
-     * @param fo            the time between floors must be greater than or equal to 0.
-     * @throws IllegalParamException             Thrown if the above parameter condition is not met.
-     */
-    private void setFloorTime(long fo) throws IllegalParamException {
-        if (fo <= 0) {
-            throw new IllegalParamException(
-                    "The floor time should not less than or equal to 0.");
-        }
-        this.floorTime = fo;
-    }
-
-    /**
-     * This method sets the number of floors in the building.
-     *
-     * @param nf            the number of floors must be greater than or equal to 0
-     * @throws IllegalParamException             Thrown if the above parameter condition is not met.
-     */
-    private void setNumFloors(int nf) throws IllegalParamException {
-        if (nf <= 0) {
-            throw new IllegalParamException(
-                    "Number of floors cannot be less than or equal to 0.");
-        }
-        this.numFloors = nf;
-
-    }
-
-    /**
-     * This method sets the number of people in the elevator.
-     *
-     * @param num            the number of people must be greater than or equal to 0.
-     * @throws IllegalParamException             Thrown if the above parameter condition is not met.
-     */
-    private void setNumpeopleperElevator(int num) throws IllegalParamException {
-        if (num <= 0) {
-            throw new IllegalParamException(
-                    "Number of people per elevator must be greater than zero.");
-        }
-        this.numPeoplePerElevator = num;
+        currentFloor = i;
     }
 
     /**
      * This method sets the time out.
-     *
-     * @param to            the timeout must be greater than or equal to 0.
-     * @throws IllegalParamException             Thrown if the above parameter condition is not met.
+     * 
+     * @param to
+     *            the timeout must be greater than or equal to 0.
+     * @throws IllegalParamException
+     *             Thrown if the above parameter condition is not met.
      */
     private void setCurrentTimeout(long to) throws IllegalParamException {
         if (to <= 0) {
             throw new IllegalParamException(
                     "Current timeout time cannot be less than or equal to zero.");
         }
-        this.currentTimeOut = to;
+        currentTimeOut = to;
+    }
+
+    /**
+     * This method sets the door time.
+     * 
+     * @param dt
+     *            the door time integer must be greater than or equal to 0.
+     * @throws IllegalParamException
+     *             Thrown if the above parameter condition is not met.
+     */
+    private void setDoorTime(long dt) throws IllegalParamException {
+        if (dt <= 0) {
+            throw new IllegalParamException(
+                    "The doortime must be greater than 0.");
+        }
+        doorTime = dt;
+    }
+
+    /**
+     * This method sets the floor time.
+     * 
+     * @param fo
+     *            the time between floors must be greater than or equal to 0.
+     * @throws IllegalParamException
+     *             Thrown if the above parameter condition is not met.
+     */
+    private void setFloorTime(long fo) throws IllegalParamException {
+        if (fo <= 0) {
+            throw new IllegalParamException(
+                    "The floor time should not less than or equal to 0.");
+        }
+        floorTime = fo;
     }
 
     /**
      * Sets the max timeout time.
-     *
-     * @param to the new max timeout time
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param to
+     *            the new max timeout time
+     * @throws IllegalParamException
+     *             thrown if to is less than or equal to 0.
      */
     private void setMaxTimeoutTime(long to) throws IllegalParamException {
         if (to <= 0) {
             throw new IllegalParamException(
                     "Max timeout time cannot be less than or equal to zero.");
         }
-        this.maxTimeOutTime = to;
+        maxTimeOutTime = to;
     }
 
     /**
-     * A method for determining the direction based on the new floor being added.
+     * This method sets the number of floors in the building.
+     * 
+     * @param nf
+     *            the number of floors must be greater than or equal to 0
+     * @throws IllegalParamException
+     *             Thrown if the above parameter condition is not met.
+     */
+    private void setNumFloors(int nf) throws IllegalParamException {
+        if (nf <= 0) {
+            throw new IllegalParamException(
+                    "Number of floors cannot be less than or equal to 0.");
+        }
+        numFloors = nf;
+
+    }
+
+    /**
+     * This method sets the number of people in the elevator.
+     * 
+     * @param num
+     *            the number of people must be greater than or equal to 0.
+     * @throws IllegalParamException
+     *             Thrown if the above parameter condition is not met.
+     */
+    private void setNumpeopleperElevator(int num) throws IllegalParamException {
+        if (num <= 0) {
+            throw new IllegalParamException(
+                    "Number of people per elevator must be greater than zero.");
+        }
+        numPeoplePerElevator = num;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#startElevator()
+     */
+    @Override
+    public void startElevator() {
+        elevatorOn = true;
+        myThread.start();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see elevator.common.Elevator#stopElevator()
+     */
+    @Override
+    public void stopElevator() {
+        elevatorOn = false;
+    }
+
+    /**
+     * A method for determining the direction based on the new floor being
+     * added.
      */
     private synchronized void updateDirection() {
-        int cf = this.getCurrentFloor();
+        int cf = getCurrentFloor();
         int destination = 0;
         try {
-            destination = this.getDestination();
+            destination = getDestination();
             if (cf > destination) {
-                this.direction = ElevatorDirection.DOWN;
+                direction = ElevatorDirection.DOWN;
             } else if (cf < destination) {
-                this.direction = ElevatorDirection.UP;
+                direction = ElevatorDirection.UP;
             }
         } catch (NoNewDestinationException e) {
-            this.direction = ElevatorDirection.IDLE;
+            direction = ElevatorDirection.IDLE;
         }
     }
 

@@ -11,35 +11,35 @@ package simulator.common;
  */
 
 /**
- * Defines simulation parameters for project.
- * Parameters are read in from external file: simInput.properties
+ * Defines simulation parameters for project. Parameters are read in from
+ * external file: simInput.properties
  */
 public class SimulationInformation {
 
     /** The num elevators. */
     public int numElevators;
-    
+
     /** The num floors. */
     public int numFloors;
-    
+
     /** The num express elevators. */
     public int numExpressElevators;
-    
+
     /** The num people per elevator. */
     public int numPeoplePerElevator;
-    
+
     /** The person per min. */
     public int personPerMin;
-    
+
     /** The floor time. */
     public long floorTime;
-    
+
     /** The door time. */
     public long doorTime;
-    
+
     /** The elevator sleep time. */
     public long elevatorSleepTime;
-    
+
     /** The sim run time. */
     public long simRunTime;
 

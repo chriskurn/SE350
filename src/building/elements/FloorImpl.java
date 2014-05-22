@@ -35,7 +35,7 @@ public class FloorImpl implements Floor {
      * @throws IllegalParamException throws this exception if the floor number is < 1
      */
     public FloorImpl(int floorNumber) throws IllegalParamException {
-        this.setMyFloor(floorNumber);
+        setMyFloor(floorNumber);
     }
 
     /*
@@ -55,12 +55,12 @@ public class FloorImpl implements Floor {
 
         Simulator.getInstance().logEvent(
                 String.format("Person %d has entered floor: %d",
-                        p.getPersonId(), this.getFloor()));
+                        p.getPersonId(), getFloor()));
 
         // Then this person is done moving yay!
         if (p.getDestinationFloor() == thisFloor) {
             synchronized (this) {
-                this.getFinishedPeople().add(p);
+                getFinishedPeople().add(p);
                 // send message to simulation
                 int pid = p.getPersonId();
                 String personFinished = String
@@ -71,7 +71,7 @@ public class FloorImpl implements Floor {
         } else {
             // else he needs to be added to the already waiting people
             synchronized (this) {
-                this.getFloorPeople().add(p);
+                getFloorPeople().add(p);
             }
         }
         return thisFloor;
@@ -82,7 +82,7 @@ public class FloorImpl implements Floor {
      * @return a list of the people who are done running
      */
     private ArrayList<Person> getFinishedPeople() {
-        return this.finishedPeople;
+        return finishedPeople;
     }
 
     /*
@@ -92,7 +92,7 @@ public class FloorImpl implements Floor {
      */
     @Override
     public int getFloor() {
-        return this.myFloor;
+        return myFloor;
     }
 
     /**
@@ -100,7 +100,7 @@ public class FloorImpl implements Floor {
      * @return a list of people as said above
      */
     private ArrayList<Person> getFloorPeople() {
-        return this.floorPeoples;
+        return floorPeoples;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class FloorImpl implements Floor {
     public ArrayList<Person> leaveFloor(ElevatorDirection dir) {
         int thisFloor = getFloor();
         ArrayList<Person> leavingPeople = new ArrayList<Person>();
-        Iterator<Person> p = this.getFloorPeople().iterator();
+        Iterator<Person> p = getFloorPeople().iterator();
         while (p.hasNext()) {
             Person person = p.next();
             // If the direction is up and the destination floor is above this
@@ -150,7 +150,7 @@ public class FloorImpl implements Floor {
             throw new IllegalParamException(
                     "Floor cannot be set to below 1 for this application.");
         }
-        this.myFloor = floor;
+        myFloor = floor;
     }
 
 }

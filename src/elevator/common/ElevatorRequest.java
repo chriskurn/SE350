@@ -40,8 +40,8 @@ public class ElevatorRequest {
      */
     public ElevatorRequest(int floorRequestedFrom,
             ElevatorDirection directionOfTravel) throws IllegalParamException {
-        this.setDirection(directionOfTravel);
-        this.setFloor(floorRequestedFrom);
+        setDirection(directionOfTravel);
+        setFloor(floorRequestedFrom);
 
     }
 
@@ -68,8 +68,8 @@ public class ElevatorRequest {
 
         ElevatorRequest rhs = (ElevatorRequest) obj;
 
-        if (this.getFloor() == rhs.getFloor()
-                && this.getDirection() == rhs.getDirection()) {
+        if (getFloor() == rhs.getFloor()
+                && getDirection() == rhs.getDirection()) {
             return true;
         } else {
             return false;
@@ -83,7 +83,7 @@ public class ElevatorRequest {
      * @return the direction
      */
     public ElevatorDirection getDirection() {
-        return this.direction;
+        return direction;
     }
 
     /**
@@ -92,7 +92,7 @@ public class ElevatorRequest {
      * @return the floor
      */
     public int getFloor() {
-        return this.floor;
+        return floor;
     }
 
     /**
@@ -110,7 +110,7 @@ public class ElevatorRequest {
             throw new IllegalParamException(
                     "Cannot provide the idle state for an elevator request.");
         }
-        this.direction = directionOfTravel;
+        direction = directionOfTravel;
 
     }
 
@@ -140,10 +140,10 @@ public class ElevatorRequest {
      */
     @Override
     public String toString() {
-        String dir = this.getDirection() == ElevatorDirection.UP ? "up"
+        String dir = getDirection() == ElevatorDirection.UP ? "up"
                 : "down";
         return String.format("Request from floor %d for direction %s.",
-                this.getFloor(), dir);
+                getFloor(), dir);
     }
 
 }

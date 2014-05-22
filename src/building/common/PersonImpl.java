@@ -64,7 +64,7 @@ public class PersonImpl implements Person {
 
     @Override
     public boolean didErrorOccur() {
-        return this.errorOccured;
+        return errorOccured;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class PersonImpl implements Person {
 
     @Override
     public void setInvalidStatus() {
-        this.errorOccured = true;
+        errorOccured = true;
 
     }
 

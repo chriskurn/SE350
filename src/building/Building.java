@@ -61,7 +61,7 @@ final public class Building {
         sim.logEvent("Building being created.");
         SimulationInformation info = sim.getSimulationInfo();
         try {
-            this.setNumberOfFloors(info.numFloors);
+            setNumberOfFloors(info.numFloors);
         } catch (IllegalParamException e) {
             Simulator
                     .getInstance()
@@ -70,7 +70,7 @@ final public class Building {
             System.exit(1);
         }
         // make floors
-        this.buildFloors();
+        buildFloors();
         // Call get instance to make sure the elevator controller is alive
         ElevatorController.getInstance().startElevatorController();
 
@@ -80,12 +80,12 @@ final public class Building {
      * Builds the floors in the building that is being created. Should only be called once!!
      */
     private void buildFloors() {
-        int numFloors = this.getNumberOfFloors();
+        int numFloors = getNumberOfFloors();
         Simulator.getInstance().logEvent(
                 String.format("Building %d number of floors.", numFloors));
         for (int i = 0; i < numFloors; i++) {
             try {
-                this.getMyFloors().add(FloorFactory.build(i + 1));
+                getMyFloors().add(FloorFactory.build(i + 1));
             } catch (IllegalParamException e) {
                 Simulator.getInstance().logEvent(String.format("Building was unable to create floor %d. Exiting application.",i));
                 System.exit(1);
@@ -120,7 +120,7 @@ final public class Building {
      */
     public int enterFloor(Person p, int floor) throws IllegalParamException,
             InvalidFloorException {
-        int floorEntered = this.getAFloor(floor).enterFloor(p);
+        int floorEntered = getAFloor(floor).enterFloor(p);
         return floorEntered;
     }
 
@@ -135,7 +135,7 @@ final public class Building {
         // -1 offset because arrays start at 0!!!
         // Throws a runtime exception for index out of bounds
         checkValidFloor(floorNumber);
-        return this.getMyFloors().get(floorNumber - 1);
+        return getMyFloors().get(floorNumber - 1);
     }
 
     /**
@@ -144,7 +144,7 @@ final public class Building {
      * @return myFloors the array of floors member.
      */
     private ArrayList<Floor> getMyFloors() {
-        return this.myFloors;
+        return myFloors;
     }
 
     /**
@@ -181,7 +181,7 @@ final public class Building {
     public ArrayList<Person> loadPeople(int floor, ElevatorDirection dir)
             throws InvalidFloorException {
         // ask the specific floor for ask it's nice people leave the floor
-        return this.getAFloor(floor).leaveFloor(dir);
+        return getAFloor(floor).leaveFloor(dir);
     }
 
     /**
@@ -196,7 +196,7 @@ final public class Building {
             throw new IllegalParamException(
                     "Cannot set the building to have more than %d floors or less than 1 floor.");
         }
-        this.numberOfFloors = numF;
+        numberOfFloors = numF;
     }
 
 }
