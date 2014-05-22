@@ -13,7 +13,6 @@ import elevator.control.ElevatorController;
 
 import org.junit.Test;
 
-
 /**
  * Description: Narrator Test.
  *
