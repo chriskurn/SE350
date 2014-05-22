@@ -10,7 +10,6 @@ import elevator.control.ElevatorController;
  * 
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package building.common
  * @since Version 1.0 - Spring Quarter 2014
  */
 
