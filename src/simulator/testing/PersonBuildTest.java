@@ -1,11 +1,11 @@
 package simulator.testing;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import java.io.IOException;
+
 import org.junit.Before;
+
 import building.common.Person;
 import building.common.PersonFactory;
 import simulator.Simulator;
@@ -29,10 +29,12 @@ import simulator.common.SimulationInformation;
 public class PersonBuildTest {
 	
 	  /** The info. */
-    private SimulationInformation info;
+    @SuppressWarnings("unused")
+	private SimulationInformation info;
     
     /** The sim. */
-    private Simulator sim;
+    @SuppressWarnings("unused")
+	private Simulator sim;
 
     /**
      * Load simulation.

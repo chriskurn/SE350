@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import elevator.common.ElevatorDirection;
-import elevator.common.InvalidFloorException;
 
 import building.common.Person;
 import building.common.PersonFactory;

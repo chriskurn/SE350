@@ -3,8 +3,6 @@ package simulator.testing;
 import java.io.IOException;
 import java.util.Random;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import elevator.common.InvalidFloorException;
