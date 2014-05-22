@@ -84,8 +84,8 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         // If we got space and there are people in that array
         for (int i = 0; i < spotsAvailable && !newFriends.isEmpty(); i++) {
             // Add them and remove them
-            currentFriends.add(newFriends.get(i));
-            newFriends.remove(i);
+            currentFriends.add(newFriends.get(0));
+            newFriends.remove(0);
         }
 
     }
