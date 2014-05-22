@@ -5,7 +5,7 @@ import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 
 /**
- * Description: InputLoader.
+ * Description: InputLoader interface.
  *
  * @author Patrick Stein
  * @author Chris Kurn

@@ -1,15 +1,20 @@
 package simulator.testing;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
 import org.junit.Test;
-
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
+
+/**
+ * Description: MaxFloor Test.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ */
 
 public class MaxFloorTest {
 

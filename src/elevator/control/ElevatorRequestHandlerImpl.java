@@ -9,7 +9,7 @@ import elevator.common.InvalidFloorException;
 import elevator.elements.Elevator;
 
 /**
- * The Class ElevatorRequestHandlerImpl.
+ * Description: The Class ElevatorRequestHandlerImpl.
  * 
  * @author Patrick Stein
  */

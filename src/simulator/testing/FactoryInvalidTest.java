@@ -14,7 +14,8 @@ import simulator.elements.InputLoader;
 /**
  * Description: Factory Invalid Test.
  *
- * @author Chris Kurn, Patrick Stein
+ * @author Patrick Stein
+ * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 

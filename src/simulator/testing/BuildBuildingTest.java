@@ -17,7 +17,7 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * The Class BuildBuildingTest
+ * Description BuildBuilding Test.
  *
  * @author Patrick Stein
  * @author Chris Kurn

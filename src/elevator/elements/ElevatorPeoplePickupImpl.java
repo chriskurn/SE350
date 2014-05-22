@@ -11,9 +11,13 @@ import elevator.common.ElevatorDirection;
 import elevator.common.InvalidFloorException;
 
 /**
- * @author Patrick Stein
+ * Description: ElevatorPeoplePickupImpl.
  * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
+
 public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
 
     ArrayList<Person> currentPeople;

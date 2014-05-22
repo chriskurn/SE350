@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 import building.common.Person;
 import elevator.common.ElevatorDirection;
+
 /**
- * @author Patrick Stein
+ * Description: ElevatorPeoplePickupFactory class.
  * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
 
 public class ElevatorPeoplePickupFactory {

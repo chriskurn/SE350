@@ -15,7 +15,7 @@ import simulator.common.SimulationInformation;
 
 
 /**
- * The Class PersonTest
+ * Description: PersonBuild Test.
  *
  * @author Patrick Stein
  * @author Chris Kurn
@@ -29,7 +29,7 @@ import simulator.common.SimulationInformation;
  */
 public class PersonBuildTest {
 	
-		@Test
+	@Test
 	public void Test() {
 			
 		int startFloor = 5;

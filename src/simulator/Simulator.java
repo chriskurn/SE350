@@ -20,7 +20,7 @@ import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 
 /**
- * The Class Simulator.
+ * Description: Simulator.
  * 
  * @author Patrick Stein
  * @author Chris Kurn

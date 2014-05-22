@@ -3,9 +3,13 @@ package elevator.elements;
 import elevator.common.InvalidFloorException;
 
 /**
- * @author Patrick Stein
+ * Description: ElevatorPeoplePickup Interface.
  * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
+
 public interface ElevatorPeoplePickup {
     /**
      * A method designed to load people in from a given floor.
