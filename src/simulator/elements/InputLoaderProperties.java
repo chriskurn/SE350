@@ -54,6 +54,9 @@ public class InputLoaderProperties implements InputLoader {
     
     /** The sim run time. */
     private long simRunTime;
+    
+    /** The default elevator floor. */
+    private int defaultElevatorFlr;
 
     /** The min elevators. */
     private final int MIN_ELEVATORS = 1;
@@ -98,10 +101,10 @@ public class InputLoaderProperties implements InputLoader {
         this.setNumElevators(prop.getProperty("numElevators"));
         this.setNumExpressElevators(prop.getProperty("numExpressElevators"));
         this.setNumFloors(prop.getProperty("numFloors"));
-        this.setNumPersonsPerElevators(prop
-                .getProperty("maxPersonsPerElevator"));
+        this.setNumPersonsPerElevators(prop.getProperty("maxPersonsPerElevator"));
         this.setPersonPerMin(prop.getProperty("personPerMin"));
         this.setSimRunTime(prop.getProperty("simRunTime"));
+        this.setDefaultElevatorFlr(prop.getProperty("defaultElevatorFlr"));
 
         return this.getSimulationInfo();
     }
@@ -122,6 +125,7 @@ public class InputLoaderProperties implements InputLoader {
         info.numPeoplePerElevator = this.numPersonsPerElevators;
         info.personPerMin = this.personPerMin;
         info.simRunTime = this.simRunTime;
+        info.defaultElevatorFlr = this.defaultElevatorFlr;
 
         return info;
     }
@@ -376,6 +380,27 @@ public class InputLoaderProperties implements InputLoader {
                     "Number of express elevators cannot be less than zero.");
         }
         this.numExpressElevators = n;
+
+    }
+    
+    /**
+     * A function for translating a string attribute to a number for the member
+     * number of express elevators.
+     * 
+     * @param attribute
+     *            a string attribute containing the number a number
+     * @throws IllegalParamException
+     *             throws an exception if the integer in the string is less than
+     *             0.
+     */
+    private void setDefaultElevatorFlr(String attribute)
+            throws IllegalParamException {
+        int n = Integer.parseInt(attribute);
+        if (n < 0) {
+            throw new IllegalParamException(
+                    "Default floor must be set to 1");
+        }
+        this.defaultElevatorFlr = n;
 
     }
 
