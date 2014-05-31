@@ -32,6 +32,20 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     private void waitRideTotalTimeByPerson() {
         ArrayList<Person> peoples = this.getPeople();
         
+        String columnHeadings = String.format("%-12s | %-10s | %-10s | %-10s | %-10s | %-10s %n",
+                "Person","Start Floor", "Destination Floor",
+                "Wait Time", "Ride Time", "Total Time");
+        Simulator.getInstance().logEvent(columnHeadings);
+        for(Person p: peoples){
+            int pid = p.getPersonId();
+            int startF = p.getStartFloor();
+            int destF = p.getDestinationFloor();
+            double waitTime = (p.getElevatorEnterTime() - p.getStartTime()) * 0.001;
+            double rideTime = (p.getFinishedTime() - p.getElevatorEnterTime()) * 0.001;
+            double totalTime = waitTime + rideTime;
+            String row = String.format("%-5s %-5d | %8d %15d %15d %12d %12d","Person",pid,startF,destF,waitTime,rideTime,totalTime);
+            Simulator.getInstance().logEvent(row);
+        }
         
     }
 
