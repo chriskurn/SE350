@@ -28,9 +28,12 @@ public class PersonImpl implements Person {
 
     /** The person id. */
     private int personId;
+    
+    private long startTime;
+    private long elevatorEnteredTime;
+    private long finishedTime;
+    
 
-    /** The my thread. */
-    Thread myThread;
     /** The person count. */
     private static volatile int personCount = 1;
 
@@ -185,12 +188,20 @@ public class PersonImpl implements Person {
 
         try {
             ElevatorController.getInstance().addNewRequest(curFloor, dir);
+            this.setStartTime();
         } catch (IllegalParamException e) {
             String event = String
                     .format("Person %d was unable to make a valid floor request to floor %d from current floor %d. Skipping person.",
                             getPersonId(), destFloor, curFloor);
             Simulator.getInstance().logEvent(event);
         }
+    }
+
+    /**
+     * Private method for setting the start time.
+     */
+    private void setStartTime() {
+        this.startTime = System.currentTimeMillis();
     }
 
     /*
@@ -204,6 +215,33 @@ public class PersonImpl implements Person {
                 .format("Person %d with starting floor as %d and destination floor as %d [Current floor: %d]",
                         getPersonId(), getStartFloor(), getDestinationFloor(),
                         getCurrentFloor());
+    }
+
+    // TODO Maybe have a check to make sure this is only called once?
+    
+    @Override
+    public void elevatorEntered() {
+        this.elevatorEnteredTime = System.currentTimeMillis(); 
+    }
+
+    @Override
+    public void leftElevator() {
+        this.finishedTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public long getStartTime() {
+        return this.startTime;
+    }
+
+    @Override
+    public long getElevatorEnterTime() {
+        return this.elevatorEnteredTime;
+    }
+
+    @Override
+    public long getFinishedTime() {
+        return this.finishedTime;
     }
 
 }

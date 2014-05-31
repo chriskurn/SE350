@@ -43,4 +43,6 @@ public class SimulationInformation {
     /** The sim run time. */
     public long simRunTime;
 
+    public int defaultElevatorFlr;
+
 }

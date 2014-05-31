@@ -84,7 +84,9 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         // If we got space and there are people in that array
         for (int i = 0; i < spotsAvailable && !newFriends.isEmpty(); i++) {
             // Add them and remove them
-            currentFriends.add(newFriends.get(0));
+            Person p = newFriends.get(0);
+            currentFriends.add(p);
+            p.elevatorEntered();
             newFriends.remove(0);
         }
 
@@ -133,6 +135,8 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
             if (person.getDestinationFloor() == curFloor) {
                 try {
                     Building.getInstance().enterFloor(person, curFloor);
+                    //Person event for leaving the elevator
+                    person.leftElevator();
                 } catch (IllegalParamException | InvalidFloorException e) {
                     String eve = String
                             .format("Elevator tried to move a person from the elevator to floor %d. This operation failed. Removing person and continuing on.",

@@ -58,5 +58,31 @@ public interface Person {
      * make a request for an elevator.
      */
     public void startPerson();
+    
+    /**
+     * This is associated and should be called when a person successfully enters an elevator
+     */
+    public void elevatorEntered();
+    /**
+     * This is associated and should be called when a person successfully leaves an elevator for their destination floor
+     */
+    public void leftElevator();
+    
+    /**
+     * Returns a long associated with when the person began execution
+     * @return
+     */
+    public long getStartTime();
+    /**
+     * Returns a long associated with when the person entered the elevator
+     * @return
+     */
+    public long getElevatorEnterTime();
+    /**
+     * Returns a long associated with when the person finished execution
+     * @return
+     */
+    public long getFinishedTime();
+    
 
 }
