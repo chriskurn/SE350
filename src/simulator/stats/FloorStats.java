@@ -4,7 +4,7 @@
 package simulator.stats;
 
 /**
- * @author Patrick
+ * @author Patrick Stein
  * This class is designed to encapsulate information about the floor.
  * It should not be used outside the package.
  */
@@ -15,12 +15,19 @@ class FloorStats {
     private int numEntries = 1;
     private double minWaitTime = Double.MAX_VALUE;
     private double maxWaitTime = Double.MIN_VALUE;
+    private int columnFloorNum;
+    private int rowFloorNum;
     
     
     FloorStats(int fn){
         this.floorNumber = fn;
     }
     
+    FloorStats(int rowFloorNumber, int columnFloorNumber) {
+        this.columnFloorNum = columnFloorNumber;
+        this.rowFloorNum = rowFloorNumber;
+    }
+
     void addEntry(double newEntry){
         this.updateAverage(newEntry);
         this.setMinWaitTime(newEntry);
@@ -82,6 +89,21 @@ class FloorStats {
     int getFloorNumber() {
         return floorNumber;
     }
+
+    /**
+     * @return the rowFloorNum
+     */
+    int getRowFloorNum() {
+        return rowFloorNum;
+    }
+
+    /**
+     * @return the columnFloorNum
+     */
+    int getColumnFloorNum() {
+        return columnFloorNum;
+    }
+
 
 
 }
