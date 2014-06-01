@@ -16,6 +16,8 @@ import simulator.common.SimulationInformation;
 
 /**
  * Description BuildBuilding Test.
+ * 
+ * Test the building build process.
  *
  * @author Patrick Stein
  * @author Chris Kurn

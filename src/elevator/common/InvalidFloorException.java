@@ -1,8 +1,10 @@
 package elevator.common;
 
 /**
- * Description: InvalidFloorException class designed to be thrown when someone
- * passed or finds an invalid floor in the application.
+ * Description: InvalidFloorException class.
+ * 
+ * Designed to be thrown when someone passed
+ * or finds an invalid floor in the application.
  * 
  * @author Patrick Stein
  * @author Chris Kurn

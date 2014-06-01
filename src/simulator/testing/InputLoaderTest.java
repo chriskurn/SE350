@@ -16,6 +16,9 @@ import simulator.elements.InputLoader;
 
 /**
  * Description: Input Loader Test.
+ * 
+ * Test the file loader.
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014

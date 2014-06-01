@@ -10,6 +10,8 @@ import simulator.common.SimulationInformation;
 
 /**
  * Description: MaxFloor Test.
+ * 
+ * Test for the maximum floor.
  *
  * @author Patrick Stein
  * @author Chris Kurn

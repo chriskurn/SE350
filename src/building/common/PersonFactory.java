@@ -1,11 +1,12 @@
 package building.common;
 
 /**
+ * Description: PersonFactory class.
+ * 
  * A factory for creating Person objects.
  *
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package building.common
  * @since Version 1.0 - Spring Quarter 2014
  */
 

@@ -22,6 +22,8 @@ import simulator.elements.Narrator;
 /**
  * Description: Simulator.
  * 
+ * Starts the simulation.
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014

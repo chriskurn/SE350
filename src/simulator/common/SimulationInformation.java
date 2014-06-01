@@ -2,18 +2,16 @@ package simulator.common;
 
 /**
  * Description: SimulationInformation class.
- *
+ * 
+ * The purpose of this class is to encapsulate all 
+ * of the data associated with building and running the simulation.
+ * external file: simInput.properties
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package simulator.common The purpose of this class is to encapsulate all
- *      of the data associated with building and running the simulation.
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-/**
- * Defines simulation parameters for project. Parameters are read in from
- * external file: simInput.properties
- */
 public class SimulationInformation {
 
     /** The num elevators. */

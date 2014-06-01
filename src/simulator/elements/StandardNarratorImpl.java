@@ -1,6 +1,5 @@
 package simulator.elements;
 
-//import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 /**

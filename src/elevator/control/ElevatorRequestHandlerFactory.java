@@ -6,7 +6,9 @@ import simulator.common.IllegalParamException;
 import elevator.elements.Elevator;
 
 /**
- * Description: A factory for creating ElevatorRequestHandler objects.
+ * Description: Elevator RequestHandler Factory.
+ * 
+ * A factory for creating ElevatorRequestHandler objects.
  * 
  * @author Patrick Stein
  * @author Chris Kurn

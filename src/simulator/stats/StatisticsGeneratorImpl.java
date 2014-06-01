@@ -6,6 +6,14 @@ import simulator.Simulator;
 import simulator.common.SimulationInformation;
 import building.common.Person;
 
+/**
+ * Description: Statistics Generator Impl.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ */
+
 public class StatisticsGeneratorImpl implements StatisticsGenerator{
     
     

@@ -5,15 +5,13 @@ import simulator.common.IllegalParamException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: ElevatorRequest class which encapsulates the parameters associated with making an elevator request.
+ * Description: ElevatorRequest class.
+ * 
+ * ElevatorRequest class which encapsulates the parameters associated with making an elevator request.
  * That is, a floor number and a direction.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package elevator.common;
- * @see import simulator.Simulator;
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.SimulationInformation;
  * @since Version 1.0 - Spring Quarter 2014
  */
 

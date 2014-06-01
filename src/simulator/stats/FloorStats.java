@@ -1,12 +1,14 @@
-/**
- * 
- */
 package simulator.stats;
 
 /**
- * @author Patrick
+ * Description: Floor Statistics
+ * 
  * This class is designed to encapsulate information about the floor.
  * It should not be used outside the package.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
 class FloorStats {
     

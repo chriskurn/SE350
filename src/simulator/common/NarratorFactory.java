@@ -8,9 +8,6 @@ import simulator.elements.StandardNarratorImpl;
  *
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package simulator.common
- * @see import simulator.elements.Narrator;
- * @see import simulator.elements.StandardNarratorImpl;
  * @since Version 1.0 - Spring Quarter 2014
  */
 
