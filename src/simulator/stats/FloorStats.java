@@ -18,7 +18,10 @@ class FloorStats {
     private double minWaitTime = Double.MAX_VALUE;
     private double maxWaitTime = Double.MIN_VALUE;
     
-    
+   /**
+    * Floor stats 
+    * @param fn
+    */
     FloorStats(int fn){
         this.floorNumber = fn;
     }
@@ -62,13 +65,14 @@ class FloorStats {
         }
     }
     /**
+     * Returns the min wait time.
      * @return the minWaitTime
      */
     double getMinWaitTime() {
         return minWaitTime;
     }
     /**
-     * 
+     * Set min wait time
      * @param minWaitTime the minWaitTime to set
      */
     void setMinWaitTime(double newMin) {
@@ -79,6 +83,7 @@ class FloorStats {
     }
 
     /**
+     * Returns the floor number
      * @return the floorNumber
      */
     int getFloorNumber() {
