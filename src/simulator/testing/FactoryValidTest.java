@@ -10,6 +10,8 @@ import simulator.elements.Narrator;
 
 /**
  * Description: Factory Valid Test.
+ * 
+ * Is factory valid test.
  *
  * @author Patrick Stein
  * @author Chris Kurn

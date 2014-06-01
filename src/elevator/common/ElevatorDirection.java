@@ -5,7 +5,6 @@ package elevator.common;
  *
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package elevator.common
  * @since Version 1.0 - Spring Quarter 2014
  */
 

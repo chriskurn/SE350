@@ -20,17 +20,15 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: InvalidFloorInputTest.
+ * Description: InvalidFloorInputTest class.
+ * 
+ * Checks for invalid floors (input)
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-/**
- * InvalidFloorInputTest Class
- * Checks for invalid floors (input)
- */
 @RunWith(Parameterized.class)
 public class InvalidFloorInputTest {
 

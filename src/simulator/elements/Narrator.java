@@ -1,7 +1,7 @@
 package simulator.elements;
 
 /**
- * Description: Narrator interface
+ * Description: Narrator Interface
  *
  * @author Patrick Stein
  * @author Chris Kurn

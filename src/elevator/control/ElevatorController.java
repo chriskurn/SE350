@@ -11,9 +11,10 @@ import elevator.common.ElevatorRequest;
 import elevator.elements.Elevator;
 
 /**
- * Description: class ElevatorController is a singleton facade designed to
- * manage the elevators and their requests.
+ * Description: Elevator Controller class.
  * 
+ * a singleton facade designed to manage
+ * the elevators and their requests.
  * 
  * @author Patrick Stein
  * @author Chris Kurn

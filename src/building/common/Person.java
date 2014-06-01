@@ -63,6 +63,7 @@ public interface Person {
      * This is associated and should be called when a person successfully enters an elevator
      */
     public void elevatorEntered();
+    
     /**
      * This is associated and should be called when a person successfully leaves an elevator for their destination floor
      */
@@ -70,17 +71,19 @@ public interface Person {
     
     /**
      * Returns a long associated with when the person began execution
-     * @return
+     * @return getStartTime
      */
     public long getStartTime();
+    
     /**
      * Returns a long associated with when the person entered the elevator
-     * @return
+     * @return getElevatorEnterTime
      */
     public long getElevatorEnterTime();
+    
     /**
      * Returns a long associated with when the person finished execution
-     * @return
+     * @return getFinishedTime
      */
     public long getFinishedTime();
     

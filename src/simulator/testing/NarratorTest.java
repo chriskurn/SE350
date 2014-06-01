@@ -6,6 +6,8 @@ import org.junit.Test;
 
 /**
  * Description: Narrator Test.
+ * 
+ * Narration output test.
  *
  * @author Patrick Stein
  * @author Chris Kurn

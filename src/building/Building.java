@@ -15,13 +15,12 @@ import elevator.control.ElevatorController;
 /**
  * Description: Building interface class.
  * 
- * @author Patrick Stein
- * @author Chris Kurn
- * @since Version 1.0 - Spring Quarter 2014
- * 
  * The building is a singleton facade responsible for managing the floors.
  * It also has methods that allow for movement of people to different floors and people leaving a floor.
  * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
 
 final public class Building {

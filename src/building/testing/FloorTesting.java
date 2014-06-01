@@ -22,6 +22,15 @@ import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
+
+/**
+ * Description: Floor Testing class.
+ * 
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ */
+
 public class FloorTesting {
     
     /** The info. */

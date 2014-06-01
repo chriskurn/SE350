@@ -1,12 +1,13 @@
-/**
- * 
- */
 package simulator.stats;
 
 /**
- * @author Patrick Stein
+ * Description: Floor Statistics
  * This class is designed to encapsulate information about the floor.
  * It should not be used outside the package.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
 class FloorStats {
     
@@ -18,7 +19,10 @@ class FloorStats {
     private int columnFloorNum;
     private int rowFloorNum;
     
-    
+   /**
+    * Floor stats 
+    * @param fn
+    */
     FloorStats(int fn){
         this.floorNumber = fn;
     }
@@ -67,13 +71,14 @@ class FloorStats {
         }
     }
     /**
+     * Returns the min wait time.
      * @return the minWaitTime
      */
     double getMinWaitTime() {
         return minWaitTime;
     }
     /**
-     * 
+     * Set min wait time
      * @param minWaitTime the minWaitTime to set
      */
     void setMinWaitTime(double newMin) {
@@ -84,6 +89,7 @@ class FloorStats {
     }
 
     /**
+     * Returns the floor number
      * @return the floorNumber
      */
     int getFloorNumber() {

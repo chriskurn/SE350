@@ -11,7 +11,14 @@ import elevator.elements.Elevator;
 /**
  * Description: The Class ElevatorRequestHandlerImpl.
  * 
+ * The building is a singleton facade responsible for
+ * managing the floors. It also has methods that allow
+ * for movement of people to different floors and people
+ * leaving a floor.
+ * 
  * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
  */
 public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
 

@@ -1,8 +1,10 @@
 package elevator.common;
 
 /**
- * Description: NoNewDestinationException exception designed to handle the case
- * in which there are no new destinations to be moved to as an elevator.
+ * Description: NoNewDestinationException.
+ * 
+ * exception designed to handle the case in which
+ * there are no new destinations to be moved to as an elevator.
  * 
  * @author Patrick Stein
  * @author Chris Kurn

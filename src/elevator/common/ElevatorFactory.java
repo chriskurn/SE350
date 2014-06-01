@@ -10,9 +10,6 @@ import elevator.elements.ElevatorImpl;
  *
  * @author Patrick Stein
  * @author Chris Kurn
- * @see package simulator.elements
- * @see import simulator.common.IllegalParamException;
- * @see import simulator.common.SimulationInformation;
  * @since Version 1.0 - Spring Quarter 2014
  */
 

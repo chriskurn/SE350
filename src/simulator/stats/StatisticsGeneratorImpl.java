@@ -8,6 +8,14 @@ import simulator.Simulator;
 import simulator.common.SimulationInformation;
 import building.common.Person;
 
+/**
+ * Description: Statistics Generator Impl.
+ *
+ * @author Patrick Stein
+ * @author Chris Kurn
+ * @since Version 1.0 - Spring Quarter 2014
+ */
+
 public class StatisticsGeneratorImpl implements StatisticsGenerator{
     
     
@@ -155,7 +163,8 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     }
 
     /**
-     * @param info the info to set
+     * info the info to set
+     * @param i
      */
     public void setInfo(SimulationInformation i) {
         this.info = i;
@@ -169,7 +178,8 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     }
 
     /**
-     * @param people the people to set
+     * People the people to set
+     * @param peps
      */
     public void setPeople(ArrayList<Person> peps) {
         this.people = peps;

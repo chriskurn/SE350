@@ -15,6 +15,8 @@ import simulator.common.SimulationInformation;
 
 /**
  * Description: PersonBuild Test.
+ * 
+ * Test creating a person object.
  *
  * @author Patrick Stein
  * @author Chris Kurn

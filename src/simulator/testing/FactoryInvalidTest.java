@@ -13,6 +13,8 @@ import simulator.elements.InputLoader;
 
 /**
  * Description: Factory Invalid Test.
+ * 
+ * Check factory for validity test.
  *
  * @author Patrick Stein
  * @author Chris Kurn
