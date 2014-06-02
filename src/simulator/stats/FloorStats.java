@@ -12,12 +12,14 @@ package simulator.stats;
 class FloorStats {
     
     private int floorNumber;
-    private double averageWaitTime;
+    private long averageWaitTime;
     private int numEntries = 1;
-    private double minWaitTime = Double.MAX_VALUE;
-    private double maxWaitTime = Double.MIN_VALUE;
+    private long minWaitTime;
+    private long maxWaitTime;
     private int columnFloorNum;
     private int rowFloorNum;
+    
+    private boolean changedMin = false;
     
    /**
     * Floor stats 
@@ -32,7 +34,7 @@ class FloorStats {
         this.rowFloorNum = rowFloorNumber;
     }
 
-    void addEntry(double newEntry){
+    void addEntry(long newEntry){
         this.updateAverage(newEntry);
         this.setMinWaitTime(newEntry);
         this.setMaxWaitTime(newEntry);
@@ -42,7 +44,7 @@ class FloorStats {
      * 
      * @param numEntry
      */
-    void updateAverage(double numEntry){
+    void updateAverage(long numEntry){
         this.averageWaitTime += numEntry;
         this.numEntries++;
     }
@@ -50,7 +52,7 @@ class FloorStats {
      * 
      * @return
      */
-    double getAverageWaitTime(){
+    long getAverageWaitTime(){
         return this.averageWaitTime/numEntries;
     }
     
@@ -58,14 +60,14 @@ class FloorStats {
     /**
      * @return the maxWaitTime
      */
-    double getMaxWaitTime() {
+    long getMaxWaitTime() {
         return maxWaitTime;
     }
     /**
      * @param maxWaitTime the maxWaitTime to set
      */
-    void setMaxWaitTime(double newMax) {
-        double currentMax = this.getMaxWaitTime();
+    void setMaxWaitTime(long newMax) {
+        long currentMax = this.getMaxWaitTime();
         if(newMax > currentMax){
             this.maxWaitTime = newMax;
         }
@@ -74,17 +76,24 @@ class FloorStats {
      * Returns the min wait time.
      * @return the minWaitTime
      */
-    double getMinWaitTime() {
+    long getMinWaitTime() {
         return minWaitTime;
     }
     /**
      * Set min wait time
      * @param minWaitTime the minWaitTime to set
      */
-    void setMinWaitTime(double newMin) {
-        double currentMin = this.getMinWaitTime();
+    void setMinWaitTime(long newMin) {
+        
+        long currentMin = this.getMinWaitTime();
+        //Included to make sure that Long.MAX_Value is not printed out for every value
+        if(changedMin == false){
+           currentMin = Long.MAX_VALUE;
+        }
+        //Check to see if it is less than
         if(newMin < currentMin){
             this.minWaitTime = newMin;
+            changedMin = true;
         }
     }
 
@@ -92,21 +101,21 @@ class FloorStats {
      * Returns the floor number
      * @return the floorNumber
      */
-    int getFloorNumber() {
+    long getFloorNumber() {
         return floorNumber;
     }
 
     /**
      * @return the rowFloorNum
      */
-    int getRowFloorNum() {
+    long getRowFloorNum() {
         return rowFloorNum;
     }
 
     /**
      * @return the columnFloorNum
      */
-    int getColumnFloorNum() {
+    long getColumnFloorNum() {
         return columnFloorNum;
     }
 

@@ -132,7 +132,7 @@ public class PersonImpl implements Person {
     public int getStartFloor() {
         return startFloor;
     }
-
+    
     private void setCurrentFloor(int floorNumber) {
         currentFloor = floorNumber;
     }
@@ -227,6 +227,7 @@ public class PersonImpl implements Person {
     @Override
     public void leftElevator() {
         this.finishedTime = System.currentTimeMillis();
+        this.setCurrentFloor(this.getDestinationFloor());
     }
 
     @Override

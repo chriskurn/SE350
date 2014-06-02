@@ -16,8 +16,10 @@ import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 import simulator.common.InputLoaderFactory;
 import simulator.common.NullFileException;
+import simulator.common.StatisticsFactory;
 import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
+import simulator.stats.StatisticsGenerator;
 
 /**
  * Description: Simulator.
@@ -30,7 +32,7 @@ import simulator.elements.Narrator;
  */
 
 // singleton
-public class Simulator implements Narrator {
+public class Simulator implements Narrator,StatisticsGenerator {
 
     /** The instance. */
     private volatile static Simulator instance;
@@ -40,6 +42,8 @@ public class Simulator implements Narrator {
 
     /** The narrator delegate. */
     private Narrator narratorDelegate;
+    
+    private StatisticsGenerator statsDelegate;
 
     /** The simulator building. */
     private Building simulatorBuilding;
@@ -47,11 +51,6 @@ public class Simulator implements Narrator {
     /** The running. */
     private boolean running = true;
     private ArrayList<Person> runningPeople = new ArrayList<Person>();
-    /**
-     * An array list for debugging purposes. If someone gets lost during
-     * execution add him/her here.
-     */
-    private ArrayList<Person> lostPeople = new ArrayList<Person>();
 
     /**
      * Instantiates a new simulator.
@@ -146,6 +145,7 @@ public class Simulator implements Narrator {
 
             int startFloor;
             int destFloor;
+            ArrayList<Person> people = this.getRunningPeople();
             do {
                 startFloor = startFloorRandom
                         .nextInt((maxFloor - minFloor) + 1) + minFloor;
@@ -164,6 +164,7 @@ public class Simulator implements Narrator {
                             .format("Person %d was put on the wrong starting floor. Skipping this person for now.",
                                     p.getPersonId()));
                 } else {
+                    people.add(p);
                     // start that person up
                     // all it does is request the floor from the elevator
                     // controller
@@ -216,6 +217,8 @@ public class Simulator implements Narrator {
         logEvent("The elevator controller has been shut down.");
         ElevatorController.getInstance().stopAllElevators();
         logEvent("All elevators have been shut down.");
+        logEvent("Generating stats");
+        this.generateStats();
     }
 
     /**
@@ -357,5 +360,26 @@ public class Simulator implements Narrator {
     @Override
     public int getMessageQueueLength() {
         return getNarratorDelegate().getMessageQueueLength();
+    }
+    @Override
+    public void generateStats() {
+        //Generate delegate
+        StatisticsGenerator sd = StatisticsFactory.build(this.getRunningPeople(), this.getSimulationInfo());
+        this.setStatsDelegate(sd);
+        sd.generateStats();
+    }
+
+    /**
+     * @return the statsDelegate
+     */
+    private StatisticsGenerator getStatsDelegate() {
+        return statsDelegate;
+    }
+
+    /**
+     * @param statsDelegate the statsDelegate to set
+     */
+    private void setStatsDelegate(StatisticsGenerator sd) {
+        this.statsDelegate = sd;
     }
 }

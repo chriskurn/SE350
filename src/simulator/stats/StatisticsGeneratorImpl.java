@@ -63,9 +63,10 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         //For each person go through and add his information to the cell in the Fstats array
         //The cell is determined by where the person started and where he ended
         for(Person p : peoples){
-            int startF = p.getStartFloor();
-            int destF = p.getDestinationFloor();
-            double deltaTimeInSeconds = (p.getElevatorEnterTime() - p.getStartTime()) * 0.001;
+            //Note: subtract 1 because arrays start at 0.
+            int startF = p.getStartFloor() - 1;
+            int destF = p.getDestinationFloor() - 1;
+            long deltaTimeInSeconds = (long) ((p.getElevatorEnterTime() - p.getStartTime()) * 0.001);
             int row = startF < destF ? startF : destF;
             int col = startF > destF ? startF : destF;
             fStats[row][col].addEntry(deltaTimeInSeconds);
@@ -95,14 +96,18 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
             for(int j = 0; j < fStats[i].length;j++){
                 String value = null;
                 FloorStats f = fStats[i][j];
+                //This is where the start param comes into play
+                //This allows this code to be a little more flexible. 
+                //This also allows for the single storage and printing of the three tables
+                //required
                 if(f == null){
                     value = "X";
                 }else if(stat.equals("avg")){
-                    value = Double.toString(f.getAverageWaitTime());
+                    value = Long.toString(f.getAverageWaitTime());
                 }else if(stat.equals("min")){
-                    value = Double.toString(f.getMinWaitTime());
+                    value = Long.toString(f.getMinWaitTime());
                 }else if(stat.equals("max")){
-                    value = Double.toString(f.getMaxWaitTime());
+                    value = Long.toString(f.getMaxWaitTime());
                 }
                 
                 row.append(String.format("%7s", value));
@@ -122,9 +127,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
             int pid = p.getPersonId();
             int startF = p.getStartFloor();
             int destF = p.getDestinationFloor();
-            double waitTime = (p.getElevatorEnterTime() - p.getStartTime()) * 0.001;
-            double rideTime = (p.getFinishedTime() - p.getElevatorEnterTime()) * 0.001;
-            double totalTime = waitTime + rideTime;
+            Long waitTime = (long) ((p.getElevatorEnterTime() - p.getStartTime()) * 0.001);
+            Long rideTime = (long) ((p.getFinishedTime() - p.getElevatorEnterTime()) * 0.001);
+            Long totalTime = waitTime + rideTime;
             System.out.printf("%-5s %-5d | %8d %15d %15d %12d %12d%n","Person",
                     pid,startF,destF,waitTime,rideTime,totalTime);
         }
@@ -141,8 +146,8 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         }
         //Iterate through the people add calculate average, min, and max wait times
         for(Person p: peoples){
-            double deltaTimeInSeconds = (p.getElevatorEnterTime() - p.getStartTime()) * 0.001;
-            int startF = p.getStartFloor();
+            long deltaTimeInSeconds = (long) ((p.getElevatorEnterTime() - p.getStartTime()) * 0.001);
+            int startF = p.getStartFloor() - 1;
             floorStats.get(startF).addEntry(deltaTimeInSeconds);
         }
         System.out.printf("%-7s | %-10s | %-10s | %-10s%n",
