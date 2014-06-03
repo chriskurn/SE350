@@ -96,8 +96,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
      * @param stat
      */
     private void outputFloorToFloorTables(FloorStats[][] fStats, String stat){
+    	String upperCaseStat = stat.toUpperCase();
     	System.out.println();
-        System.out.println("Now printing out the floor to floor " + stat + " table.");
+        System.out.println(upperCaseStat + " Ride Time from Floor to Floor by Person (in seconds).");    
         printHorizontalLn(117);
         
         String columnStart = String.format("%-5s", "Floor");
