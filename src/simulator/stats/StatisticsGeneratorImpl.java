@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 //import com.sun.corba.se.spi.orbutil.fsm.State;
 
+
 import simulator.Simulator;
 import simulator.common.SimulationInformation;
 import building.common.Person;
@@ -35,13 +36,19 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
      */
     @Override
     public void generateStats() {
-        System.out.printf("Generating Average/Min/Max Wait time by floor (in seconds).%n");
+    	System.out.println();
+    	System.out.println();
+        System.out.printf("Generating: Average/Min/Max Wait time by floor (in seconds).%n");
+        printHorizontalLn(65);
         generateAverageWaitTimeByFloorTable();
-        System.out.printf("Generating Wait/Ride/Total Time by Person (in seconds).%n");
+        System.out.println();
+        System.out.printf("Generating: Wait/Ride/Total Time by Person (in seconds).%n");
+        printHorizontalLn(86);
         generateWaitRideTotalTimeByPersonTable();
-        System.out.printf("Generating Floor to Floor tables (in seconds).%n");
+        System.out.println();
+        System.out.printf("Generating: Floor to Floor tables (in seconds).%n");
         generateFloorToFloorTables();
-        
+        System.out.println();
     }
     
     /**
@@ -89,7 +96,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
      * @param stat
      */
     private void outputFloorToFloorTables(FloorStats[][] fStats, String stat){
+    	System.out.println();
         System.out.println("Now printing out the floor to floor " + stat + " table.");
+        printHorizontalLn(117);
         
         String columnStart = String.format("%-5s", "Floor");
         StringBuilder columnHeading = new StringBuilder(columnStart);
@@ -133,7 +142,7 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     private void generateWaitRideTotalTimeByPersonTable() {
         ArrayList<Person> peoples = this.getPeople();
         
-        System.out.printf("%-12s | %-10s | %-10s | %-10s | %-10s | %-10s %n",
+        System.out.printf("%-13s | %-10s | %-10s | %-10s | %-10s | %-10s %n",
                 "Person","Start Floor", "Destination Floor",
                 "Wait Time", "Ride Time", "Total Time");
         for(Person p: peoples){
@@ -143,7 +152,7 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
             Long waitTime = (long) ((p.getElevatorEnterTime() - p.getStartTime()) * 0.001);
             Long rideTime = (long) ((p.getFinishedTime() - p.getElevatorEnterTime()) * 0.001);
             Long totalTime = waitTime + rideTime;
-            System.out.printf("%-5s %-5d | %8d %15d %15d %12d %12d%n","Person",
+            System.out.printf("%-7s %-5d | %8d %15d %15d %12d %12d%n","Person",
                     pid,startF,destF,waitTime,rideTime,totalTime);
         }
         
@@ -167,11 +176,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
             int startF = p.getStartFloor() - 1;
             floorStats.get(startF).addEntry(deltaTimeInSeconds);
         }
-        System.out.printf("%-7s | %-10s | %-10s | %-10s%n",
-                          "Floor", "Average wait time",
-                          "Min wait time", "Max wait time");
+        System.out.printf("%-13s | %-10s | %-10s | %-10s%n","Floor","Average wait time","Min wait time","Max wait time");
         for(FloorStats fs: floorStats){
-            System.out.printf("%-5s %d | %10d  %13d  %13d%n","Floor",
+            System.out.printf("%-7s %-5d | %10d  %13d  %13d%n","Floor",
                     fs.getFloorNumber(),fs.getAverageWaitTime(),
                     fs.getMinWaitTime(),fs.getMaxWaitTime());
         }
@@ -209,5 +216,16 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         this.people = peps;
     }
     
+    /**
+     * Outputs a horizontal to the console
+     * @param myLineLen
+     */
+    public void printHorizontalLn(int myLineLen){ 
+    for(int i = 0; i <= myLineLen; i++){
+        System.out.print("-");
+        }
+    System.out.println();
+    
+    }
 
 }
