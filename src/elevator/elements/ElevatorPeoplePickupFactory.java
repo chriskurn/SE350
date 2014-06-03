@@ -13,6 +13,11 @@ import elevator.common.ElevatorDirection;
  * @since Version 1.0 - Spring Quarter 2014
  */
 
+
+/**
+ * Public class Elevator People Pickup Factory
+ *
+ */
 public class ElevatorPeoplePickupFactory {
 
     public static ElevatorPeoplePickup build(ArrayList<Person> people,

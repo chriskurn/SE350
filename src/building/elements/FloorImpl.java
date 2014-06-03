@@ -38,10 +38,8 @@ public class FloorImpl implements Floor {
         setMyFloor(floorNumber);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Floor#enterFloor(building.common.Person)
+    /**
+     * Enter Floor, Person - Check if array is null
      */
     @Override
     public int enterFloor(Person p) throws IllegalParamException {
@@ -85,10 +83,8 @@ public class FloorImpl implements Floor {
         return finishedPeople;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Floor#getFloor()
+    /**
+     * getFloor() 
      */
     @Override
     public int getFloor() {
@@ -103,15 +99,16 @@ public class FloorImpl implements Floor {
         return floorPeoples;
     }
 
+    /**
+     * Check if floor is empty
+     */
     @Override
     public synchronized boolean isEmpty() {
         return getFloorPeople().isEmpty();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Floor#leaveFloor(building.common.Person)
+    /**
+     * Public ArrayList
      */
     @Override
     public ArrayList<Person> leaveFloor(ElevatorDirection dir) {

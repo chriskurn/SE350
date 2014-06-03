@@ -84,7 +84,9 @@ public class InputLoaderProperties implements InputLoader {
         this.setInput(new FileInputStream(this.getResourceName()));
     }
 
-    /* (non-Javadoc)
+
+    /**
+     * SimulationInformation loadInput()
      * @see simulator.elements.InputLoader#loadInput()
      */
     @Override
@@ -108,8 +110,9 @@ public class InputLoaderProperties implements InputLoader {
 
         return this.getSimulationInfo();
     }
-
-    /* (non-Javadoc)
+   
+    /**
+     * SimulationInformation getSimulationInfo()
      * @see simulator.elements.InputLoader#getSimulationInfo()
      */
     @Override

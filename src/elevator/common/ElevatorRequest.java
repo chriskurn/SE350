@@ -131,10 +131,8 @@ public class ElevatorRequest {
         floor = floorRequestedFrom;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
+    /**
+     * Public method for toString
      */
     @Override
     public String toString() {

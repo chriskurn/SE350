@@ -2,7 +2,7 @@ package simulator.stats;
 
 import java.util.ArrayList;
 
-import com.sun.corba.se.spi.orbutil.fsm.State;
+//import com.sun.corba.se.spi.orbutil.fsm.State;
 
 import simulator.Simulator;
 import simulator.common.SimulationInformation;
@@ -15,6 +15,7 @@ import building.common.Person;
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
+
 
 public class StatisticsGeneratorImpl implements StatisticsGenerator{
     
@@ -29,6 +30,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         setPeople(p);
     }
 
+    /**
+     * Generate simulation statistics.
+     */
     @Override
     public void generateStats() {
         System.out.printf("Generating Average/Min/Max Wait time by floor (in seconds).%n");
@@ -40,7 +44,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         
     }
     
-    
+    /**
+     * Generate simulation floor to floor tables.
+     */
     private void generateFloorToFloorTables() {
         ArrayList<Person> peoples = this.getPeople();
         SimulationInformation simInfo = this.getInfo();
@@ -76,9 +82,13 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         outputFloorToFloorTables(fStats,"min");
     }
     
+    
+    /**
+     * Output simulation floor to floor tables.
+     * @param fStats
+     * @param stat
+     */
     private void outputFloorToFloorTables(FloorStats[][] fStats, String stat){
-        
-        
         System.out.println("Now printing out the floor to floor " + stat + " table.");
         
         String columnStart = String.format("%-5s", "Floor");
@@ -117,6 +127,9 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         
     }
 
+    /**
+     * Generate wait ride total time by person table
+     */
     private void generateWaitRideTotalTimeByPersonTable() {
         ArrayList<Person> peoples = this.getPeople();
         
@@ -136,6 +149,10 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
         
     }
 
+    
+    /**
+     * Generate average wait time by floor table
+     */
     private void generateAverageWaitTimeByFloorTable(){
         ArrayList<FloorStats> floorStats = new ArrayList<FloorStats>();
         ArrayList<Person> peoples = this.getPeople();
@@ -161,6 +178,7 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     }
 
     /**
+     * Simulation Information getInfo()
      * @return the info
      */
     public SimulationInformation getInfo() {
@@ -176,6 +194,7 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator{
     }
 
     /**
+     * getPeople()
      * @return the people
      */
     public ArrayList<Person> getPeople() {

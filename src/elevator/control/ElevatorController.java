@@ -156,14 +156,13 @@ final public class ElevatorController implements Runnable {
         this.notifyAll();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Runnable#run()
+
+    /**
+     * Public method run.
+     * While the elevator controller is running handle all requests
      */
     @Override
     public void run() {
-        // While the elevator controller is running handle all requests
         while (running) {
 
             handlePendingRequests();
@@ -262,17 +261,24 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * Start elevator controller.
+     * Public method to start elevator controller.
      */
     public void startElevatorController() {
         this.running = true;
         this.myThread.start();
     }
 
+    /**
+     * Public method to stop elevator controller.
+     */
     public void stopElevatorController() {
         this.running = false;
     }
 
+    
+    /**
+     * Public method to stop all elevators.
+     */
     public void stopAllElevators() {
         // stop it
         for (Elevator e : getElevators()) {

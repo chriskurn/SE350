@@ -43,6 +43,7 @@ public class Simulator implements Narrator,StatisticsGenerator {
     /** The narrator delegate. */
     private Narrator narratorDelegate;
     
+    /** The statistics generator. */
     private StatisticsGenerator statsDelegate;
 
     /** The simulator building. */

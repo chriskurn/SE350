@@ -29,11 +29,15 @@ public class PersonImpl implements Person {
     /** The person id. */
     private int personId;
     
+    /** The start time. */
     private long startTime;
+    
+    /** The elevator entered time. */
     private long elevatorEnteredTime;
+    
+    /** The finished time. */
     private long finishedTime;
     
-
     /** The person count. */
     private static volatile int personCount = 1;
 
@@ -93,53 +97,48 @@ public class PersonImpl implements Person {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Person#getCurrentFloor()
+    /**
+     * Get current floor.
      */
     @Override
     public int getCurrentFloor() {
         return currentFloor;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Person#getDestinationFloor()
+    /**
+     * Get destination floor.
      */
     @Override
     public int getDestinationFloor() {
         return destinationFloor;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Person#getPersonId()
+    /**
+     * Get person ID.
      */
     @Override
     public int getPersonId() {
         return personId;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see building.common.Person#getStartFloor()
+    /**
+     * Get start floor.
      */
     @Override
     public int getStartFloor() {
         return startFloor;
     }
     
+    /**
+     * Set current floor.
+     * @param floorNumber
+     */
     private void setCurrentFloor(int floorNumber) {
         currentFloor = floorNumber;
     }
 
     /**
      * Sets the destination floor.
-     * 
      * @param destF
      *            the new destination floor
      */
@@ -147,6 +146,10 @@ public class PersonImpl implements Person {
         destinationFloor = destF;
     }
 
+  
+    /**
+     * Check for invalid status.
+     */
     @Override
     public void setInvalidStatus() {
         errorOccured = true;
@@ -173,11 +176,10 @@ public class PersonImpl implements Person {
         startFloor = startF;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Runnable#run()
-     */
+
+	/**
+	 * Public start person method
+	 */
     @Override
     public void startPerson() {
         int destFloor = getDestinationFloor();
@@ -204,10 +206,8 @@ public class PersonImpl implements Person {
         this.startTime = System.currentTimeMillis();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
+    /**
+     * Public method toString
      */
     @Override
     public String toString() {
@@ -219,27 +219,47 @@ public class PersonImpl implements Person {
 
     // TODO Maybe have a check to make sure this is only called once?
     
+   
+    /**
+     * Public method for time elevator entered.
+     */
     @Override
     public void elevatorEntered() {
         this.elevatorEnteredTime = System.currentTimeMillis(); 
     }
 
+    
+    /**
+     * Public method for time remaining.
+     */
     @Override
     public void leftElevator() {
         this.finishedTime = System.currentTimeMillis();
         this.setCurrentFloor(this.getDestinationFloor());
     }
 
+    
+    /**
+     * Public method for geting start time.
+     */
     @Override
     public long getStartTime() {
         return this.startTime;
     }
 
+    
+    /**
+     * Public method for getting the elevator enter time.
+     */
     @Override
     public long getElevatorEnterTime() {
         return this.elevatorEnteredTime;
     }
 
+    
+    /**
+     * Public method for getting the finished time.
+     */
     @Override
     public long getFinishedTime() {
         return this.finishedTime;

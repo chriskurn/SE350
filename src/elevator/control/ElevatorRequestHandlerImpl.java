@@ -38,12 +38,9 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
         this.setElevators(theElevators);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * elevator.control.ElevatorRequestHandler#handleRequests(java.util.ArrayList
-     * )
+
+    /**
+     * Elevator Request Handler
      */
     @Override
     public boolean handleRequest(ElevatorRequest eleRequest) {

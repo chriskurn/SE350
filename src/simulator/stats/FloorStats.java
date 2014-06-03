@@ -41,7 +41,7 @@ class FloorStats {
     }
     
     /**
-     * 
+     * updateAverage
      * @param numEntry
      */
     void updateAverage(long numEntry){
@@ -49,7 +49,7 @@ class FloorStats {
         this.numEntries++;
     }
     /**
-     * 
+     * getAverageWaitTime()
      * @return
      */
     long getAverageWaitTime(){
@@ -58,12 +58,14 @@ class FloorStats {
     
     
     /**
+     * getMaxWaitTime()
      * @return the maxWaitTime
      */
     long getMaxWaitTime() {
         return maxWaitTime;
     }
     /**
+     * setMaxWaitTime
      * @param maxWaitTime the maxWaitTime to set
      */
     void setMaxWaitTime(long newMax) {
@@ -106,6 +108,7 @@ class FloorStats {
     }
 
     /**
+     * getRowFloorNum()
      * @return the rowFloorNum
      */
     long getRowFloorNum() {
@@ -113,6 +116,7 @@ class FloorStats {
     }
 
     /**
+     * getColumnFloorNum()
      * @return the columnFloorNum
      */
     long getColumnFloorNum() {

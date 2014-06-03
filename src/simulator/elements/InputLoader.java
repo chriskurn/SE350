@@ -26,14 +26,12 @@ public interface InputLoader {
 
     /**
      * Gets the simulation info.
-     *
      * @return the simulation info
      */
     public SimulationInformation getSimulationInfo();
 
     /**
      * Gets the resource name.
-     *
      * @return the resource name
      */
     public String getResourceName();

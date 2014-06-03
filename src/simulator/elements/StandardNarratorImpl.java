@@ -18,6 +18,7 @@ public class StandardNarratorImpl implements Narrator {
     /** The recent messages. */
     private String[] recentMessages;
     
+    /** The narration creation time. */
     private final long narrationCreationTime;
 
     /**
@@ -33,13 +34,11 @@ public class StandardNarratorImpl implements Narrator {
         narrationCreationTime = System.currentTimeMillis();
     }
 
-    /* (non-Javadoc)
+    /**
+     * Method that logs elevator events.
      * @see simulator.elements.Narrator#logEvent(java.lang.String)
      */
     @Override
-    /**
-     * Method that logs elevator events.
-     */
     public void logEvent(String event) {
 
         String logMessage = getCurrentElapsedTime() + " " + event;
@@ -65,25 +64,22 @@ public class StandardNarratorImpl implements Narrator {
         return narrationCreationTime;
     }
 
-    /* (non-Javadoc)
+ 
+    /**
+     * Method that writes elevator info to a file.
      * @see simulator.elements.Narrator#writeToFile()
      */
     @Override
-    /**
-     * Method that writes elevator info to a file.
-     */
     public boolean writeToFile() {
         return saveToFile;
     }
-
-    /* (non-Javadoc)
-     * @see simulator.elements.Narrator#getMessageQueueLength()
-     */
-    @Override
+   
     /**
      * Method retrieves message queue length.
+     * @see simulator.elements.Narrator#getMessageQueueLength()
      * @return the message queue length
      */
+    @Override
     public int getMessageQueueLength() {
         return recentMessages.length;
     }

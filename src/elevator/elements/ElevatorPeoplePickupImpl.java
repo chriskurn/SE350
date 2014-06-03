@@ -63,16 +63,17 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
 
     /**
      * Get the max number of people.
-     * 
      * @return the max number of people available for an elevator
      */
     private int getMaxNumberOfPeople() {
         return maxNumberOfPeople;
     }
 
+    /**
+     * Ask building to load in people for this floor
+     */
     @Override
     public void loadPeople(int floor) throws InvalidFloorException {
-        // Ask building to load in people for this floor
         int curFloor = floor;
         ElevatorDirection dir = getCurrentDirection();
         int maxPeeps = getMaxNumberOfPeople();

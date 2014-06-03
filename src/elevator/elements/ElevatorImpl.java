@@ -107,10 +107,8 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see elevator.common.Elevator#addFloor(int)
+    /**
+     * Public method add Floor.
      */
     @Override
     public void addFloor(int floor) throws InvalidFloorException {

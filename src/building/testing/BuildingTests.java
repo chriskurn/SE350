@@ -32,10 +32,10 @@ import simulator.common.SimulationInformation;
  */
 public class BuildingTests {
 
-    /** The info. */
+    /** The simulator info. */
     private SimulationInformation info;
     
-    /** The sim. */
+    /** The simulator */
     private Simulator sim;
 
     /**
@@ -54,6 +54,11 @@ public class BuildingTests {
         this.sim = mySim; 
     }
     
+    /**
+     * personEnterValidFloor()
+     * @throws IllegalParamException
+     * @throws InvalidFloorException
+     */
     @Test
     public void personEnterValidFloor() throws IllegalParamException, InvalidFloorException{
         
@@ -67,19 +72,33 @@ public class BuildingTests {
         
     }
     
-   
+   /**
+    * personEnterInvalidFloor()
+    * @throws IllegalParamException
+    * @throws InvalidFloorException
+    */
     @Test(expected = InvalidFloorException.class)
     public void personEnterInvalidFloor() throws IllegalParamException, InvalidFloorException {
         Person p = PersonFactory.build(1, 10);
         Building.getInstance().enterFloor(p, -10);
         
     }
+    
+    /**
+     * testCorrectFloorNumber()
+     */
     @Test
     public void testCorrectFloorNumber(){
         int correctFloor = info.numFloors;
         
         assertEquals("Number of floors should be equal",correctFloor,Building.getInstance().getNumberOfFloors());
     }
+    
+    /**
+     * loadPeopleCorrectlyUp()
+     * @throws IllegalParamException
+     * @throws InvalidFloorException
+     */
     @Test
     public void loadPeopleCorrectlyUp() throws IllegalParamException, InvalidFloorException{
         
