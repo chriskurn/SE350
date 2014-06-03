@@ -9,16 +9,16 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Maximum Floor Test.
+ * Description: Express Elevator Test.
  * 
- * Test for the maximum floor of the building.
+ * Test for an express elevator in the simulation.
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class MaxFloorTest {
+public class ExpressElevatorTest {
 
 	@Test
 	public void Test() {
@@ -34,11 +34,11 @@ public class MaxFloorTest {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
 
-        int maxFloor = info.numFloors;
+        int expElev = info.numExpressElevators;
         
-        if(maxFloor !=0){
-        	System.out.println("MaxFloor = " + maxFloor);
-        } else fail("simInput error - MaxFloor Value missing");
+        if(expElev == 0){
+        	System.out.println("Number of express elevators = " + expElev);
+        } else fail("simInput error - There are no express elevators in this building.");
 	}
 
 }

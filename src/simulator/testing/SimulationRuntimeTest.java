@@ -9,16 +9,16 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Maximum Floor Test.
+ * Description: Check the simulation runtime test.
  * 
- * Test for the maximum floor of the building.
+ * Test for the input value for runtime.
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class MaxFloorTest {
+public class SimulationRuntimeTest {
 
 	@Test
 	public void Test() {
@@ -34,11 +34,11 @@ public class MaxFloorTest {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
 
-        int maxFloor = info.numFloors;
+        long simulationRunTime = info.simRunTime;
         
-        if(maxFloor !=0){
-        	System.out.println("MaxFloor = " + maxFloor);
-        } else fail("simInput error - MaxFloor Value missing");
+        if(simulationRunTime == 300000){
+        	System.out.println("Simulation Run Time = " + simulationRunTime);
+        } else fail("simInput error - Simulation Run Time should be 300000");
 	}
 
 }

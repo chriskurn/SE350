@@ -9,16 +9,16 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Maximum Floor Test.
+ * Description: Default Person Per Minute Input Test.
  * 
- * Test for the maximum floor of the building.
+ * Test for the correct number of people per. minute input.
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class MaxFloorTest {
+public class PersonPerMinuteInputTest {
 
 	@Test
 	public void Test() {
@@ -34,11 +34,11 @@ public class MaxFloorTest {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
 
-        int maxFloor = info.numFloors;
+        int peoplePerMin = info.personPerMin;
         
-        if(maxFloor !=0){
-        	System.out.println("MaxFloor = " + maxFloor);
-        } else fail("simInput error - MaxFloor Value missing");
+        if(peoplePerMin ==15){
+        	System.out.println("Default value for people per minute = " + peoplePerMin);
+        } else fail("simInput error - Default value for people per minute is incorrect.");
 	}
 
 }

@@ -9,16 +9,16 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Maximum Floor Test.
+ * Description: Door time input value Test.
  * 
- * Test for the maximum floor of the building.
+ * Test for the default door time value.
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class MaxFloorTest {
+public class DoorTimeTest {
 
 	@Test
 	public void Test() {
@@ -34,11 +34,11 @@ public class MaxFloorTest {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
 
-        int maxFloor = info.numFloors;
+        long doorTime = info.doorTime;
         
-        if(maxFloor !=0){
-        	System.out.println("MaxFloor = " + maxFloor);
-        } else fail("simInput error - MaxFloor Value missing");
+        if(doorTime == 500){
+        	System.out.println("Door Time = " + doorTime);
+        } else fail("simInput error - Door Time should be 500");
 	}
 
 }

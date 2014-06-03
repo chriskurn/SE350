@@ -9,16 +9,16 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 
 /**
- * Description: Maximum Floor Test.
+ * Description: Default Elevator Floor Test.
  * 
- * Test for the maximum floor of the building.
+ * Test for the default floor.
  *
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class MaxFloorTest {
+public class DefaultElevatorFloorTest {
 
 	@Test
 	public void Test() {
@@ -34,11 +34,11 @@ public class MaxFloorTest {
         SimulationInformation info = Simulator.getInstance()
                 .getSimulationInfo();
 
-        int maxFloor = info.numFloors;
+        int defaultElevatorFloor = info.defaultElevatorFlr;
         
-        if(maxFloor !=0){
-        	System.out.println("MaxFloor = " + maxFloor);
-        } else fail("simInput error - MaxFloor Value missing");
+        if(defaultElevatorFloor ==1){
+        	System.out.println("Default Elevator Floor = " + defaultElevatorFloor);
+        } else fail("simInput error - Default Elevator Floor Value missing");
 	}
 
 }

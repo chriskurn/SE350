@@ -10,7 +10,7 @@ import org.junit.Test;
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-public class BlankTest {
+public class OutputToConsoleTest {
 
     //private SimulationInformation info;
     
