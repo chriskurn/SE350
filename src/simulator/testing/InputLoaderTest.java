@@ -45,18 +45,22 @@ public class InputLoaderTest {
         try {
             i.loadInput();
         } catch (IOException | IllegalParamException e) {
-            // TODO Auto-generated catch block
             fail("This file should load properly. Examine the file and the code to make sure they are correct.");
         }
         SimulationInformation si = i.getSimulationInfo();
+        
 
-        assertEquals(si.doorTime, 5239293);
-        assertEquals(si.elevatorSleepTime, 6304821);
-        assertEquals(si.floorTime, 5039893);
-        assertEquals(si.numElevators, 238);
-        assertEquals(si.numExpressElevators, 23893);
-        assertEquals(si.numFloors, 1233);
-        assertEquals(si.numPeoplePerElevator, 23723);
+        assertEquals(si.doorTime, 524224);
+        assertEquals(si.elevatorSleepTime, 15214000);
+        assertEquals(si.floorTime, 502241);
+        assertEquals(si.numElevators, 2421);
+        assertEquals(si.numExpressElevators, 212132);
+        assertEquals(si.numFloors, 125323);
+        assertEquals(si.numPeoplePerElevator, 214424);
+        
+        assertEquals(si.defaultElevatorFlr, 214);
+        assertEquals(si.simRunTime, 3000421);
+        assertEquals(si.personPerMin, 1524);
     }
 
 }

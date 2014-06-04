@@ -79,7 +79,7 @@ class FloorStats {
      *         milliseconds, to this floor.
      */
     long getAverageWaitTime() {
-        return averageWaitTime / getNumEntries();
+        return getNumEntries() == 0 ? 0 : averageWaitTime / getNumEntries();
     }
 
     /**
