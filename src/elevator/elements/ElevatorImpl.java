@@ -174,6 +174,17 @@ public class ElevatorImpl implements Elevator, Runnable {
             throw new InvalidFloorException(
                     "Cannot add a floor in a different direction of travel.");
         }
+        //people could be loading in while we check the size
+        //Could lead to an exception
+        int curSpots = 0;
+        synchronized(this){
+            curSpots = getMaxNumberOfPeople() - getElevatorPeople().size();
+        }
+        //Make sure that people requesting a floor don't get lost
+        if (floor == getCurrentFloor() && curSpots <= 0){
+            throw new InvalidFloorException(
+                    "Cannot add due to a full elevator.");
+        }
         // If the destination already exists we want to ignore it / not add it
         if (destinationExists(floor) == false) {
             // add the destination
