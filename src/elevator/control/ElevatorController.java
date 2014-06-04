@@ -13,8 +13,7 @@ import elevator.elements.Elevator;
 /**
  * Description: Elevator Controller class.
  * 
- * a singleton facade designed to manage
- * the elevators and their requests.
+ * a singleton facade designed to manage the elevators and their requests.
  * 
  * @author Patrick Stein
  * @author Chris Kurn
@@ -102,13 +101,13 @@ final public class ElevatorController implements Runnable {
     private void createElevators(SimulationInformation simInfo)
             throws IllegalParamException {
         ArrayList<Elevator> eles = this.getElevators();
-
-        for (int i = 0; i < simInfo.numElevators; i++) {
+        int numEles = simInfo.numElevators;
+        
+        for (int i = 0; i < numEles; i++) {
             Elevator ele = ElevatorFactory.build(simInfo);
             eles.add(ele);
             ele.startElevator();
         }
-
     }
 
     /**
@@ -156,10 +155,9 @@ final public class ElevatorController implements Runnable {
         this.notifyAll();
     }
 
-
     /**
-     * Public method run.
-     * While the elevator controller is running handle all requests
+     * Public method run. While the elevator controller is running handle all
+     * requests
      */
     @Override
     public void run() {
@@ -275,7 +273,6 @@ final public class ElevatorController implements Runnable {
         this.running = false;
     }
 
-    
     /**
      * Public method to stop all elevators.
      */

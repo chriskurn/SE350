@@ -11,10 +11,9 @@ import elevator.elements.Elevator;
 /**
  * Description: The Class ElevatorRequestHandlerImpl.
  * 
- * The building is a singleton facade responsible for
- * managing the floors. It also has methods that allow
- * for movement of people to different floors and people
- * leaving a floor.
+ * The building is a singleton facade responsible for managing the floors. It
+ * also has methods that allow for movement of people to different floors and
+ * people leaving a floor.
  * 
  * @author Patrick Stein
  * @author Chris Kurn
@@ -37,7 +36,6 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
             throws IllegalParamException {
         this.setElevators(theElevators);
     }
-
 
     /**
      * Elevator Request Handler

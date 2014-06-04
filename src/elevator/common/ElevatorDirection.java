@@ -13,10 +13,10 @@ package elevator.common;
  */
 public enum ElevatorDirection {
 
-    /** The up. */
+    /** Up direction. */
     UP,
-    /** The down. */
+    /** Down direction. */
     DOWN,
-    /** The idle. */
+    /** Idle if no movement is occuring. */
     IDLE;
 }

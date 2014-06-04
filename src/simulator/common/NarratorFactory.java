@@ -25,8 +25,8 @@ public class NarratorFactory {
      *            the size of message queue
      * @return the narrator
      */
-    public static Narrator build(boolean saveToFile, int sizeOfMessageQueue) {
-        return new StandardNarratorImpl(saveToFile, sizeOfMessageQueue);
+    public static Narrator build() {
+        return new StandardNarratorImpl();
     }
 
 }

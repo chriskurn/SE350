@@ -32,7 +32,8 @@ public class FloorImpl implements Floor {
      * 
      * @param floorNumber
      *            the floor number of this floor
-     * @throws IllegalParamException throws this exception if the floor number is < 1
+     * @throws IllegalParamException
+     *             throws this exception if the floor number is < 1
      */
     public FloorImpl(int floorNumber) throws IllegalParamException {
         setMyFloor(floorNumber);
@@ -76,7 +77,9 @@ public class FloorImpl implements Floor {
     }
 
     /**
-     * Private get method for getting the people who have finished execution and are chilling
+     * Private get method for getting the people who have finished execution and
+     * are chilling
+     * 
      * @return a list of the people who are done running
      */
     private ArrayList<Person> getFinishedPeople() {
@@ -84,7 +87,7 @@ public class FloorImpl implements Floor {
     }
 
     /**
-     * getFloor() 
+     * getFloor()
      */
     @Override
     public int getFloor() {
@@ -92,7 +95,9 @@ public class FloorImpl implements Floor {
     }
 
     /**
-     * Private get method for the list of people that are waiting for an elevator
+     * Private get method for the list of people that are waiting for an
+     * elevator
+     * 
      * @return a list of people as said above
      */
     private ArrayList<Person> getFloorPeople() {
@@ -119,7 +124,8 @@ public class FloorImpl implements Floor {
             Person person = p.next();
             // If the direction is up and the destination floor is above this
             // floor
-            // Or if the direction is down and the destination floor is above this
+            // Or if the direction is down and the destination floor is above
+            // this
             // floor
             // Then we are good to leave the floor
             if (dir == ElevatorDirection.UP
@@ -140,7 +146,9 @@ public class FloorImpl implements Floor {
      * 
      * @param floor
      *            the new my floor
-     * @throws IllegalParamException Thrown if the floor is less than 1. Cannot have a 0 or negative floor.
+     * @throws IllegalParamException
+     *             Thrown if the floor is less than 1. Cannot have a 0 or
+     *             negative floor.
      */
     private void setMyFloor(int floor) throws IllegalParamException {
         if (floor < 1) {

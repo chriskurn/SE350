@@ -63,6 +63,7 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
 
     /**
      * Get the max number of people.
+     * 
      * @return the max number of people available for an elevator
      */
     private int getMaxNumberOfPeople() {
@@ -136,7 +137,7 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
             if (person.getDestinationFloor() == curFloor) {
                 try {
                     Building.getInstance().enterFloor(person, curFloor);
-                    //Person event for leaving the elevator
+                    // Person event for leaving the elevator
                     person.leftElevator();
                 } catch (IllegalParamException | InvalidFloorException e) {
                     String eve = String

@@ -2,10 +2,9 @@ package simulator.common;
 
 import java.util.ArrayList;
 
-import building.common.Person;
-
 import simulator.stats.StatisticsGenerator;
 import simulator.stats.StatisticsGeneratorImpl;
+import building.common.Person;
 
 /**
  * Description: Statistics Factory class.
@@ -16,9 +15,10 @@ import simulator.stats.StatisticsGeneratorImpl;
  */
 
 public class StatisticsFactory {
-    
-    public static StatisticsGenerator build(ArrayList<Person> p, SimulationInformation info){
-        return new StatisticsGeneratorImpl(p,info);
+
+    public static StatisticsGenerator build(ArrayList<Person> p,
+            SimulationInformation info) {
+        return new StatisticsGeneratorImpl(p, info);
     }
 
 }

@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import simulator.common.SimulationInformation;
+
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
+import simulator.common.SimulationInformation;
 
 /**
  * Description: InputLoaderProperties class.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -21,60 +22,64 @@ public class InputLoaderProperties implements InputLoader {
 
     /** The file name. */
     private String fileName;
-    
+
     /** The input. */
     private InputStream input;
-    
+
     /** The prop. */
     private Properties prop;
 
     /** The num elevators. */
     private int numElevators;
-    
+
     /** The num floors. */
     private int numFloors;
-    
+
     /** The num express elevators. */
     private int numExpressElevators;
-    
+
     /** The num persons per elevators. */
     private int numPersonsPerElevators;
-    
+
     /** The person per min. */
     private int personPerMin;
-    
+
     /** The floor time. */
     private long floorTime;
-    
+
     /** The door time. */
     private long doorTime;
-    
+
     /** The elevator sleep time. */
     private long elevatorSleepTime;
-    
+
     /** The sim run time. */
     private long simRunTime;
-    
+
     /** The default elevator floor. */
     private int defaultElevatorFlr;
 
     /** The min elevators. */
     private final int MIN_ELEVATORS = 1;
-    
+
     /** The min floors. */
     private final int MIN_FLOORS = 1;
-    
+
     /** The min execution. */
     private final long MIN_EXECUTION = 5000;
 
     /**
      * A basic constructor that takes a Properties file name with its full path.
-     *
-     * @param fn            A String containing the full path and name of an properties
+     * 
+     * @param fn
+     *            A String containing the full path and name of an properties
      *            file.
-     * @throws IllegalParamException             thrown if the properties member or input member is null
-     * @throws NullFileException the null file exception
-     * @throws FileNotFoundException             thrown if the filename provided does not open an existing
+     * @throws IllegalParamException
+     *             thrown if the properties member or input member is null
+     * @throws NullFileException
+     *             the null file exception
+     * @throws FileNotFoundException
+     *             thrown if the filename provided does not open an existing
      *             file
      */
     public InputLoaderProperties(String fn) throws IllegalParamException,
@@ -84,9 +89,9 @@ public class InputLoaderProperties implements InputLoader {
         this.setInput(new FileInputStream(this.getResourceName()));
     }
 
-
     /**
      * SimulationInformation loadInput()
+     * 
      * @see simulator.elements.InputLoader#loadInput()
      */
     @Override
@@ -103,16 +108,18 @@ public class InputLoaderProperties implements InputLoader {
         this.setNumElevators(prop.getProperty("numElevators"));
         this.setNumExpressElevators(prop.getProperty("numExpressElevators"));
         this.setNumFloors(prop.getProperty("numFloors"));
-        this.setNumPersonsPerElevators(prop.getProperty("maxPersonsPerElevator"));
+        this.setNumPersonsPerElevators(prop
+                .getProperty("maxPersonsPerElevator"));
         this.setPersonPerMin(prop.getProperty("personPerMin"));
         this.setSimRunTime(prop.getProperty("simRunTime"));
         this.setDefaultElevatorFlr(prop.getProperty("defaultElevatorFlr"));
 
         return this.getSimulationInfo();
     }
-   
+
     /**
      * SimulationInformation getSimulationInfo()
+     * 
      * @see simulator.elements.InputLoader#getSimulationInfo()
      */
     @Override
@@ -135,12 +142,13 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Sets the sim run time.
-     *
-     * @param attribute the new sim run time
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param attribute
+     *            the new sim run time
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
     private void setSimRunTime(String attribute) throws IllegalParamException {
-        // TODO Auto-generated method stub
         int n = Integer.parseInt(attribute);
         if (n <= MIN_EXECUTION) {
             throw new IllegalParamException(
@@ -152,12 +160,13 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Sets the person per min.
-     *
-     * @param attribute the new person per min
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param attribute
+     *            the new person per min
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
     private void setPersonPerMin(String attribute) throws IllegalParamException {
-        // TODO Auto-generated method stub
         int n = Integer.parseInt(attribute);
         if (n < 1) {
             throw new IllegalParamException(
@@ -213,10 +222,12 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Private set method for the Properties file name.
-     *
-     * @param fn            Takes a string that must correspond to an Properties file. It
+     * 
+     * @param fn
+     *            Takes a string that must correspond to an Properties file. It
      *            also cannot be null.
-     * @throws NullFileException the null file exception
+     * @throws NullFileException
+     *             the null file exception
      */
     private void setFileName(String fn) throws NullFileException {
         // Make sure the file name exists
@@ -239,7 +250,7 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Returns the input stream for the file opened.
-     *
+     * 
      * @return the inputstream associated with the file being read.
      */
     private InputStream getInput() {
@@ -248,9 +259,11 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Sets the input.
-     *
-     * @param i the new input
-     * @throws IllegalParamException             the input stream cannot be set to null.
+     * 
+     * @param i
+     *            the new input
+     * @throws IllegalParamException
+     *             the input stream cannot be set to null.
      */
     private void setInput(InputStream i) throws IllegalParamException {
         if (i != null) {
@@ -271,9 +284,11 @@ public class InputLoaderProperties implements InputLoader {
 
     /**
      * Sets the properties member.
-     *
-     * @param p the new prop
-     * @throws IllegalParamException             throws an exception if the parameter p is null.
+     * 
+     * @param p
+     *            the new prop
+     * @throws IllegalParamException
+     *             throws an exception if the parameter p is null.
      */
     private void setProp(Properties p) throws IllegalParamException {
         if (p != null) {
@@ -385,7 +400,7 @@ public class InputLoaderProperties implements InputLoader {
         this.numExpressElevators = n;
 
     }
-    
+
     /**
      * A function for translating a string attribute to a number for the member
      * number of express elevators.
@@ -400,8 +415,7 @@ public class InputLoaderProperties implements InputLoader {
             throws IllegalParamException {
         int n = Integer.parseInt(attribute);
         if (n < 0) {
-            throw new IllegalParamException(
-                    "Default floor must be set to 1");
+            throw new IllegalParamException("Default floor must be set to 1");
         }
         this.defaultElevatorFlr = n;
 

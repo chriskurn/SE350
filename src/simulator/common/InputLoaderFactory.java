@@ -1,6 +1,7 @@
 package simulator.common;
 
 import java.io.FileNotFoundException;
+
 import simulator.elements.InputLoader;
 import simulator.elements.InputLoaderProperties;
 

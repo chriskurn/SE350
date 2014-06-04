@@ -136,8 +136,7 @@ public class ElevatorRequest {
      */
     @Override
     public String toString() {
-        String dir = getDirection() == ElevatorDirection.UP ? "up"
-                : "down";
+        String dir = getDirection() == ElevatorDirection.UP ? "up" : "down";
         return String.format("Request from floor %d for direction %s.",
                 getFloor(), dir);
     }

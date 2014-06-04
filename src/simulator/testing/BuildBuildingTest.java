@@ -5,38 +5,37 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import elevator.common.InvalidFloorException;
-import building.Building;
-import building.common.Person;
-import building.common.PersonFactory;
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
+import building.Building;
+import building.common.Person;
+import building.common.PersonFactory;
+import elevator.common.InvalidFloorException;
 
 /**
  * Description BuildBuilding Test.
  * 
  * Test the building build process.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  */
 
-
 public class BuildBuildingTest {
 
-	/**
-	 * Build Building simulation. Create a new person Select a start and
-	 * destination floor Add the person to the start floor * Press the
-	 * appropriate button (up/down) on that floor [Elevator controller and
-	 * elevator behaviors will handle things from here]
-	 *
-	 */
- 
-	@Test
-	public void BuildingTest() {
+    /**
+     * Build Building simulation. Create a new person Select a start and
+     * destination floor Add the person to the start floor * Press the
+     * appropriate button (up/down) on that floor [Elevator controller and
+     * elevator behaviors will handle things from here]
+     * 
+     */
+
+    @Test
+    public void BuildingTest() {
         // TODO Auto-generated method stub
 
         /**
@@ -104,12 +103,12 @@ public class BuildBuildingTest {
             System.out.println("Destination Floor = " + destFloor);
             System.out.println("Adding person to start floor");
 
-			try {
-				Building.getInstance().enterFloor (P, destFloor);
-			} catch (IllegalParamException | InvalidFloorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            try {
+                Building.getInstance().enterFloor(P, destFloor);
+            } catch (IllegalParamException | InvalidFloorException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             System.out.println();
 

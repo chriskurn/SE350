@@ -10,20 +10,19 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import elevator.common.InvalidFloorException;
-import elevator.elements.Elevator;
-import elevator.elements.ElevatorImpl;
-
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
+import elevator.common.InvalidFloorException;
+import elevator.elements.Elevator;
+import elevator.elements.ElevatorImpl;
 
 /**
  * Description: InvalidFloorInputTest class.
  * 
  * Checks for invalid floors (input)
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -34,21 +33,23 @@ public class InvalidFloorInputTest {
 
     /** The info. */
     private SimulationInformation info;
-    
+
     /** The sim. */
     private Simulator sim;
-    
+
     /** The floor number. */
     private int floorNumber;
-    
+
     /** The elevator. */
     private Elevator elevator;
 
     /**
      * InvalidFloorInputTest.
-     *
-     * @param floorNum the floor num
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @param floorNum
+     *            the floor num
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
     public InvalidFloorInputTest(int floorNum) throws IllegalParamException {
         this.floorNumber = floorNum;
@@ -56,10 +57,13 @@ public class InvalidFloorInputTest {
 
     /**
      * Load simulation.
-     *
-     * @throws NullFileException the null file exception
-     * @throws IllegalParamException the illegal param exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     * 
+     * @throws NullFileException
+     *             the null file exception
+     * @throws IllegalParamException
+     *             the illegal param exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     @Before
     public void loadSimulation() throws NullFileException,
@@ -73,7 +77,7 @@ public class InvalidFloorInputTest {
 
     /**
      * Data.
-     *
+     * 
      * @return the collection
      */
     @Parameters
@@ -84,8 +88,9 @@ public class InvalidFloorInputTest {
 
     /**
      * Invalid floor numbers test.
-     *
-     * @throws InvalidFloorException the invalid floor exception
+     * 
+     * @throws InvalidFloorException
+     *             the invalid floor exception
      */
     @Test(expected = InvalidFloorException.class)
     public void invalidFloorNumbersTest() throws InvalidFloorException {

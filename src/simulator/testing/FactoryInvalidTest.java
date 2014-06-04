@@ -15,7 +15,7 @@ import simulator.elements.InputLoader;
  * Description: Factory Invalid Test.
  * 
  * Check factory for validity test.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -25,10 +25,13 @@ public class FactoryInvalidTest {
 
     /**
      * Properties input loader test.
-     *
-     * @throws FileNotFoundException the file not found exception
-     * @throws NullFileException the null file exception
-     * @throws IllegalParamException the illegal param exception
+     * 
+     * @throws FileNotFoundException
+     *             the file not found exception
+     * @throws NullFileException
+     *             the null file exception
+     * @throws IllegalParamException
+     *             the illegal param exception
      */
     @Test(expected = FileNotFoundException.class)
     public void propertiesInputLoaderTest() throws FileNotFoundException,

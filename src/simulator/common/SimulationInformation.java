@@ -3,9 +3,8 @@ package simulator.common;
 /**
  * Description: SimulationInformation class.
  * 
- * The purpose of this class is to encapsulate all 
- * of the data associated with building and running the simulation.
- * external file: simInput.properties
+ * The purpose of this class is to encapsulate all of the data associated with
+ * building and running the simulation. external file: simInput.properties
  * 
  * @author Patrick Stein
  * @author Chris Kurn
@@ -40,7 +39,7 @@ public class SimulationInformation {
 
     /** The sim run time. */
     public long simRunTime;
-
+    /** The default floor elevators go to after timeout */
     public int defaultElevatorFlr;
 
 }

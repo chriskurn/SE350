@@ -7,19 +7,18 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import simulator.Simulator;
+import simulator.common.IllegalParamException;
+import simulator.common.NullFileException;
+import simulator.common.SimulationInformation;
 import elevator.common.InvalidFloorException;
 import elevator.common.NoNewDestinationException;
 import elevator.elements.Elevator;
 import elevator.elements.ElevatorImpl;
 
-import simulator.Simulator;
-import simulator.common.IllegalParamException;
-import simulator.common.NullFileException;
-import simulator.common.SimulationInformation;
-
 /**
  * Description: validFloorInputTest class.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -29,16 +28,19 @@ public class ValidFloorInputTest {
 
     /** The info. */
     private SimulationInformation info;
-    
+
     /** The sim. */
     private Simulator sim;
 
     /**
      * Load simulation.
-     *
-     * @throws NullFileException the null file exception
-     * @throws IllegalParamException the illegal param exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     * 
+     * @throws NullFileException
+     *             the null file exception
+     * @throws IllegalParamException
+     *             the illegal param exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     @Before
     public void loadSimulation() throws NullFileException,
@@ -51,10 +53,13 @@ public class ValidFloorInputTest {
 
     /**
      * Adds the floor input test.
-     *
-     * @throws IllegalParamException the illegal param exception
-     * @throws InvalidFloorException the invalid floor exception
-     * @throws NoNewDestinationException the no new destination exception
+     * 
+     * @throws IllegalParamException
+     *             the illegal param exception
+     * @throws InvalidFloorException
+     *             the invalid floor exception
+     * @throws NoNewDestinationException
+     *             the no new destination exception
      */
     @Test
     public void addFloorInputTest() throws IllegalParamException,

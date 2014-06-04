@@ -1,8 +1,11 @@
 package simulator.testing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import simulator.common.InputLoaderFactory;
 import simulator.common.NarratorFactory;
 import simulator.elements.InputLoader;
@@ -12,26 +15,13 @@ import simulator.elements.Narrator;
  * Description: Factory Valid Test.
  * 
  * Is factory valid test.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
  * */
 
 public class FactoryValidTest {
-
-    /**
-     * Standard narrator creation test.
-     */
-    @Test
-    public void standardNarratorCreationTest() {
-
-        Narrator n = NarratorFactory.build(false, 1);
-
-        assertTrue(n.writeToFile() == false);
-        assertTrue(n.getMessageQueueLength() == 1);
-
-    }
 
     /**
      * Properties input loader test.

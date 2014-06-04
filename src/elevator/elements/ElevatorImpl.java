@@ -24,7 +24,7 @@ import elevator.common.NoNewDestinationException;
 public class ElevatorImpl implements Elevator, Runnable {
 
     /** The default floor. */
-    private int defaultFloor = 1;
+    private int defaultFloor;
 
     /** The current time out. */
     private long currentTimeOut;
@@ -102,9 +102,27 @@ public class ElevatorImpl implements Elevator, Runnable {
         setNumpeopleperElevator(info.numPeoplePerElevator);
         setNumFloors(info.numFloors);
         setCurrentFloor(STARTINGFLOOR);
+        setDefaultFloor(info.defaultElevatorFlr);
         elevatorId = ElevatorImpl.getNewElevatorId();
         myThread = new Thread(this);
 
+    }
+
+    /**
+     * Private set method for the default floor assignment
+     * @param flr the new value of default floor.
+     * @throws IllegalParamException This exception is thrown if the flr parameters
+     * exceeds the number of floors for this building or is less than 1.
+     */
+    private void setDefaultFloor(int flr) throws IllegalParamException{
+        
+        if(flr < 1 || flr >= getNumFloors()){
+            String msg = String.format("The default floor cannot be less than 1 or greater than %d.", getNumFloors());
+            throw new IllegalParamException(msg);
+        }
+        defaultFloor = flr;
+        
+        
     }
 
     /**
@@ -124,8 +142,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     @Override
     public void addFloor(int floor, ElevatorDirection dir)
             throws InvalidFloorException {
-        if (dir == getDirection()
-                || getDirection() == ElevatorDirection.IDLE) {
+        if (dir == getDirection() || getDirection() == ElevatorDirection.IDLE) {
             addFloor(floor);
         } else {
             throw new InvalidFloorException(
@@ -166,8 +183,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                     .logEvent(
                             String.format(
                                     "Elevator %d has added floor: %d. [Floor requests: %s]",
-                                    getElevatorId(), floor,
-                                    getFloorRequests()));
+                                    getElevatorId(), floor, getFloorRequests()));
         }
     }
 
@@ -479,8 +495,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                                 "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
             }
             return;
-        } else if (destinationsLeft() == false
-                && newTimeout < getMaxTimeout()) {
+        } else if (destinationsLeft() == false && newTimeout < getMaxTimeout()) {
             // I was woken up unexpectedly with nothing to do
             try {
                 setCurrentTimeout(newTimeout);
@@ -492,17 +507,17 @@ public class ElevatorImpl implements Elevator, Runnable {
             }
             return;
         } else if (destinationsLeft() == false // if there are no
-                                                    // destinations
+                                               // destinations
                 && newTimeout >= getMaxTimeout() // if the delta time has
-                                                      // exceeded the maximum
-                                                      // timeout time allowed
+                                                 // exceeded the maximum
+                                                 // timeout time allowed
                 && getCurrentFloor() != getDefaultFloor()) { // if the
-                                                                       // current
-                                                                       // floor
-                                                                       // is not
-                                                                       // the
-                                                                       // default
-                                                                       // floor
+                                                             // current
+                                                             // floor
+                                                             // is not
+                                                             // the
+                                                             // default
+                                                             // floor
             // add default floor to the elevator queue
             // and move to it
             Simulator
@@ -510,7 +525,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                     .logEvent(
                             String.format(
                                     "Elevator %d has timed out. Returning to default floor: %d.",
-                                    elevatorId, defaultFloor));
+                                    getElevatorId(), getDefaultFloor()));
             try {
                 addFloorHelper(getDefaultFloor());
             } catch (InvalidFloorException e) {
@@ -559,7 +574,8 @@ public class ElevatorImpl implements Elevator, Runnable {
                 Simulator
                         .getInstance()
                         .logEvent(
-                                "Unable to set timeout time to a new value in the elevator class. Continuing with execution.");
+                                "Unable to set timeout time to a new value in the elevator class." +
+                                " Continuing with execution.");
             }
         }
 

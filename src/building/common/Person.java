@@ -15,7 +15,7 @@ public interface Person {
      * Note: A person is invalid if he did not reach his destination. If he did,
      * then there is nothing to worry about.
      * 
-     * @return true if someone call setInvalidStatus()
+     * @return true if someone called setInvalidStatus()
      */
     public boolean didErrorOccur();
 
@@ -58,35 +58,38 @@ public interface Person {
      * make a request for an elevator.
      */
     public void startPerson();
-    
+
     /**
-     * This is associated and should be called when a person successfully enters an elevator
+     * This is associated and should be called when a person successfully enters
+     * an elevator
      */
     public void elevatorEntered();
-    
+
     /**
-     * This is associated and should be called when a person successfully leaves an elevator for their destination floor
+     * This is associated and should be called when a person successfully leaves
+     * an elevator for their destination floor
      */
     public void leftElevator();
-    
+
     /**
      * Returns a long associated with when the person began execution
+     * 
      * @return getStartTime
      */
     public long getStartTime();
-    
+
     /**
      * Returns a long associated with when the person entered the elevator
+     * 
      * @return getElevatorEnterTime
      */
     public long getElevatorEnterTime();
-    
+
     /**
      * Returns a long associated with when the person finished execution
+     * 
      * @return getFinishedTime
      */
     public long getFinishedTime();
-
-    
 
 }

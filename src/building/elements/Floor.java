@@ -24,7 +24,7 @@ public interface Floor {
      * @throws IllegalParamException
      *             throws this exception if the person is null. I don't need no
      *             null people!
-     * @return the floor number where this person entered.       
+     * @return the floor number where this person entered.
      */
     public int enterFloor(Person p) throws IllegalParamException;
 

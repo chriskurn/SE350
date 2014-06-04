@@ -4,22 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import building.Building;
-import building.common.Person;
-import building.common.PersonFactory;
-
-import elevator.common.InvalidFloorException;
-import elevator.control.ElevatorController;
-
-import simulator.common.NarratorFactory;
-import simulator.common.SimulationInformation;
 import simulator.common.IllegalParamException;
 import simulator.common.InputLoaderFactory;
+import simulator.common.NarratorFactory;
 import simulator.common.NullFileException;
+import simulator.common.SimulationInformation;
 import simulator.common.StatisticsFactory;
 import simulator.elements.InputLoader;
 import simulator.elements.Narrator;
 import simulator.stats.StatisticsGenerator;
+import building.Building;
+import building.common.Person;
+import building.common.PersonFactory;
+import elevator.common.InvalidFloorException;
+import elevator.control.ElevatorController;
 
 /**
  * Description: Simulator.
@@ -32,7 +30,7 @@ import simulator.stats.StatisticsGenerator;
  */
 
 // singleton
-public class Simulator implements Narrator,StatisticsGenerator {
+public class Simulator implements Narrator, StatisticsGenerator {
 
     /** The instance. */
     private volatile static Simulator instance;
@@ -42,7 +40,7 @@ public class Simulator implements Narrator,StatisticsGenerator {
 
     /** The narrator delegate. */
     private Narrator narratorDelegate;
-    
+
     /** The statistics generator. */
     private StatisticsGenerator statsDelegate;
 
@@ -55,8 +53,17 @@ public class Simulator implements Narrator,StatisticsGenerator {
 
     /**
      * Instantiates a new simulator.
+     * @throws IllegalParamException 
      */
-    private Simulator() {
+    private Simulator(){
+        // Create logging class
+        try {
+            setNarratorDelegate(NarratorFactory.build());
+        } catch (IllegalParamException e) {
+            System.err.println("Unable to build a narrator component for the simulation." +
+            		"Cannot continue with execution. Exiting now.");
+            System.exit(1);
+        }
     }
 
     /**
@@ -112,9 +119,6 @@ public class Simulator implements Narrator,StatisticsGenerator {
         // Build information based on the file passed in.
         setInputLoader(InputLoaderFactory.build(file));
         getInputLoader().loadInput();
-
-        // Create logging class
-        setNarratorDelegate(NarratorFactory.build(false, 1));
 
         setBuilding(Building.getInstance());
         logEvent("Ended building the simulation");
@@ -197,7 +201,8 @@ public class Simulator implements Narrator,StatisticsGenerator {
     }
 
     /**
-     * Private helper method to determine when to shut off all of the simulation related crap.
+     * Private helper method to determine when to shut off all of the simulation
+     * related crap.
      */
     private void simulationEnd() {
         // Check to see if we can end the simulation
@@ -241,6 +246,7 @@ public class Simulator implements Narrator,StatisticsGenerator {
 
     /**
      * Private method for getting the collection of running people
+     * 
      * @return the collection of people
      */
     private ArrayList<Person> getRunningPeople() {
@@ -343,29 +349,11 @@ public class Simulator implements Narrator,StatisticsGenerator {
         return simulatorBuilding;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see simulator.elements.Narrator#writeToFile()
-     */
-    @Override
-    public boolean writeToFile() {
-        return getNarratorDelegate().writeToFile();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see simulator.elements.Narrator#getMessageQueueLength()
-     */
-    @Override
-    public int getMessageQueueLength() {
-        return getNarratorDelegate().getMessageQueueLength();
-    }
     @Override
     public void generateStats() {
-        //Generate delegate
-        StatisticsGenerator sd = StatisticsFactory.build(this.getRunningPeople(), this.getSimulationInfo());
+        // Generate delegate
+        StatisticsGenerator sd = StatisticsFactory.build(
+                this.getRunningPeople(), this.getSimulationInfo());
         this.setStatsDelegate(sd);
         sd.generateStats();
     }
@@ -378,7 +366,8 @@ public class Simulator implements Narrator,StatisticsGenerator {
     }
 
     /**
-     * @param statsDelegate the statsDelegate to set
+     * @param statsDelegate
+     *            the statsDelegate to set
      */
     private void setStatsDelegate(StatisticsGenerator sd) {
         this.statsDelegate = sd;

@@ -28,16 +28,16 @@ public class PersonImpl implements Person {
 
     /** The person id. */
     private int personId;
-    
+
     /** The start time. */
     private long startTime;
-    
+
     /** The elevator entered time. */
     private long elevatorEnteredTime;
-    
+
     /** The finished time. */
     private long finishedTime;
-    
+
     /** The person count. */
     private static volatile int personCount = 1;
 
@@ -77,6 +77,7 @@ public class PersonImpl implements Person {
     @Override
     public boolean equals(Object obj) {
 
+        //The basic three checks for any object equality
         if (obj == null) {
             return false;
         }
@@ -89,6 +90,7 @@ public class PersonImpl implements Person {
 
         PersonImpl rhs = (PersonImpl) obj;
 
+        // if the ID is the same then they are equal. This is because ID is unique to each person
         if (getPersonId() == rhs.getPersonId()) {
             return true;
         } else {
@@ -128,9 +130,10 @@ public class PersonImpl implements Person {
     public int getStartFloor() {
         return startFloor;
     }
-    
+
     /**
      * Set current floor.
+     * 
      * @param floorNumber
      */
     private void setCurrentFloor(int floorNumber) {
@@ -139,6 +142,7 @@ public class PersonImpl implements Person {
 
     /**
      * Sets the destination floor.
+     * 
      * @param destF
      *            the new destination floor
      */
@@ -146,7 +150,6 @@ public class PersonImpl implements Person {
         destinationFloor = destF;
     }
 
-  
     /**
      * Check for invalid status.
      */
@@ -176,10 +179,9 @@ public class PersonImpl implements Person {
         startFloor = startF;
     }
 
-
-	/**
-	 * Public start person method
-	 */
+    /**
+     * Public start person method
+     */
     @Override
     public void startPerson() {
         int destFloor = getDestinationFloor();
@@ -218,17 +220,15 @@ public class PersonImpl implements Person {
     }
 
     // TODO Maybe have a check to make sure this is only called once?
-    
-   
+
     /**
      * Public method for time elevator entered.
      */
     @Override
     public void elevatorEntered() {
-        this.elevatorEnteredTime = System.currentTimeMillis(); 
+        this.elevatorEnteredTime = System.currentTimeMillis();
     }
 
-    
     /**
      * Public method for time remaining.
      */
@@ -238,7 +238,6 @@ public class PersonImpl implements Person {
         this.setCurrentFloor(this.getDestinationFloor());
     }
 
-    
     /**
      * Public method for geting start time.
      */
@@ -247,7 +246,6 @@ public class PersonImpl implements Person {
         return this.startTime;
     }
 
-    
     /**
      * Public method for getting the elevator enter time.
      */
@@ -256,7 +254,6 @@ public class PersonImpl implements Person {
         return this.elevatorEnteredTime;
     }
 
-    
     /**
      * Public method for getting the finished time.
      */
