@@ -322,7 +322,7 @@ final public class ElevatorController implements Runnable {
      * 
      * @return the number of floors
      */
-    private int getNumberOfFloors() {
+    public int getNumberOfFloors() {
         return this.numberOfFloors;
     }
 
