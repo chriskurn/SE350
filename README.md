@@ -7,4 +7,4 @@ with the same name as the project file (In this case "SE350"). Eclipse should ha
 the rest.
 
 Note: This project includes Junit 4 testing. Make sure to include Junit 4 in the build path of
-your project.
+your project if you want to run the tests.
