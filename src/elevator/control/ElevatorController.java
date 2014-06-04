@@ -137,9 +137,6 @@ final public class ElevatorController implements Runnable {
         // if this does not already contain this request, then add it
         if (!this.getPendingRequests().contains(req)) {
             this.addNewRequest(req);
-            Simulator.getInstance().logEvent(
-                    String.format("The following request has been added: %s",
-                            req.toString()));
         }
     }
 

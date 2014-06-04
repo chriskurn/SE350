@@ -426,6 +426,8 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private void getNewDestinationsFromPeople() {
 
+        // TODO fix implementation
+        
         ArrayList<Person> currentPeople = getElevatorPeople();
         int curFloor = getCurrentFloor();
         Iterator<Person> p = currentPeople.iterator();
@@ -624,14 +626,14 @@ public class ElevatorImpl implements Elevator, Runnable {
                     .getInstance()
                     .logEvent(
                             String.format(
-                                    "Elevator %d Now at floor: %d. [Floor requests: %s]",
+                                    "Elevator %d now at floor: %d. [Floor requests: %s]",
                                     eleId, curFloor, getFloorRequests()));
 
             updateDirection();
         }
         Simulator.getInstance().logEvent(
-                String.format("Elevator %d now done moving to floor: %d.",
-                        eleId, curFloor));
+                String.format("Elevator %d has arrived on floor: %d. [Floor requests: %s]",
+                        eleId, curFloor, getFloorRequests()));
     }
 
     /**
@@ -647,30 +649,24 @@ public class ElevatorImpl implements Elevator, Runnable {
         ElevatorDirection dir = getDirection();
 
         ElevatorPeoplePickup delegate = ElevatorPeoplePickupFactory.build(
-                currentPeople, dir, getMaxNumberOfPeople());
+                currentPeople, dir, getMaxNumberOfPeople(),getElevatorId());
 
-        String event = String.format(
-                "Elevator %d now unloading people on floor %d.",
-                getElevatorId(), curFloor);
-        Simulator.getInstance().logEvent(event);
         delegate.unloadPeople(curFloor);
 
-        event = String.format("Elevator %d now accepting people on floor %d.",
-                getElevatorId(), getCurrentFloor());
-        Simulator.getInstance().logEvent(event);
         try {
             delegate.loadPeople(curFloor);
         } catch (InvalidFloorException e1) {
-            event = String
+            String event = String
                     .format("Elevator %d unable to load people from floor %d. Continuing with execution.",
                             getElevatorId(), curFloor);
+            Simulator.getInstance().logEvent(event);
         }
         // Ask for new destinations
         getNewDestinationsFromPeople();
         try {
             Thread.sleep(getDoorTime());
         } catch (InterruptedException e) {
-            event = String
+            String event = String
                     .format("Elevator %d's thread has been interrupted during open door time. Moving on.",
                             getElevatorId());
             Simulator.getInstance().logEvent(event);

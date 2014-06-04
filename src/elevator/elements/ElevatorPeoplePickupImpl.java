@@ -20,9 +20,10 @@ import elevator.common.InvalidFloorException;
 
 public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
 
-    ArrayList<Person> currentPeople;
-    ElevatorDirection currentDirection;
-    int maxNumberOfPeople;
+    private ArrayList<Person> currentPeople;
+    private ElevatorDirection currentDirection;
+    private int maxNumberOfPeople;
+    private int elevatorId;
 
     /**
      * Construction method for making a new ElevatorPeoplePickupImpl
@@ -36,11 +37,12 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
      *            simulation.
      */
     public ElevatorPeoplePickupImpl(ArrayList<Person> people,
-            ElevatorDirection dir, int maxPeople) {
+            ElevatorDirection dir, int maxPeople, int eleId) {
 
         setCurrentDirection(dir);
         setMaxNumberOfPeople(maxPeople);
         setCurrentPeople(people);
+        elevatorId = eleId;
     }
 
     /**
@@ -52,6 +54,10 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         return currentDirection;
     }
 
+    private int getElevatorId(){
+        return elevatorId;
+    }
+    
     /**
      * Private method for getting the people arraylist
      * 
@@ -90,6 +96,9 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
             currentFriends.add(p);
             p.elevatorEntered();
             newFriends.remove(0);
+            String logEvent = String.format("Person %s entered elevator %d [Riders: %s]",
+                                        p,getElevatorId(),currentFriends);
+            Simulator.getInstance().logEvent(logEvent);
         }
 
     }
@@ -144,9 +153,12 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
                             .format("Elevator tried to move a person from the elevator to floor %d. This operation failed. Removing person and continuing on.",
                                     curFloor);
                     Simulator.getInstance().logEvent(eve);
+                    person.setInvalidStatus();
                 }
                 p.remove();
-                person.setInvalidStatus();
+                String logEvent = String.format("Person %s has left elevator %d [Riders: %s]",
+                        person,getElevatorId(),currentPeople);
+                Simulator.getInstance().logEvent(logEvent);
             }
         }
 

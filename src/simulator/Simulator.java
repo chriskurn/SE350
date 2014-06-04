@@ -222,6 +222,7 @@ public class Simulator implements Narrator, StatisticsGenerator {
         do {
             try {
                 SimulationInformation inf = getSimulationInfo();
+                //Sleep for how long the elevators need to before they return home
                 Thread.sleep(inf.elevatorSleepTime);
             } catch (InterruptedException e){
                 logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
@@ -231,7 +232,7 @@ public class Simulator implements Narrator, StatisticsGenerator {
         ElevatorController.getInstance().stopAllElevators();
         logEvent("All elevators have been shut down.");
         logEvent("Generating stats");
-        this.generateStats();
+        generateStats();
     }
 
     /**
@@ -366,8 +367,10 @@ public class Simulator implements Narrator, StatisticsGenerator {
     }
 
     /**
+     * Returns the delegate for stats generation
      * @return the statsDelegate
      */
+    @SuppressWarnings("unused")
     private StatisticsGenerator getStatsDelegate() {
         return statsDelegate;
     }

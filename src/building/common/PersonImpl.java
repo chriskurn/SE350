@@ -65,8 +65,11 @@ public class PersonImpl implements Person {
         setDestinationFloor(destF);
         setPersonId(PersonImpl.getNewPersonId());
 
-        Simulator.getInstance().logEvent(
-                String.format("New person created: %s", toString()));
+        String dir = getStartFloor() < getDestinationFloor() ? "UP" : "DOWN";
+        String logEvent = String.format("Person %d created on Floor %d, wants to go %s to Floor %d.",
+                                    getPersonId(),getStartFloor(),dir,getDestinationFloor());
+        Simulator.getInstance().logEvent(logEvent);
+        
     }
 
     @Override
@@ -192,6 +195,8 @@ public class PersonImpl implements Person {
 
         try {
             ElevatorController.getInstance().addNewRequest(curFloor, dir);
+            String logEvent = String.format("Person %d presses %s on Floor %d", getPersonId(),dir,curFloor);
+            Simulator.getInstance().logEvent(logEvent);
             this.setStartTime();
         } catch (IllegalParamException e) {
             String event = String
@@ -213,10 +218,7 @@ public class PersonImpl implements Person {
      */
     @Override
     public String toString() {
-        return String
-                .format("Person %d with starting floor as %d and destination floor as %d [Current floor: %d]",
-                        getPersonId(), getStartFloor(), getDestinationFloor(),
-                        getCurrentFloor());
+        return "P" + getPersonId();
     }
 
     // TODO Maybe have a check to make sure this is only called once?
