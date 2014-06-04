@@ -62,10 +62,9 @@ public class FloorImpl implements Floor {
             synchronized (this) {
                 getFinishedPeople().add(p);
                 // send message to simulation
-                int pid = p.getPersonId();
                 String personFinished = String
-                        .format("Person %d has finished by entering his destination floor %d.",
-                                pid, thisFloor);
+                        .format("Person %s has finished by entering his destination floor %d.",
+                                p, thisFloor);
                 Simulator.getInstance().logEvent(personFinished);
             }
         } else {
@@ -123,12 +122,9 @@ public class FloorImpl implements Floor {
         Iterator<Person> p = getFloorPeople().iterator();
         while (p.hasNext()) {
             Person person = p.next();
-            // If the direction is up and the destination floor is above this
-            // floor
+            // If the direction is up and the destination floor is above this floor
             // Or if the direction is down and the destination floor is above
-            // this
-            // floor
-            // Then we are good to leave the floor
+            // this floor Then we are good to leave the floor
             if (dir == ElevatorDirection.UP
                     && person.getDestinationFloor() > thisFloor
                     || dir == ElevatorDirection.DOWN

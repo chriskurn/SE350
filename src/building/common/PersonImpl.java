@@ -70,7 +70,7 @@ public class PersonImpl implements Person {
                 "Person %d created on Floor %d, wants to go %s to Floor %d.",
                 getPersonId(), getStartFloor(), dir, getDestinationFloor());
         Simulator.getInstance().logEvent(logEvent);
-        this.setStartTime();
+        setStartTime();
 
     }
 
@@ -198,8 +198,8 @@ public class PersonImpl implements Person {
 
         try {
             ElevatorController.getInstance().addNewRequest(curFloor, dir);
-            String logEvent = String.format("Person %d presses %s on Floor %d",
-                    getPersonId(), dir, curFloor);
+            String logEvent = String.format("Person %s presses %s on Floor %d",
+                    this, dir, curFloor);
             Simulator.getInstance().logEvent(logEvent);
         } catch (IllegalParamException e) {
             String event = String
@@ -213,7 +213,7 @@ public class PersonImpl implements Person {
      * Private method for setting the start time.
      */
     private void setStartTime() {
-        this.startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
     }
 
     /**
@@ -231,7 +231,7 @@ public class PersonImpl implements Person {
      */
     @Override
     public void elevatorEntered() {
-        this.elevatorEnteredTime = System.currentTimeMillis();
+        elevatorEnteredTime = System.currentTimeMillis();
     }
 
     /**
@@ -239,8 +239,8 @@ public class PersonImpl implements Person {
      */
     @Override
     public void leftElevator() {
-        this.finishedTime = System.currentTimeMillis();
-        this.setCurrentFloor(this.getDestinationFloor());
+        finishedTime = System.currentTimeMillis();
+        setCurrentFloor(getDestinationFloor());
     }
 
     /**
@@ -248,7 +248,7 @@ public class PersonImpl implements Person {
      */
     @Override
     public long getStartTime() {
-        return this.startTime;
+        return startTime;
     }
 
     /**
@@ -256,7 +256,7 @@ public class PersonImpl implements Person {
      */
     @Override
     public long getElevatorEnterTime() {
-        return this.elevatorEnteredTime;
+        return elevatorEnteredTime;
     }
 
     /**
@@ -264,7 +264,7 @@ public class PersonImpl implements Person {
      */
     @Override
     public long getFinishedTime() {
-        return this.finishedTime;
+        return finishedTime;
     }
 
 }
