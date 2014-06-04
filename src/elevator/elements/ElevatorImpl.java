@@ -518,16 +518,19 @@ public class ElevatorImpl implements Elevator, Runnable {
                                                              // the
                                                              // default
                                                              // floor
-            // add default floor to the elevator queue
-            // and move to it
-            Simulator
-                    .getInstance()
-                    .logEvent(
-                            String.format(
-                                    "Elevator %d has timed out. Returning to default floor: %d.",
-                                    getElevatorId(), getDefaultFloor()));
             try {
-                addFloorHelper(getDefaultFloor());
+                //Only add if we aren't already on the floor
+                if(getCurrentFloor() != getDefaultFloor()){
+                    // add default floor to the elevator queue
+                    // and move to it
+                    Simulator
+                            .getInstance()
+                            .logEvent(
+                                    String.format(
+                                            "Elevator %d has timed out. Returning to default floor: %d.",
+                                            getElevatorId(), getDefaultFloor()));
+                    addFloorHelper(getDefaultFloor());
+                }
             } catch (InvalidFloorException e) {
                 // Even though this floor was added. Don't crash. Just log it
                 // and move on.

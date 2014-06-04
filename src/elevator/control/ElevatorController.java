@@ -339,24 +339,19 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * This will only return true if each elevator has no destination left and
-     * the elevator controller has no requests left.
+     * This will only return true if each elevator has no destinations in
+     * their queue. 
      * 
-     * @return returns true if any elevators have destinations left and if there
-     *         are elevator requests in the ElevatorController's request queue.
+     * @return returns true if any elevators have destinations left to handle.
      */
     public synchronized boolean elevatorWorkLeft() {
-        boolean ecNoRequests = this.getPendingRequests().isEmpty();
-        boolean elesNoMovement = false;
 
         for (Elevator e : this.getElevators()) {
             if (e.destinationsLeft() == true) {
-                elesNoMovement = false;
+                return true;
             }
         }
-        elesNoMovement = true;
-
-        return (ecNoRequests && elesNoMovement);
+        return false;
     }
 
 }

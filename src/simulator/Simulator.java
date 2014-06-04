@@ -211,16 +211,23 @@ public class Simulator implements Narrator, StatisticsGenerator {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                Simulator
-                        .getInstance()
-                        .logEvent(
-                                "An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
+                logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
             }
         } while (allPersonsDone() == false);
         // End simulation now that everything is done
         logEvent("The simulator has now ended.");
         ElevatorController.getInstance().shutDownElevatorController();
         logEvent("The elevator controller has been shut down.");
+        logEvent("Waiting for elevators to return to default floors");
+        do {
+            try {
+                SimulationInformation inf = getSimulationInfo();
+                Thread.sleep(inf.elevatorSleepTime);
+            } catch (InterruptedException e){
+                logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
+            }
+        }while(ElevatorController.getInstance().elevatorWorkLeft() == true);
+        
         ElevatorController.getInstance().stopAllElevators();
         logEvent("All elevators have been shut down.");
         logEvent("Generating stats");
