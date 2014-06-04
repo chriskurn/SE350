@@ -434,14 +434,12 @@ public class ElevatorImpl implements Elevator, Runnable {
      * Asks all of the people in the elevator for their destinations. And adds
      * any valid ones to the queue. If invalid, will reenter the floor they were
      * just on.
+     * @param peopleAdded An arraylist containing all of the new people added to this elevator
      */
-    private void getNewDestinationsFromPeople() {
-
-        // TODO fix implementation
+    private void getNewDestinationsFromPeople(ArrayList<Person> peopleAdded) {
         
-        ArrayList<Person> currentPeople = getElevatorPeople();
         int curFloor = getCurrentFloor();
-        Iterator<Person> p = currentPeople.iterator();
+        Iterator<Person> p = peopleAdded.iterator();
 
         while (p.hasNext()) {
             Person person = p.next();
@@ -450,11 +448,14 @@ public class ElevatorImpl implements Elevator, Runnable {
 
             try {
                 addFloor(destFloor);
+                String event = String.format("Elevator %d rider request made for floor %d.", getElevatorId(),destFloor);
+                Simulator.getInstance().logEvent(event);
             } catch (InvalidFloorException e) {
                 String event = String
-                        .format("Person %d tried to request his destination %d. In elevator %d and failed. Moving back to floor %d.",
+                        .format("Person %d tried to request his destination %d. In elevator %d and failed. Skipping.",
                                 pid, destFloor, getElevatorId(), curFloor);
                 Simulator.getInstance().logEvent(event);
+                person.setInvalidStatus();
                 try {
                     Building.getInstance().enterFloor(person, curFloor);
                 } catch (IllegalParamException | InvalidFloorException e1) {
@@ -463,7 +464,7 @@ public class ElevatorImpl implements Elevator, Runnable {
                                     + " This operation failed. Removing person and continuing on.",
                                     getElevatorId(), curFloor);
                     Simulator.getInstance().logEvent(eve);
-
+                    person.setInvalidStatus();
                     p.remove();
 
                 }
@@ -656,6 +657,7 @@ public class ElevatorImpl implements Elevator, Runnable {
      */
     private void openDoors() {
         ArrayList<Person> currentPeople = getElevatorPeople();
+        ArrayList<Person> peopleAdded = null;
         int curFloor = getCurrentFloor();
         ElevatorDirection dir = getDirection();
 
@@ -665,7 +667,7 @@ public class ElevatorImpl implements Elevator, Runnable {
         delegate.unloadPeople(curFloor);
 
         try {
-            delegate.loadPeople(curFloor);
+            peopleAdded = delegate.loadPeople(curFloor);
         } catch (InvalidFloorException e1) {
             String event = String
                     .format("Elevator %d unable to load people from floor %d. Continuing with execution.",
@@ -673,7 +675,7 @@ public class ElevatorImpl implements Elevator, Runnable {
             Simulator.getInstance().logEvent(event);
         }
         // Ask for new destinations
-        getNewDestinationsFromPeople();
+        getNewDestinationsFromPeople(peopleAdded);
         try {
             Thread.sleep(getDoorTime());
         } catch (InterruptedException e) {

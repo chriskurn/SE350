@@ -69,6 +69,7 @@ public class PersonImpl implements Person {
         String logEvent = String.format("Person %d created on Floor %d, wants to go %s to Floor %d.",
                                     getPersonId(),getStartFloor(),dir,getDestinationFloor());
         Simulator.getInstance().logEvent(logEvent);
+        this.setStartTime();
         
     }
 
@@ -197,7 +198,6 @@ public class PersonImpl implements Person {
             ElevatorController.getInstance().addNewRequest(curFloor, dir);
             String logEvent = String.format("Person %d presses %s on Floor %d", getPersonId(),dir,curFloor);
             Simulator.getInstance().logEvent(logEvent);
-            this.setStartTime();
         } catch (IllegalParamException e) {
             String event = String
                     .format("Person %d was unable to make a valid floor request to floor %d from current floor %d. Skipping person.",

@@ -80,7 +80,8 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
      * Ask building to load in people for this floor
      */
     @Override
-    public void loadPeople(int floor) throws InvalidFloorException {
+    public ArrayList<Person> loadPeople(int floor) throws InvalidFloorException {
+        ArrayList<Person> peopleAdded = new ArrayList<Person>();
         int curFloor = floor;
         ElevatorDirection dir = getCurrentDirection();
         int maxPeeps = getMaxNumberOfPeople();
@@ -93,6 +94,7 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         for (int i = 0; i < spotsAvailable && !newFriends.isEmpty(); i++) {
             // Add them and remove them
             Person p = newFriends.get(0);
+            peopleAdded.add(p);
             currentFriends.add(p);
             p.elevatorEntered();
             newFriends.remove(0);
@@ -100,7 +102,32 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
                                         p,getElevatorId(),currentFriends);
             Simulator.getInstance().logEvent(logEvent);
         }
+        //If anyone is left over, return them to their floor
+        returnPeopleToFloor(newFriends,curFloor);
+        
+        return peopleAdded;
 
+    }
+    
+    private void returnPeopleToFloor(ArrayList<Person> newFriends, int floor){
+        int curFloor = floor;
+        //Put people back on the floor if the elevator ran out of space
+        while(!newFriends.isEmpty()){
+            Person p = null;
+            try {
+                p = newFriends.get(0);
+                Building.getInstance().enterFloor(p, curFloor);
+                //The person now needs to make his request again
+                p.startPerson();
+            } catch (IllegalParamException | InvalidFloorException e) {
+                String event = String.format("Unable to return %s to floor %d. Setting error status and moving on.",
+                        p,curFloor);
+                Simulator.getInstance().logEvent(event);
+                p.setInvalidStatus();
+            }
+            newFriends.remove(0);
+        }
+        
     }
 
     /**

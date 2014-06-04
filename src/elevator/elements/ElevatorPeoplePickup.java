@@ -1,5 +1,9 @@
 package elevator.elements;
 
+import java.util.ArrayList;
+
+import building.common.Person;
+
 import elevator.common.InvalidFloorException;
 
 /**
@@ -16,8 +20,9 @@ public interface ElevatorPeoplePickup {
      * 
      * @throws InvalidFloorException
      *             thrown if the floor given to it is invalid
+     * @return A list of all of the new people the elevator obtained            
      */
-    public void loadPeople(int floor) throws InvalidFloorException;
+    public ArrayList<Person> loadPeople(int floor) throws InvalidFloorException;
 
     /**
      * Method designed to unload people objects from the elevator to a floor.
