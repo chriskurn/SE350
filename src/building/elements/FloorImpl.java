@@ -52,9 +52,9 @@ public class FloorImpl implements Floor {
                     getFloor()));
         }
 
-        Simulator.getInstance().logEvent(
-                String.format("Person %d has entered floor: %d",
-                        p.getPersonId(), getFloor()));
+        String event = String.format("Person %s has entered Floor %d [Floor people: %s]",
+                p,thisFloor,getFloorPeople());
+        Simulator.getInstance().logEvent(event);
 
         // Then this person is done moving yay!
         if (p.getDestinationFloor() == thisFloor) {
@@ -135,6 +135,9 @@ public class FloorImpl implements Floor {
                     || dir == ElevatorDirection.IDLE) {
                 leavingPeople.add(person);
                 p.remove();
+                String event = String.format("Person %s has left Floor %d [Floor people: %s]",
+                        person,thisFloor,getFloorPeople());
+                Simulator.getInstance().logEvent(event);
             }
         }
 
