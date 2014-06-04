@@ -160,11 +160,12 @@ class FloorStats {
     long getColumnFloorNum() {
         return columnFloorNum;
     }
+
     /**
      * 
      * @return
      */
-    long getNumEntries(){
+    long getNumEntries() {
         return numEntries;
     }
 

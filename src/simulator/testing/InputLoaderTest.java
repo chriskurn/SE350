@@ -48,7 +48,6 @@ public class InputLoaderTest {
             fail("This file should load properly. Examine the file and the code to make sure they are correct.");
         }
         SimulationInformation si = i.getSimulationInfo();
-        
 
         assertEquals(si.doorTime, 524224);
         assertEquals(si.elevatorSleepTime, 15214000);
@@ -57,7 +56,7 @@ public class InputLoaderTest {
         assertEquals(si.numExpressElevators, 212132);
         assertEquals(si.numFloors, 125323);
         assertEquals(si.numPeoplePerElevator, 214424);
-        
+
         assertEquals(si.defaultElevatorFlr, 214);
         assertEquals(si.simRunTime, 3000421);
         assertEquals(si.personPerMin, 1524);
