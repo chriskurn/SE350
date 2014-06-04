@@ -251,7 +251,7 @@ public class InputLoaderProperties implements InputLoader {
     /**
      * Returns the input stream for the file opened.
      * 
-     * @return the inputstream associated with the file being read.
+     * @return the input stream associated with the file being read.
      */
     private InputStream getInput() {
         return input;

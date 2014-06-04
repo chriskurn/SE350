@@ -17,13 +17,10 @@ import simulator.elements.StandardNarratorImpl;
 public class NarratorFactory {
 
     /**
-     * Builds the.
+     * Builds a narrator delegate. Currently just being used for extra
+     * extensibility.
      * 
-     * @param saveToFile
-     *            the save to file
-     * @param sizeOfMessageQueue
-     *            the size of message queue
-     * @return the narrator
+     * @return the a new narrator
      */
     public static Narrator build() {
         return new StandardNarratorImpl();

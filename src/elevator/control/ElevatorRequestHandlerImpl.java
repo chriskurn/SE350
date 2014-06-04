@@ -86,7 +86,7 @@ public class ElevatorRequestHandlerImpl implements ElevatorRequestHandler {
      * @param theElevators
      *            the new elevators
      * @throws IllegalParamException
-     *             the illegal param exception
+     *             Thrown if the array list provided is null.
      */
     private void setElevators(ArrayList<Elevator> theElevators)
             throws IllegalParamException {

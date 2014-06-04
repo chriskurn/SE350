@@ -102,7 +102,7 @@ final public class ElevatorController implements Runnable {
             throws IllegalParamException {
         ArrayList<Elevator> eles = this.getElevators();
         int numEles = simInfo.numElevators;
-        
+
         for (int i = 0; i < numEles; i++) {
             Elevator ele = ElevatorFactory.build(simInfo);
             eles.add(ele);
@@ -336,13 +336,14 @@ final public class ElevatorController implements Runnable {
     }
 
     /**
-     * This will only return true if each elevator has no destinations in
-     * their queue. 
+     * This will only return true if each elevator has no destinations in their
+     * queue.
      * 
      * @return returns true if any elevators have destinations left to handle.
      */
     public synchronized boolean elevatorWorkLeft() {
 
+        // Ask all of the elevators if they have any work left.
         for (Elevator e : this.getElevators()) {
             if (e.destinationsLeft() == true) {
                 return true;

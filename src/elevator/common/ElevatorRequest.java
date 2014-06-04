@@ -34,7 +34,8 @@ public class ElevatorRequest {
      * @param directionOfTravel
      *            the direction of travel
      * @throws IllegalParamException
-     *             the illegal param exception
+     *             if elevator direction is idle or floor does not fit within
+     *             the building.
      */
     public ElevatorRequest(int floorRequestedFrom,
             ElevatorDirection directionOfTravel) throws IllegalParamException {
@@ -54,6 +55,7 @@ public class ElevatorRequest {
      */
     @Override
     public boolean equals(Object obj) {
+        // Three basic equals check
         if (obj == null) {
             return false;
         }

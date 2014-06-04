@@ -16,6 +16,17 @@ import building.common.Person;
 
 public class StatisticsFactory {
 
+    /**
+     * Returns a new stats generator delegate to be generate stats on Person
+     * objects.
+     * 
+     * @param p
+     *            an arraylist of person objects that have gone through the
+     *            simulation
+     * @param info
+     *            The information pertaining to the current simulation
+     * @return a new StatisticsGeneratorImpl based on the parameters above
+     */
     public static StatisticsGenerator build(ArrayList<Person> p,
             SimulationInformation info) {
         return new StatisticsGeneratorImpl(p, info);

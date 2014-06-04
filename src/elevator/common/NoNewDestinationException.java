@@ -18,7 +18,7 @@ public class NoNewDestinationException extends Exception {
      * 
      * @param msg
      *            the error message
-     *                 */
+     * */
     public NoNewDestinationException(String msg) {
         super(msg);
     }

@@ -66,11 +66,12 @@ public class PersonImpl implements Person {
         setPersonId(PersonImpl.getNewPersonId());
 
         String dir = getStartFloor() < getDestinationFloor() ? "UP" : "DOWN";
-        String logEvent = String.format("Person %d created on Floor %d, wants to go %s to Floor %d.",
-                                    getPersonId(),getStartFloor(),dir,getDestinationFloor());
+        String logEvent = String.format(
+                "Person %d created on Floor %d, wants to go %s to Floor %d.",
+                getPersonId(), getStartFloor(), dir, getDestinationFloor());
         Simulator.getInstance().logEvent(logEvent);
         this.setStartTime();
-        
+
     }
 
     @Override
@@ -81,7 +82,7 @@ public class PersonImpl implements Person {
     @Override
     public boolean equals(Object obj) {
 
-        //The basic three checks for any object equality
+        // The basic three checks for any object equality
         if (obj == null) {
             return false;
         }
@@ -94,7 +95,8 @@ public class PersonImpl implements Person {
 
         PersonImpl rhs = (PersonImpl) obj;
 
-        // if the ID is the same then they are equal. This is because ID is unique to each person
+        // if the ID is the same then they are equal. This is because ID is
+        // unique to each person
         if (getPersonId() == rhs.getPersonId()) {
             return true;
         } else {
@@ -184,7 +186,7 @@ public class PersonImpl implements Person {
     }
 
     /**
-     * Public start person method
+     * Public start person method.
      */
     @Override
     public void startPerson() {
@@ -196,7 +198,8 @@ public class PersonImpl implements Person {
 
         try {
             ElevatorController.getInstance().addNewRequest(curFloor, dir);
-            String logEvent = String.format("Person %d presses %s on Floor %d", getPersonId(),dir,curFloor);
+            String logEvent = String.format("Person %d presses %s on Floor %d",
+                    getPersonId(), dir, curFloor);
             Simulator.getInstance().logEvent(logEvent);
         } catch (IllegalParamException e) {
             String event = String

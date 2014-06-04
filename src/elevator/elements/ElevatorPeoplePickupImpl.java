@@ -54,14 +54,14 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         return currentDirection;
     }
 
-    private int getElevatorId(){
+    private int getElevatorId() {
         return elevatorId;
     }
-    
+
     /**
-     * Private method for getting the people arraylist
+     * Private method for getting the people array list
      * 
-     * @return people arraylist
+     * @return people array list containing all of the people
      */
     private ArrayList<Person> getCurrentPeople() {
         return currentPeople;
@@ -98,36 +98,48 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
             currentFriends.add(p);
             p.elevatorEntered();
             newFriends.remove(0);
-            String logEvent = String.format("Person %s entered elevator %d [Riders: %s]",
-                                        p,getElevatorId(),currentFriends);
+            String logEvent = String.format(
+                    "Person %s entered elevator %d [Riders: %s]", p,
+                    getElevatorId(), currentFriends);
             Simulator.getInstance().logEvent(logEvent);
         }
-        //If anyone is left over, return them to their floor
-        returnPeopleToFloor(newFriends,curFloor);
-        
+        // If anyone is left over, return them to their floor
+        returnPeopleToFloor(newFriends, curFloor);
+
         return peopleAdded;
 
     }
-    
-    private void returnPeopleToFloor(ArrayList<Person> newFriends, int floor){
+
+    /**
+     * A helper method that will return people to their respective floor if they
+     * try and enter a full elevator.
+     * 
+     * @param newFriends
+     *            An array list of the people left over that need to return to
+     *            their floors
+     * @param floor
+     *            the floor that the people in array list need to return to
+     */
+    private void returnPeopleToFloor(ArrayList<Person> newFriends, int floor) {
         int curFloor = floor;
-        //Put people back on the floor if the elevator ran out of space
-        while(!newFriends.isEmpty()){
+        // Put people back on the floor if the elevator ran out of space
+        while (!newFriends.isEmpty()) {
             Person p = null;
             try {
                 p = newFriends.get(0);
                 Building.getInstance().enterFloor(p, curFloor);
-                //The person now needs to make his request again
+                // The person now needs to make his request again
                 p.startPerson();
             } catch (IllegalParamException | InvalidFloorException e) {
-                String event = String.format("Unable to return %s to floor %d. Setting error status and moving on.",
-                        p,curFloor);
+                String event = String
+                        .format("Unable to return %s to floor %d. Setting error status and moving on.",
+                                p, curFloor);
                 Simulator.getInstance().logEvent(event);
                 p.setInvalidStatus();
             }
             newFriends.remove(0);
         }
-        
+
     }
 
     /**
@@ -183,8 +195,9 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
                     person.setInvalidStatus();
                 }
                 p.remove();
-                String logEvent = String.format("Person %s has left elevator %d [Riders: %s]",
-                        person,getElevatorId(),currentPeople);
+                String logEvent = String.format(
+                        "Person %s has left elevator %d [Riders: %s]", person,
+                        getElevatorId(), currentPeople);
                 Simulator.getInstance().logEvent(logEvent);
             }
         }

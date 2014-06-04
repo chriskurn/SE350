@@ -22,7 +22,7 @@ public class ElevatorPeoplePickupFactory {
     public static ElevatorPeoplePickup build(ArrayList<Person> people,
             ElevatorDirection dir, int maxPeople, int eleId) {
 
-        return new ElevatorPeoplePickupImpl(people, dir, maxPeople,eleId);
+        return new ElevatorPeoplePickupImpl(people, dir, maxPeople, eleId);
 
     }
 

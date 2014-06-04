@@ -1,15 +1,12 @@
 package simulator.testing;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import simulator.common.InputLoaderFactory;
-import simulator.common.NarratorFactory;
 import simulator.elements.InputLoader;
-import simulator.elements.Narrator;
 
 /**
  * Description: Factory Valid Test.

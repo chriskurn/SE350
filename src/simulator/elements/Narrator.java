@@ -14,7 +14,7 @@ public interface Narrator {
      * Logs an event that occurs in the programs runtime.
      * 
      * @param event
-     *            a string containing some information about the event.
+     *            a string containing an event that has occurred.
      */
     public void logEvent(String event);
 }

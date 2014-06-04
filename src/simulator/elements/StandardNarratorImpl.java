@@ -18,10 +18,6 @@ public class StandardNarratorImpl implements Narrator {
     /**
      * Instantiates a new standard narrator impl.
      * 
-     * @param stf
-     *            the stf
-     * @param sizeOfMessageQueue
-     *            the size of message queue
      */
     public StandardNarratorImpl() {
         narrationCreationTime = System.currentTimeMillis();
@@ -39,6 +35,13 @@ public class StandardNarratorImpl implements Narrator {
         System.out.println(logMessage);
     }
 
+    /**
+     * Utility method for determining the delta time since the narrator has
+     * begun.
+     * 
+     * @return a string representing the delta time. The format is:
+     *         hh:min:seconds.miliseconds
+     */
     private String getCurrentElapsedTime() {
 
         long l = System.currentTimeMillis() - getNarrationCreationTime();
@@ -57,6 +60,11 @@ public class StandardNarratorImpl implements Narrator {
 
     }
 
+    /**
+     * Private get method for returning the creation time member.
+     * 
+     * @return returns the creation time of this class
+     */
     private long getNarrationCreationTime() {
         return narrationCreationTime;
     }

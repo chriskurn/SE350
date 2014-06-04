@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import simulator.common.SimulationInformation;
 import building.common.Person;
-//import com.sun.corba.se.spi.orbutil.fsm.State;
 
 /**
  * Description: Statistics Generator Impl.
@@ -16,9 +15,25 @@ import building.common.Person;
 
 public class StatisticsGeneratorImpl implements StatisticsGenerator {
 
+    /**
+     * An array list of the people used to generate statistics.
+     */
     private ArrayList<Person> people;
+
+    /**
+     * A class that holds all relevant information for this simulation
+     */
     private SimulationInformation info;
 
+    /**
+     * A public constructor that takes an array list of persons and the
+     * simulation information used to build the simulation
+     * 
+     * @param p
+     *            an array list of person objects
+     * @param info
+     *            the simulation information used to build the simulator
+     */
     public StatisticsGeneratorImpl(ArrayList<Person> p,
             SimulationInformation info) {
         setInfo(info);
@@ -91,10 +106,14 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator {
     }
 
     /**
-     * Output simulation floor to floor tables.
+     * Output simulation floor to floor tables. See project part 4 tables b,c,d
+     * for more information
      * 
      * @param fStats
+     *            a 2-dimension array representing tables
      * @param stat
+     *            a string refering to which stat you want to print out. Choices
+     *            are: "avg", "min", and "max".
      */
     private void outputFloorToFloorTables(FloorStats[][] fStats, String stat) {
         String upperCaseStat = stat.toUpperCase();
@@ -203,36 +222,39 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator {
     }
 
     /**
-     * info the info to set
+     * Private method for setting the information.
      * 
      * @param i
+     *            the information from the simulation
      */
     public void setInfo(SimulationInformation i) {
         this.info = i;
     }
 
     /**
-     * getPeople()
+     * A public method for obtaining the people array
      * 
      * @return the people
      */
-    public ArrayList<Person> getPeople() {
+    private ArrayList<Person> getPeople() {
         return people;
     }
 
     /**
-     * People the people to set
+     * A private method for setting the people member
      * 
      * @param peps
+     *            the new people array list
      */
-    public void setPeople(ArrayList<Person> peps) {
+    private void setPeople(ArrayList<Person> peps) {
         this.people = peps;
     }
 
     /**
-     * Outputs a horizontal to the console
+     * Outputs a horizontal to the console.
      * 
      * @param myLineLen
+     *            the length of a line
      */
     public void printHorizontalLn(int myLineLen) {
         for (int i = 0; i <= myLineLen; i++) {

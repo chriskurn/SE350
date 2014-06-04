@@ -110,19 +110,23 @@ public class ElevatorImpl implements Elevator, Runnable {
 
     /**
      * Private set method for the default floor assignment
-     * @param flr the new value of default floor.
-     * @throws IllegalParamException This exception is thrown if the flr parameters
-     * exceeds the number of floors for this building or is less than 1.
+     * 
+     * @param flr
+     *            the new value of default floor.
+     * @throws IllegalParamException
+     *             This exception is thrown if the flr parameters exceeds the
+     *             number of floors for this building or is less than 1.
      */
-    private void setDefaultFloor(int flr) throws IllegalParamException{
-        
-        if(flr < 1 || flr >= getNumFloors()){
-            String msg = String.format("The default floor cannot be less than 1 or greater than %d.", getNumFloors());
+    private void setDefaultFloor(int flr) throws IllegalParamException {
+
+        if (flr < 1 || flr >= getNumFloors()) {
+            String msg = String
+                    .format("The default floor cannot be less than 1 or greater than %d.",
+                            getNumFloors());
             throw new IllegalParamException(msg);
         }
         defaultFloor = flr;
-        
-        
+
     }
 
     /**
@@ -174,14 +178,14 @@ public class ElevatorImpl implements Elevator, Runnable {
             throw new InvalidFloorException(
                     "Cannot add a floor in a different direction of travel.");
         }
-        //people could be loading in while we check the size
-        //Could lead to an exception
+        // people could be loading in while we check the size
+        // Could lead to an exception
         int curSpots = 0;
-        synchronized(this){
+        synchronized (this) {
             curSpots = getMaxNumberOfPeople() - getElevatorPeople().size();
         }
-        //Make sure that people requesting a floor don't get lost
-        if (floor == getCurrentFloor() && curSpots <= 0){
+        // Make sure that people requesting a floor don't get lost
+        if (floor == getCurrentFloor() && curSpots <= 0) {
             throw new InvalidFloorException(
                     "Cannot add due to a full elevator.");
         }
@@ -424,7 +428,7 @@ public class ElevatorImpl implements Elevator, Runnable {
     /**
      * Gets the max timeout.
      * 
-     * @return the max timeout
+     * @return the max timeout member.
      */
     private long getMaxTimeout() {
         return maxTimeOutTime;
@@ -434,10 +438,13 @@ public class ElevatorImpl implements Elevator, Runnable {
      * Asks all of the people in the elevator for their destinations. And adds
      * any valid ones to the queue. If invalid, will reenter the floor they were
      * just on.
-     * @param peopleAdded An arraylist containing all of the new people added to this elevator
+     * 
+     * @param peopleAdded
+     *            An arraylist containing all of the new people added to this
+     *            elevator
      */
     private void getNewDestinationsFromPeople(ArrayList<Person> peopleAdded) {
-        
+
         int curFloor = getCurrentFloor();
         Iterator<Person> p = peopleAdded.iterator();
 
@@ -448,7 +455,9 @@ public class ElevatorImpl implements Elevator, Runnable {
 
             try {
                 addFloor(destFloor);
-                String event = String.format("Elevator %d rider request made for floor %d.", getElevatorId(),destFloor);
+                String event = String.format(
+                        "Elevator %d rider request made for floor %d.",
+                        getElevatorId(), destFloor);
                 Simulator.getInstance().logEvent(event);
             } catch (InvalidFloorException e) {
                 String event = String
@@ -533,8 +542,8 @@ public class ElevatorImpl implements Elevator, Runnable {
                                                              // default
                                                              // floor
             try {
-                //Only add if we aren't already on the floor
-                if(getCurrentFloor() != getDefaultFloor()){
+                // Only add if we aren't already on the floor
+                if (getCurrentFloor() != getDefaultFloor()) {
                     // add default floor to the elevator queue
                     // and move to it
                     Simulator
@@ -588,11 +597,9 @@ public class ElevatorImpl implements Elevator, Runnable {
             try {
                 setCurrentTimeout(getMaxTimeout());
             } catch (IllegalParamException e) {
-                Simulator
-                        .getInstance()
-                        .logEvent(
-                                "Unable to set timeout time to a new value in the elevator class." +
-                                " Continuing with execution.");
+                Simulator.getInstance().logEvent(
+                        "Unable to set timeout time to a new value in the elevator class."
+                                + " Continuing with execution.");
             }
         }
 
@@ -643,9 +650,12 @@ public class ElevatorImpl implements Elevator, Runnable {
 
             updateDirection();
         }
-        Simulator.getInstance().logEvent(
-                String.format("Elevator %d has arrived on floor: %d. [Floor requests: %s]",
-                        eleId, curFloor, getFloorRequests()));
+        Simulator
+                .getInstance()
+                .logEvent(
+                        String.format(
+                                "Elevator %d has arrived on floor: %d. [Floor requests: %s]",
+                                eleId, curFloor, getFloorRequests()));
     }
 
     /**
@@ -662,7 +672,7 @@ public class ElevatorImpl implements Elevator, Runnable {
         ElevatorDirection dir = getDirection();
 
         ElevatorPeoplePickup delegate = ElevatorPeoplePickupFactory.build(
-                currentPeople, dir, getMaxNumberOfPeople(),getElevatorId());
+                currentPeople, dir, getMaxNumberOfPeople(), getElevatorId());
 
         delegate.unloadPeople(curFloor);
 

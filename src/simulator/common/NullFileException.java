@@ -15,7 +15,7 @@ public class NullFileException extends Exception {
      * Instantiates a new null file exception.
      * 
      * @param msg
-     *            the msg
+     *            the error msg
      */
     public NullFileException(String msg) {
         super(msg);

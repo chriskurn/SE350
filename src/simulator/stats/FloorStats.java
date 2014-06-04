@@ -12,7 +12,7 @@ class FloorStats {
 
     private int floorNumber;
     private long averageWaitTime;
-    private int numEntries = 1;
+    private int numEntries;
     private long minWaitTime;
     private long maxWaitTime;
     private int columnFloorNum;
@@ -21,46 +21,69 @@ class FloorStats {
     private boolean changedMin = false;
 
     /**
-     * Floor stats
+     * Constructor that initializes the values for a new FloorStats object.
      * 
      * @param fn
+     *            an integer that represents the appropriate floor number for
+     *            these stats.
      */
     FloorStats(int fn) {
-        this.floorNumber = fn;
-    }
-
-    FloorStats(int rowFloorNumber, int columnFloorNumber) {
-        this.columnFloorNum = columnFloorNumber;
-        this.rowFloorNum = rowFloorNumber;
-    }
-
-    void addEntry(long newEntry) {
-        this.updateAverage(newEntry);
-        this.setMinWaitTime(newEntry);
-        this.setMaxWaitTime(newEntry);
+        floorNumber = fn;
     }
 
     /**
-     * updateAverage
+     * Constructor that initializes the values for a column Floor Number and a
+     * row floor number. Note: This only makes sense by looking at the tables
+     * required for project part 4.
+     * 
+     * @param rowFloorNumber
+     *            a row number that also represents a floor number
+     * @param columnFloorNumber
+     *            a column number that also represents a floor number
+     */
+    FloorStats(int rowFloorNumber, int columnFloorNumber) {
+        columnFloorNum = columnFloorNumber;
+        rowFloorNum = rowFloorNumber;
+    }
+
+    /**
+     * This method is designed to encapsulate if someone were to add a new time
+     * entry. It will call all of the appropriate methods to make sure this
+     * class is up-to-date.
+     * 
+     * @param newEntry
+     *            a long representing a time measurement (in milliseconds).
+     */
+    void addEntry(long newEntry) {
+        updateAverage(newEntry);
+        setMinWaitTime(newEntry);
+        setMaxWaitTime(newEntry);
+    }
+
+    /**
+     * updateAverage takes a new time entry and updates the overall average for
+     * this floor.
      * 
      * @param numEntry
+     *            a long representing a time measurement (in milliseconds).
      */
     void updateAverage(long numEntry) {
-        this.averageWaitTime += numEntry;
-        this.numEntries++;
+        averageWaitTime += numEntry;
+        numEntries++;
     }
 
     /**
-     * getAverageWaitTime()
+     * Returns the average travel time to this floor
      * 
-     * @return
+     * @return returns a long representing the average travel time, in
+     *         milliseconds, to this floor.
      */
     long getAverageWaitTime() {
-        return this.averageWaitTime / numEntries;
+        return averageWaitTime / getNumEntries();
     }
 
     /**
-     * getMaxWaitTime()
+     * Returns the max wait time for this floor
      * 
      * @return the maxWaitTime
      */
@@ -69,15 +92,15 @@ class FloorStats {
     }
 
     /**
-     * setMaxWaitTime
+     * Sets the max wait time for this floor
      * 
      * @param maxWaitTime
      *            the maxWaitTime to set
      */
     void setMaxWaitTime(long newMax) {
-        long currentMax = this.getMaxWaitTime();
+        long currentMax = getMaxWaitTime();
         if (newMax > currentMax) {
-            this.maxWaitTime = newMax;
+            maxWaitTime = newMax;
         }
     }
 
@@ -98,7 +121,7 @@ class FloorStats {
      */
     void setMinWaitTime(long newMin) {
 
-        long currentMin = this.getMinWaitTime();
+        long currentMin = getMinWaitTime();
         // Included to make sure that Long.MAX_Value is not printed out for
         // every value
         if (changedMin == false) {
@@ -106,7 +129,7 @@ class FloorStats {
         }
         // Check to see if it is less than
         if (newMin < currentMin) {
-            this.minWaitTime = newMin;
+            minWaitTime = newMin;
             changedMin = true;
         }
     }
@@ -121,7 +144,7 @@ class FloorStats {
     }
 
     /**
-     * getRowFloorNum()
+     * Gets the row floor number member
      * 
      * @return the rowFloorNum
      */
@@ -130,12 +153,19 @@ class FloorStats {
     }
 
     /**
-     * getColumnFloorNum()
+     * Gets the column floor number member
      * 
      * @return the columnFloorNum
      */
     long getColumnFloorNum() {
         return columnFloorNum;
+    }
+    /**
+     * 
+     * @return
+     */
+    long getNumEntries(){
+        return numEntries;
     }
 
 }

@@ -44,8 +44,8 @@ public interface Elevator {
     /**
      * Method does the elevator have destinations remaining.
      * 
-     * @return returns true if there are destinations left. 
-     * False if there are not destinations left.
+     * @return returns true if there are destinations left. False if there are
+     *         not destinations left.
      */
     boolean destinationsLeft();
 

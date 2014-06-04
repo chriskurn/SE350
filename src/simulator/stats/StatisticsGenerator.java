@@ -13,6 +13,9 @@ package simulator.stats;
  */
 public interface StatisticsGenerator {
 
+    /**
+     * Displays a series of tables and graphs about a set of data.
+     */
     public void generateStats();
 
 }

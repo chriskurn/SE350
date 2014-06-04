@@ -3,7 +3,6 @@ package elevator.elements;
 import java.util.ArrayList;
 
 import building.common.Person;
-
 import elevator.common.InvalidFloorException;
 
 /**
@@ -20,7 +19,7 @@ public interface ElevatorPeoplePickup {
      * 
      * @throws InvalidFloorException
      *             thrown if the floor given to it is invalid
-     * @return A list of all of the new people the elevator obtained            
+     * @return A list of all of the new people the elevator obtained
      */
     public ArrayList<Person> loadPeople(int floor) throws InvalidFloorException;
 

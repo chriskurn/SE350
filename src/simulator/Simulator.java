@@ -53,15 +53,16 @@ public class Simulator implements Narrator, StatisticsGenerator {
 
     /**
      * Instantiates a new simulator.
-     * @throws IllegalParamException 
+     * 
      */
-    private Simulator(){
+    private Simulator() {
         // Create logging class
         try {
             setNarratorDelegate(NarratorFactory.build());
         } catch (IllegalParamException e) {
-            System.err.println("Unable to build a narrator component for the simulation." +
-            		"Cannot continue with execution. Exiting now.");
+            System.err
+                    .println("Unable to build a narrator component for the simulation."
+                            + "Cannot continue with execution. Exiting now.");
             System.exit(1);
         }
     }
@@ -222,13 +223,14 @@ public class Simulator implements Narrator, StatisticsGenerator {
         do {
             try {
                 SimulationInformation inf = getSimulationInfo();
-                //Sleep for how long the elevators need to before they return home
+                // Sleep for how long the elevators need to before they return
+                // home
                 Thread.sleep(inf.elevatorSleepTime);
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 logEvent("An attempt to interrupt the simulation thread was made. Ignoring and continuing on.");
             }
-        }while(ElevatorController.getInstance().elevatorWorkLeft() == true);
-        
+        } while (ElevatorController.getInstance().elevatorWorkLeft() == true);
+
         ElevatorController.getInstance().stopAllElevators();
         logEvent("All elevators have been shut down.");
         logEvent("Generating stats");
@@ -362,15 +364,20 @@ public class Simulator implements Narrator, StatisticsGenerator {
         // Generate delegate
         StatisticsGenerator sd = StatisticsFactory.build(
                 this.getRunningPeople(), this.getSimulationInfo());
-        this.setStatsDelegate(sd);
-        sd.generateStats();
+        try {
+            this.setStatsDelegate(sd);
+        } catch (IllegalParamException e) {
+            logEvent("Stats generator returned as null. Cannot generate stats. Ending program now.");
+            System.exit(1);
+        }
+        getStatsDelegate().generateStats();
     }
 
     /**
      * Returns the delegate for stats generation
+     * 
      * @return the statsDelegate
      */
-    @SuppressWarnings("unused")
     private StatisticsGenerator getStatsDelegate() {
         return statsDelegate;
     }
@@ -378,8 +385,14 @@ public class Simulator implements Narrator, StatisticsGenerator {
     /**
      * @param statsDelegate
      *            the statsDelegate to set
+     * @throws IllegalParamException
      */
-    private void setStatsDelegate(StatisticsGenerator sd) {
+    private void setStatsDelegate(StatisticsGenerator sd)
+            throws IllegalParamException {
+        if (sd == null) {
+            throw new IllegalParamException(
+                    "Stats generator cannot be set to null.");
+        }
         this.statsDelegate = sd;
     }
 }

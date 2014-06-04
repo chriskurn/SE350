@@ -39,6 +39,7 @@ public class SimulationInformation {
 
     /** The sim run time. */
     public long simRunTime;
+
     /** The default floor elevators go to after timeout */
     public int defaultElevatorFlr;
 
