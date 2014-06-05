@@ -1,8 +1,11 @@
 package simulator.testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+
 import org.junit.Test;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -12,7 +15,7 @@ import simulator.common.SimulationInformation;
  * Description: Default Person Per Minute Input Test.
  * 
  * Test for the correct number of people per. minute input.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -20,8 +23,8 @@ import simulator.common.SimulationInformation;
 
 public class PersonPerMinuteInputTest {
 
-	@Test
-	public void Test() {
+    @Test
+    public void Test() {
 
         try {
             Simulator.getInstance().buildSimulator("simInput.properties");
@@ -35,10 +38,12 @@ public class PersonPerMinuteInputTest {
                 .getSimulationInfo();
 
         int peoplePerMin = info.personPerMin;
-        
-        if(peoplePerMin ==15){
-        	System.out.println("Default value for people per minute = " + peoplePerMin);
-        } else fail("simInput error - Default value for people per minute is incorrect.");
-	}
+
+        if (peoplePerMin == 15) {
+            System.out.println("Default value for people per minute = "
+                    + peoplePerMin);
+        } else
+            fail("simInput error - Default value for people per minute is incorrect.");
+    }
 
 }

@@ -1,7 +1,5 @@
 package elevator.testing;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 

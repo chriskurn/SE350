@@ -1,8 +1,11 @@
 package simulator.testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+
 import org.junit.Test;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -12,7 +15,7 @@ import simulator.common.SimulationInformation;
  * Description: Door time input value Test.
  * 
  * Test for the default door time value.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -20,8 +23,8 @@ import simulator.common.SimulationInformation;
 
 public class DoorTimeTest {
 
-	@Test
-	public void Test() {
+    @Test
+    public void Test() {
 
         try {
             Simulator.getInstance().buildSimulator("simInput.properties");
@@ -35,10 +38,11 @@ public class DoorTimeTest {
                 .getSimulationInfo();
 
         long doorTime = info.doorTime;
-        
-        if(doorTime == 500){
-        	System.out.println("Door Time = " + doorTime);
-        } else fail("simInput error - Door Time should be 500");
-	}
+
+        if (doorTime == 500) {
+            System.out.println("Door Time = " + doorTime);
+        } else
+            fail("simInput error - Door Time should be 500");
+    }
 
 }

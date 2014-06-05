@@ -1,8 +1,11 @@
 package simulator.testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+
 import org.junit.Test;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -12,7 +15,7 @@ import simulator.common.SimulationInformation;
  * Description: Express Elevator Test.
  * 
  * Test for an express elevator in the simulation.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -20,8 +23,8 @@ import simulator.common.SimulationInformation;
 
 public class ExpressElevatorTest {
 
-	@Test
-	public void Test() {
+    @Test
+    public void Test() {
 
         try {
             Simulator.getInstance().buildSimulator("simInput.properties");
@@ -35,10 +38,11 @@ public class ExpressElevatorTest {
                 .getSimulationInfo();
 
         int expElev = info.numExpressElevators;
-        
-        if(expElev == 0){
-        	System.out.println("Number of express elevators = " + expElev);
-        } else fail("simInput error - There are no express elevators in this building.");
-	}
+
+        if (expElev == 0) {
+            System.out.println("Number of express elevators = " + expElev);
+        } else
+            fail("simInput error - There are no express elevators in this building.");
+    }
 
 }

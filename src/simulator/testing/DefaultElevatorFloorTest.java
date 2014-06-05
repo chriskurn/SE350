@@ -1,8 +1,11 @@
 package simulator.testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+
 import org.junit.Test;
+
 import simulator.Simulator;
 import simulator.common.IllegalParamException;
 import simulator.common.NullFileException;
@@ -12,7 +15,7 @@ import simulator.common.SimulationInformation;
  * Description: Default Elevator Floor Test.
  * 
  * Test for the default floor.
- *
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014
@@ -20,8 +23,8 @@ import simulator.common.SimulationInformation;
 
 public class DefaultElevatorFloorTest {
 
-	@Test
-	public void Test() {
+    @Test
+    public void Test() {
 
         try {
             Simulator.getInstance().buildSimulator("simInput.properties");
@@ -35,10 +38,12 @@ public class DefaultElevatorFloorTest {
                 .getSimulationInfo();
 
         int defaultElevatorFloor = info.defaultElevatorFlr;
-        
-        if(defaultElevatorFloor ==1){
-        	System.out.println("Default Elevator Floor = " + defaultElevatorFloor);
-        } else fail("simInput error - Default Elevator Floor Value missing");
-	}
+
+        if (defaultElevatorFloor == 1) {
+            System.out.println("Default Elevator Floor = "
+                    + defaultElevatorFloor);
+        } else
+            fail("simInput error - Default Elevator Floor Value missing");
+    }
 
 }

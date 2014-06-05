@@ -12,14 +12,11 @@ import simulator.common.NullFileException;
 import simulator.common.SimulationInformation;
 import elevator.common.ElevatorDirection;
 import elevator.control.ElevatorController;
-import elevator.control.ElevatorRequestHandler;
-import elevator.control.ElevatorRequestHandlerFactory;
 import elevator.elements.Elevator;
-import elevator.elements.ElevatorImpl;
 
 /**
  * @author Patrick Stein
- *
+ * 
  */
 public class ElevatorControllerTest {
     private SimulationInformation info;
@@ -32,7 +29,7 @@ public class ElevatorControllerTest {
 
     /** The elevator. */
     private ArrayList<Elevator> eles = new ArrayList<Elevator>();
-    
+
     ElevatorController ec;
 
     /**
@@ -55,25 +52,25 @@ public class ElevatorControllerTest {
         ec = ElevatorController.getInstance();
         ec.stopAllElevators();
     }
-    
+
     @Test
-    public void validRequestAddTest() throws IllegalParamException{
+    public void validRequestAddTest() throws IllegalParamException {
         ec.addNewRequest(5, ElevatorDirection.UP);
     }
-    
+
     @Test(expected = IllegalParamException.class)
-    public void invalidDirectionRequestTest() throws IllegalParamException{
+    public void invalidDirectionRequestTest() throws IllegalParamException {
         ec.addNewRequest(5, ElevatorDirection.IDLE);
     }
-    
+
     @Test(expected = IllegalParamException.class)
-    public void invalidUpperFloorRequestTest() throws IllegalParamException{
+    public void invalidUpperFloorRequestTest() throws IllegalParamException {
         ec.addNewRequest(30, ElevatorDirection.UP);
     }
+
     @Test(expected = IllegalParamException.class)
-    public void invalidLowerFloorRequestTest() throws IllegalParamException{
+    public void invalidLowerFloorRequestTest() throws IllegalParamException {
         ec.addNewRequest(-5, ElevatorDirection.DOWN);
     }
-    
 
 }

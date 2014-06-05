@@ -47,11 +47,13 @@ public class StatisticsGeneratorImpl implements StatisticsGenerator {
     public void generateStats() {
         System.out.println();
         System.out.println();
-        System.out.printf("Generating: Average/Min/Max Wait time by floor (in seconds).%n");
+        System.out
+                .printf("Generating: Average/Min/Max Wait time by floor (in seconds).%n");
         printHorizontalLn(65);
         generateAverageWaitTimeByFloorTable();
         System.out.println();
-        System.out.printf("Generating: Wait/Ride/Total Time by Person (in seconds).%n");
+        System.out
+                .printf("Generating: Wait/Ride/Total Time by Person (in seconds).%n");
         printHorizontalLn(86);
         generateWaitRideTotalTimeByPersonTable();
         System.out.println();
