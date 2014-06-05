@@ -1,6 +1,3 @@
-/**
- * 
- */
 package elevator.testing;
 
 import java.io.IOException;
