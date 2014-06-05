@@ -33,6 +33,7 @@ public class ElevatorControllerTest {
     /** The elevator. */
     private ArrayList<Elevator> eles = new ArrayList<Elevator>();
     
+    /** Elevator Controller */
     ElevatorController ec;
 
     /**
