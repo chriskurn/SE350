@@ -74,15 +74,23 @@ public class PersonImpl implements Person {
 
     }
 
+    /**
+     * Did an Error Occur
+     * @return errorOccured
+     */
     @Override
     public boolean didErrorOccur() {
         return errorOccured;
     }
 
+    
+    /**
+     * Equals - basic three checks for any object equality
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
-
-        // The basic three checks for any object equality
+        
         if (obj == null) {
             return false;
         }

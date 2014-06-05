@@ -31,6 +31,7 @@ public class ElevatorRequestHandlerTest {
     /** The elevator. */
     private ArrayList<Elevator> eles = new ArrayList<Elevator>();
 
+    /** Elevator Request Handler */
     private ElevatorRequestHandler req;
 
     /**

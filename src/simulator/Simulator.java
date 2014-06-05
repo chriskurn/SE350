@@ -49,11 +49,12 @@ public class Simulator implements Narrator, StatisticsGenerator {
 
     /** The running. */
     private boolean running = true;
+    
+    /** ArrayList of running people     */
     private ArrayList<Person> runningPeople = new ArrayList<Person>();
 
     /**
      * Instantiates a new simulator.
-     * 
      */
     private Simulator() {
         // Create logging class
@@ -128,8 +129,7 @@ public class Simulator implements Narrator, StatisticsGenerator {
 
     /**
      * Runs the simulation. Currently just adds a bunch of random destinations
-     * to a set of elevators.
-     * 
+     * to a set of elevators. 
      */
     public void runSimulator() {
 

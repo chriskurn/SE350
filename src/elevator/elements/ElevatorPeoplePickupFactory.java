@@ -15,7 +15,6 @@ import elevator.common.ElevatorDirection;
 
 /**
  * Public class Elevator People Pickup Factory
- * 
  */
 public class ElevatorPeoplePickupFactory {
 

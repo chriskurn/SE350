@@ -11,6 +11,19 @@ package simulator;
  * can predict the expected effect of taking an elevator down for repairs on the
  * building’s population.
  * 
+ * Input parameters for the project are below.
+ * Note: original values for Sim Run Time and Person Rate were changed per the instructor.
+ * 
+ * numFloors=16
+ * numElevators=4
+ * maxPersonsPerElevator=8
+ * doorTime=500
+ * floorTime=500
+ * elevatorSleepTime=15000
+ * personPerMin=15
+ * simRunTime=300000
+ * defaultElevatorFlr=1
+ * 
  * @author Patrick Stein
  * @author Chris Kurn
  * @since Version 1.0 - Spring Quarter 2014

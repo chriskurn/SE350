@@ -172,6 +172,9 @@ public class ElevatorPeoplePickupImpl implements ElevatorPeoplePickup {
         maxNumberOfPeople = mNum;
     }
 
+    /**
+     * Unload people from elevator.
+     */
     @Override
     public void unloadPeople(int floor) {
         int curFloor = floor;
