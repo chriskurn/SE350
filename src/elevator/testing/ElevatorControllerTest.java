@@ -29,7 +29,12 @@ public class ElevatorControllerTest {
 
     /** The elevator. */
     private ArrayList<Elevator> eles = new ArrayList<Elevator>();
+<<<<<<< HEAD
 
+=======
+    
+    /** Elevator Controller */
+>>>>>>> cead06b3a64df8e6dcff6c543320358e74e19a8e
     ElevatorController ec;
 
     /**
